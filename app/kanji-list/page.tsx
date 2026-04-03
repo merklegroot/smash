@@ -73,7 +73,7 @@ export default function KanjiList() {
                 <button
                   type="button"
                   onClick={() => setSelectedKanji(item)}
-                  className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
+                  className={`flex w-full cursor-pointer items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
                     selectedKanji?.kanji === item.kanji
                       ? "border-black/30 bg-black/10 shadow-sm dark:border-white/30 dark:bg-white/10"
                       : "border-black/10 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"
