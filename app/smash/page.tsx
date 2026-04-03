@@ -105,6 +105,7 @@ export default function SmashPage() {
   const [toasts, setToasts] = useState<ToastState[]>([]);
   const [round, setRound] = useState<RoundState>(() => createRound([]));
   const [guessedCorrectKanji, setGuessedCorrectKanji] = useState<string[]>([]);
+  const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
 
   const allPossibleKanji = Array.from(new Set(kanjiItems.map((item) => item.kanji)));
 
@@ -123,6 +124,7 @@ export default function SmashPage() {
         if (isMounted) {
           setKanjiItems(data.kanji);
           setRound(createRound(data.kanji));
+          setWrongKanjiChoices([]);
         }
       } catch {
         // Ignore fetch failures and keep fallback labels.
@@ -168,7 +170,15 @@ export default function SmashPage() {
           : [...currentGuesses, round.target.kanji],
       );
       setRound((currentRound) => createRound(kanjiItems, currentRound.target.kanji));
+      setWrongKanjiChoices([]);
+      return;
     }
+
+    setWrongKanjiChoices((currentWrongChoices) =>
+      currentWrongChoices.includes(clickedKanji)
+        ? currentWrongChoices
+        : [...currentWrongChoices, clickedKanji],
+    );
   }
 
   function removeToast(toastId: string) {
@@ -192,7 +202,12 @@ export default function SmashPage() {
               <button
                 key={`${item.kanji}-${index}`}
                 type="button"
-                className="aspect-square w-24 cursor-pointer rounded-xl border border-zinc-300 bg-white text-4xl font-semibold shadow-sm transition hover:bg-zinc-50"
+                disabled={wrongKanjiChoices.includes(item.kanji)}
+                className={`aspect-square w-24 rounded-xl border text-4xl font-semibold shadow-sm transition ${
+                  wrongKanjiChoices.includes(item.kanji)
+                    ? "cursor-not-allowed border-rose-500 bg-rose-500 text-white"
+                    : "cursor-pointer border-zinc-300 bg-white hover:bg-zinc-50"
+                }`}
                 onClick={() => handleKanjiClick(item.kanji)}
               >
                 {item.kanji}
