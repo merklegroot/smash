@@ -126,5 +126,115 @@
       { "word": "中学", "readingKana": "ちゅうがく", "readingRomaji": "chuugaku", "meaning": "middle school" },
       { "word": "中", "readingKana": "なか", "readingRomaji": "naka", "meaning": "inside" }
     ]
+  },
+  {
+    "kanji": "長",
+    "meaning": "long, leader",
+    "onReading": [{ "kana": "チョウ", "romaji": "chou" }],
+    "kunReading": [{ "kana": "なが", "romaji": "naga" }],
+    "commonWords": [
+      { "word": "校長", "readingKana": "こうちょう", "readingRomaji": "kouchou", "meaning": "principal" },
+      { "word": "長い", "readingKana": "ながい", "readingRomaji": "nagai", "meaning": "long" },
+      { "word": "社長", "readingKana": "しゃちょう", "readingRomaji": "shachou", "meaning": "company president" }
+    ]
+  },
+  {
+    "kanji": "出",
+    "meaning": "exit, put out",
+    "onReading": [{ "kana": "シュツ", "romaji": "shutsu" }],
+    "kunReading": [{ "kana": "で", "romaji": "de" }],
+    "commonWords": [
+      { "word": "出口", "readingKana": "でぐち", "readingRomaji": "deguchi", "meaning": "exit" },
+      { "word": "出発", "readingKana": "しゅっぱつ", "readingRomaji": "shuppatsu", "meaning": "departure" },
+      { "word": "出す", "readingKana": "だす", "readingRomaji": "dasu", "meaning": "to take out" }
+    ]
+  },
+  {
+    "kanji": "三",
+    "meaning": "three",
+    "onReading": [{ "kana": "サン", "romaji": "san" }],
+    "kunReading": [{ "kana": "みっ", "romaji": "mi" }],
+    "commonWords": [
+      { "word": "三つ", "readingKana": "みっつ", "readingRomaji": "mittsu", "meaning": "three (things)" },
+      { "word": "三人", "readingKana": "さんにん", "readingRomaji": "sannin", "meaning": "three people" },
+      { "word": "三月", "readingKana": "さんがつ", "readingRomaji": "sangatsu", "meaning": "March" }
+    ]
+  },
+  {
+    "kanji": "同",
+    "meaning": "same",
+    "onReading": [{ "kana": "ドウ", "romaji": "dou" }],
+    "kunReading": [{ "kana": "おな", "romaji": "ona" }],
+    "commonWords": [
+      { "word": "同じ", "readingKana": "おなじ", "readingRomaji": "onaji", "meaning": "same" },
+      { "word": "同時", "readingKana": "どうじ", "readingRomaji": "douji", "meaning": "simultaneous" },
+      { "word": "同意", "readingKana": "どうい", "readingRomaji": "doui", "meaning": "agreement" }
+    ]
+  },
+  {
+    "kanji": "時",
+    "meaning": "time, hour",
+    "onReading": [{ "kana": "ジ", "romaji": "ji" }],
+    "kunReading": [{ "kana": "とき", "romaji": "toki" }],
+    "commonWords": [
+      { "word": "時間", "readingKana": "じかん", "readingRomaji": "jikan", "meaning": "time" },
+      { "word": "時計", "readingKana": "とけい", "readingRomaji": "tokei", "meaning": "clock" },
+      { "word": "時々", "readingKana": "ときどき", "readingRomaji": "tokidoki", "meaning": "sometimes" }
+    ]
+  },
+  {
+    "kanji": "行",
+    "meaning": "go, conduct",
+    "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+    "kunReading": [{ "kana": "い", "romaji": "i" }],
+    "commonWords": [
+      { "word": "銀行", "readingKana": "ぎんこう", "readingRomaji": "ginkou", "meaning": "bank" },
+      { "word": "旅行", "readingKana": "りょこう", "readingRomaji": "ryokou", "meaning": "travel" },
+      { "word": "行く", "readingKana": "いく", "readingRomaji": "iku", "meaning": "to go" }
+    ]
+  },
+  {
+    "kanji": "見",
+    "meaning": "see, look",
+    "onReading": [{ "kana": "ケン", "romaji": "ken" }],
+    "kunReading": [{ "kana": "み", "romaji": "mi" }],
+    "commonWords": [
+      { "word": "見る", "readingKana": "みる", "readingRomaji": "miru", "meaning": "to see" },
+      { "word": "見学", "readingKana": "けんがく", "readingRomaji": "kengaku", "meaning": "field trip; inspection" },
+      { "word": "意見", "readingKana": "いけん", "readingRomaji": "iken", "meaning": "opinion" }
+    ]
+  },
+  {
+    "kanji": "月",
+    "meaning": "month, moon",
+    "onReading": [{ "kana": "ゲツ", "romaji": "getsu" }],
+    "kunReading": [{ "kana": "つき", "romaji": "tsuki" }],
+    "commonWords": [
+      { "word": "月曜日", "readingKana": "げつようび", "readingRomaji": "getsuyoubi", "meaning": "Monday" },
+      { "word": "今月", "readingKana": "こんげつ", "readingRomaji": "kongetsu", "meaning": "this month" },
+      { "word": "月", "readingKana": "つき", "readingRomaji": "tsuki", "meaning": "moon" }
+    ]
+  },
+  {
+    "kanji": "後",
+    "meaning": "after, behind",
+    "onReading": [{ "kana": "ゴ", "romaji": "go" }],
+    "kunReading": [{ "kana": "あと", "romaji": "ato" }],
+    "commonWords": [
+      { "word": "午後", "readingKana": "ごご", "readingRomaji": "gogo", "meaning": "afternoon; p.m." },
+      { "word": "最後", "readingKana": "さいご", "readingRomaji": "saigo", "meaning": "last" },
+      { "word": "後で", "readingKana": "あとで", "readingRomaji": "atode", "meaning": "later" }
+    ]
+  },
+  {
+    "kanji": "前",
+    "meaning": "before, front",
+    "onReading": [{ "kana": "ゼン", "romaji": "zen" }],
+    "kunReading": [{ "kana": "まえ", "romaji": "mae" }],
+    "commonWords": [
+      { "word": "名前", "readingKana": "なまえ", "readingRomaji": "namae", "meaning": "name" },
+      { "word": "午前", "readingKana": "ごぜん", "readingRomaji": "gozen", "meaning": "morning; a.m." },
+      { "word": "前", "readingKana": "まえ", "readingRomaji": "mae", "meaning": "front" }
+    ]
   }
 ]
