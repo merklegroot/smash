@@ -27,11 +27,22 @@ const TOAST_LIFETIME_MS = 2400;
 const TOAST_EXIT_MS = 300;
 const MAX_TOASTS = 5;
 const CORRECT_FLASH_MS = 450;
+const TRAINING_SET_SIZE = 12;
 const FALLBACK_KANJI: KanjiApiItem = { kanji: "?", meaning: "Unknown" };
 
 function getRandomKanji(items: KanjiApiItem[]) {
   const randomIndex = Math.floor(Math.random() * items.length);
   return items[randomIndex] ?? FALLBACK_KANJI;
+}
+
+function chunkKanji(items: KanjiApiItem[], size: number) {
+  const chunks: KanjiApiItem[][] = [];
+
+  for (let i = 0; i < items.length; i += size) {
+    chunks.push(items.slice(i, i + size));
+  }
+
+  return chunks;
 }
 
 function createRound(items: KanjiApiItem[], previousTargetKanji?: string): RoundState {
@@ -104,6 +115,7 @@ function Toast({
 export default function SmashPage() {
   const [kanjiItems, setKanjiItems] = useState<KanjiApiItem[]>([]);
   const [toasts, setToasts] = useState<ToastState[]>([]);
+  const [trainingSetIndex] = useState(0);
   const [round, setRound] = useState<RoundState>(() => createRound([]));
   const [guessedCorrectKanji, setGuessedCorrectKanji] = useState<string[]>([]);
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
@@ -111,6 +123,9 @@ export default function SmashPage() {
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const kanjiSets = chunkKanji(kanjiItems, TRAINING_SET_SIZE);
+  const currentTrainingSet = kanjiSets[trainingSetIndex] ?? [];
+  const trainingKanji = Array.from(new Set(currentTrainingSet.map((item) => item.kanji)));
   const allPossibleKanji = Array.from(new Set(kanjiItems.map((item) => item.kanji)));
 
   useEffect(() => {
@@ -127,7 +142,9 @@ export default function SmashPage() {
 
         if (isMounted) {
           setKanjiItems(data.kanji);
-          setRound(createRound(data.kanji));
+          const nextSets = chunkKanji(data.kanji, TRAINING_SET_SIZE);
+          const initialTrainingSet = nextSets[trainingSetIndex] ?? [];
+          setRound(createRound(initialTrainingSet));
           setWrongKanjiChoices([]);
           setCorrectButtonIndex(null);
           setIsAdvancingRound(false);
@@ -195,7 +212,7 @@ export default function SmashPage() {
       }
 
       roundAdvanceTimeoutRef.current = setTimeout(() => {
-        setRound((currentRound) => createRound(kanjiItems, currentRound.target.kanji));
+        setRound((currentRound) => createRound(currentTrainingSet, currentRound.target.kanji));
         setWrongKanjiChoices([]);
         setCorrectButtonIndex(null);
         setIsAdvancingRound(false);
@@ -226,7 +243,7 @@ export default function SmashPage() {
       </div>
       <div className="flex items-start gap-8">
         <div className="flex flex-col items-center gap-4">
-          <p className="text-lg font-medium text-zinc-700">Meaning: {round.target.meaning}</p>
+          <p className="text-3xl font-semibold text-zinc-700">{round.target.meaning}</p>
           <div className="grid grid-cols-3 gap-4">
             {round.buttons.map((item, index) => (
               <button
@@ -247,21 +264,38 @@ export default function SmashPage() {
             ))}
           </div>
         </div>
-        <aside className="max-h-[26rem] min-w-16 overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
-          <ul className="space-y-1 text-center text-2xl font-semibold text-zinc-800">
-            {allPossibleKanji.map((kanji) => (
-              <li key={`list-${kanji}`} className="flex items-center justify-center gap-2">
-                <span>{kanji}</span>
-                {guessedCorrectKanji.includes(kanji) ? (
+        <div className="flex max-h-[26rem] min-w-56 items-stretch gap-3">
+          <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+              Currently training
+            </p>
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+              {trainingKanji.map((kanji) => (
+                <li key={`training-${kanji}`} className="flex flex-col items-center justify-center gap-1">
+                  <span>{kanji}</span>
                   <span
-                    aria-label="guessed correctly"
-                    className="inline-block size-2 rounded-full bg-emerald-500"
+                    aria-hidden={!guessedCorrectKanji.includes(kanji)}
+                    className={`inline-block size-2 rounded-full ${
+                      guessedCorrectKanji.includes(kanji) ? "bg-emerald-500" : "bg-transparent"
+                    }`}
                   />
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </aside>
+                </li>
+              ))}
+            </ul>
+          </aside>
+          <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+              All kanji
+            </p>
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+              {allPossibleKanji.map((kanji) => (
+                <li key={`all-${kanji}`} className="flex items-center justify-center">
+                  <span>{kanji}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </div>
       </div>
     </section>
   );
