@@ -22,6 +22,8 @@ type RoundState = {
   buttons: KanjiApiItem[];
 };
 
+type PipOutcome = "right" | "wrong";
+
 const GRID_SIZE = 9;
 const TOAST_LIFETIME_MS = 2400;
 const TOAST_EXIT_MS = 300;
@@ -117,10 +119,13 @@ export default function SmashPage() {
   const [toasts, setToasts] = useState<ToastState[]>([]);
   const [trainingSetIndex] = useState(0);
   const [round, setRound] = useState<RoundState>(() => createRound([]));
-  const [guessedCorrectKanji, setGuessedCorrectKanji] = useState<string[]>([]);
+  const [pipHistoryByKanji, setPipHistoryByKanji] = useState<Record<string, PipOutcome[]>>(
+    {},
+  );
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
+  const [showDebugStats, setShowDebugStats] = useState(true);
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const kanjiSets = chunkKanji(kanjiItems, TRAINING_SET_SIZE);
@@ -199,11 +204,23 @@ export default function SmashPage() {
     });
 
     if (isCorrect) {
-      setGuessedCorrectKanji((currentGuesses) =>
-        currentGuesses.includes(round.target.kanji)
-          ? currentGuesses
-          : [...currentGuesses, round.target.kanji],
-      );
+      setPipHistoryByKanji((currentHistory) => {
+        const nextHistory = { ...currentHistory };
+
+        if (wrongKanjiChoices.length > 0) {
+          const wrongOutcomes = [...wrongKanjiChoices, round.target.kanji];
+          for (const kanji of wrongOutcomes) {
+            nextHistory[kanji] = [...(nextHistory[kanji] ?? []), "wrong"];
+          }
+        }
+
+        nextHistory[round.target.kanji] = [
+          ...(nextHistory[round.target.kanji] ?? []),
+          "right",
+        ];
+
+        return nextHistory;
+      });
       setCorrectButtonIndex(buttonIndex);
       setIsAdvancingRound(true);
 
@@ -264,37 +281,88 @@ export default function SmashPage() {
             ))}
           </div>
         </div>
-        <div className="flex max-h-[26rem] min-w-56 items-stretch gap-3">
-          <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-              Currently training
-            </p>
-            <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-              {trainingKanji.map((kanji) => (
-                <li key={`training-${kanji}`} className="flex flex-col items-center justify-center gap-1">
-                  <span>{kanji}</span>
-                  <span
-                    aria-hidden={!guessedCorrectKanji.includes(kanji)}
-                    className={`inline-block size-2 rounded-full ${
-                      guessedCorrectKanji.includes(kanji) ? "bg-emerald-500" : "bg-transparent"
-                    }`}
-                  />
-                </li>
-              ))}
-            </ul>
-          </aside>
-          <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-              All kanji
-            </p>
-            <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-              {allPossibleKanji.map((kanji) => (
-                <li key={`all-${kanji}`} className="flex items-center justify-center">
-                  <span>{kanji}</span>
-                </li>
-              ))}
-            </ul>
-          </aside>
+        <div className="flex min-w-56 flex-col gap-3">
+          <div className="flex max-h-[26rem] items-stretch gap-3">
+            <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                Currently training
+              </p>
+              <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+                {trainingKanji.map((kanji) => (
+                  <li key={`training-${kanji}`} className="flex flex-col items-center justify-center gap-1">
+                    <span>{kanji}</span>
+                    <span className="grid min-h-5 grid-cols-4 grid-rows-2 gap-1">
+                      {(pipHistoryByKanji[kanji] ?? []).slice(-8).map((outcome, index) => (
+                        <span
+                          key={`pip-${kanji}-${index}`}
+                          aria-label={
+                            outcome === "right"
+                              ? "correct answer"
+                              : "missed before correct answer"
+                          }
+                          className={`inline-block size-2 rounded-full ${
+                            outcome === "right" ? "bg-emerald-500" : "bg-rose-500"
+                          }`}
+                        />
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+            <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                All kanji
+              </p>
+              <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+                {allPossibleKanji.map((kanji) => (
+                  <li key={`all-${kanji}`} className="flex items-center justify-center">
+                    <span>{kanji}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </div>
+          <div className="rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                Debug totals per kanji
+              </p>
+              <button
+                type="button"
+                className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50"
+                onClick={() => setShowDebugStats((current) => !current)}
+              >
+                {showDebugStats ? "Hide debug" : "Show debug"}
+              </button>
+            </div>
+            {showDebugStats ? (
+              <ul className="grid max-h-40 grid-cols-2 gap-x-3 gap-y-1 overflow-y-auto text-sm text-zinc-700 sm:grid-cols-3">
+                {allPossibleKanji.map((kanji) => {
+                  const rightCount = (pipHistoryByKanji[kanji] ?? []).filter(
+                    (outcome) => outcome === "right",
+                  ).length;
+                  const wrongCount = (pipHistoryByKanji[kanji] ?? []).filter(
+                    (outcome) => outcome === "wrong",
+                  ).length;
+
+                  return (
+                    <li
+                      key={`debug-${kanji}`}
+                      className="flex items-center justify-between gap-2 rounded border border-zinc-200 px-2 py-1"
+                    >
+                      <span className="text-lg font-semibold leading-none text-zinc-900">
+                        {kanji}
+                      </span>
+                      <span className="text-xs">
+                        R:{rightCount} W:{wrongCount}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </div>
         </div>
       </div>
     </section>
