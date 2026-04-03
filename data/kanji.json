@@ -1,12 +1,130 @@
 [
-  { "kanji": "日", "meaning": "day, sun" },
-  { "kanji": "一", "meaning": "one" },
-  { "kanji": "国", "meaning": "country" },
-  { "kanji": "人", "meaning": "person" },
-  { "kanji": "年", "meaning": "year" },
-  { "kanji": "大", "meaning": "big, large" },
-  { "kanji": "十", "meaning": "ten" },
-  { "kanji": "二", "meaning": "two" },
-  { "kanji": "本", "meaning": "book, origin" },
-  { "kanji": "中", "meaning": "middle, inside" }
+  {
+    "kanji": "日",
+    "meaning": "day, sun",
+    "onReading": [
+      { "kana": "ニチ", "romaji": "nichi" },
+      { "kana": "ジツ", "romaji": "jitsu" }
+    ],
+    "kunReading": [
+      { "kana": "ひ", "romaji": "hi" },
+      { "kana": "か", "romaji": "ka" }
+    ],
+    "commonWords": [
+      { "word": "日本", "readingKana": "にほん", "readingRomaji": "nihon", "meaning": "Japan" },
+      { "word": "日曜日", "readingKana": "にちようび", "readingRomaji": "nichiyoubi", "meaning": "Sunday" },
+      { "word": "毎日", "readingKana": "まいにち", "readingRomaji": "mainichi", "meaning": "every day" }
+    ]
+  },
+  {
+    "kanji": "一",
+    "meaning": "one",
+    "onReading": [
+      { "kana": "イチ", "romaji": "ichi" },
+      { "kana": "イツ", "romaji": "itsu" }
+    ],
+    "kunReading": [{ "kana": "ひと", "romaji": "hito" }],
+    "commonWords": [
+      { "word": "一つ", "readingKana": "ひとつ", "readingRomaji": "hitotsu", "meaning": "one (thing)" },
+      { "word": "一人", "readingKana": "ひとり", "readingRomaji": "hitori", "meaning": "one person" },
+      { "word": "一日", "readingKana": "いちにち", "readingRomaji": "ichinichi", "meaning": "one day" }
+    ]
+  },
+  {
+    "kanji": "国",
+    "meaning": "country",
+    "onReading": [{ "kana": "コク", "romaji": "koku" }],
+    "kunReading": [{ "kana": "くに", "romaji": "kuni" }],
+    "commonWords": [
+      { "word": "国語", "readingKana": "こくご", "readingRomaji": "kokugo", "meaning": "national language (Japanese class)" },
+      { "word": "外国", "readingKana": "がいこく", "readingRomaji": "gaikoku", "meaning": "foreign country" },
+      { "word": "中国", "readingKana": "ちゅうごく", "readingRomaji": "chuugoku", "meaning": "China" }
+    ]
+  },
+  {
+    "kanji": "人",
+    "meaning": "person",
+    "onReading": [
+      { "kana": "ジン", "romaji": "jin" },
+      { "kana": "ニン", "romaji": "nin" }
+    ],
+    "kunReading": [{ "kana": "ひと", "romaji": "hito" }],
+    "commonWords": [
+      { "word": "人気", "readingKana": "にんき", "readingRomaji": "ninki", "meaning": "popular" },
+      { "word": "人間", "readingKana": "にんげん", "readingRomaji": "ningen", "meaning": "human being" },
+      { "word": "日本人", "readingKana": "にほんじん", "readingRomaji": "nihonjin", "meaning": "Japanese person" }
+    ]
+  },
+  {
+    "kanji": "年",
+    "meaning": "year",
+    "onReading": [{ "kana": "ネン", "romaji": "nen" }],
+    "kunReading": [{ "kana": "とし", "romaji": "toshi" }],
+    "commonWords": [
+      { "word": "今年", "readingKana": "ことし", "readingRomaji": "kotoshi", "meaning": "this year" },
+      { "word": "来年", "readingKana": "らいねん", "readingRomaji": "rainen", "meaning": "next year" },
+      { "word": "年上", "readingKana": "としうえ", "readingRomaji": "toshiue", "meaning": "older person" }
+    ]
+  },
+  {
+    "kanji": "大",
+    "meaning": "big, large",
+    "onReading": [
+      { "kana": "ダイ", "romaji": "dai" },
+      { "kana": "タイ", "romaji": "tai" }
+    ],
+    "kunReading": [{ "kana": "おお", "romaji": "oo" }],
+    "commonWords": [
+      { "word": "大学", "readingKana": "だいがく", "readingRomaji": "daigaku", "meaning": "university" },
+      { "word": "大人", "readingKana": "おとな", "readingRomaji": "otona", "meaning": "adult" },
+      { "word": "大きい", "readingKana": "おおきい", "readingRomaji": "ookii", "meaning": "big" }
+    ]
+  },
+  {
+    "kanji": "十",
+    "meaning": "ten",
+    "onReading": [
+      { "kana": "ジュウ", "romaji": "juu" },
+      { "kana": "ジッ", "romaji": "ji" }
+    ],
+    "kunReading": [{ "kana": "とお", "romaji": "too" }],
+    "commonWords": [
+      { "word": "十日", "readingKana": "とおか", "readingRomaji": "tooka", "meaning": "the 10th day of the month" },
+      { "word": "十人", "readingKana": "じゅうにん", "readingRomaji": "juunin", "meaning": "ten people" },
+      { "word": "十円", "readingKana": "じゅうえん", "readingRomaji": "juuen", "meaning": "ten yen" }
+    ]
+  },
+  {
+    "kanji": "二",
+    "meaning": "two",
+    "onReading": [{ "kana": "ニ", "romaji": "ni" }],
+    "kunReading": [{ "kana": "ふた", "romaji": "futa" }],
+    "commonWords": [
+      { "word": "二つ", "readingKana": "ふたつ", "readingRomaji": "futatsu", "meaning": "two (things)" },
+      { "word": "二人", "readingKana": "ふたり", "readingRomaji": "futari", "meaning": "two people" },
+      { "word": "二月", "readingKana": "にがつ", "readingRomaji": "nigatsu", "meaning": "February" }
+    ]
+  },
+  {
+    "kanji": "本",
+    "meaning": "book, origin",
+    "onReading": [{ "kana": "ホン", "romaji": "hon" }],
+    "kunReading": [{ "kana": "もと", "romaji": "moto" }],
+    "commonWords": [
+      { "word": "本", "readingKana": "ほん", "readingRomaji": "hon", "meaning": "book" },
+      { "word": "本当", "readingKana": "ほんとう", "readingRomaji": "hontou", "meaning": "truth; really" },
+      { "word": "日本", "readingKana": "にほん", "readingRomaji": "nihon", "meaning": "Japan" }
+    ]
+  },
+  {
+    "kanji": "中",
+    "meaning": "middle, inside",
+    "onReading": [{ "kana": "チュウ", "romaji": "chuu" }],
+    "kunReading": [{ "kana": "なか", "romaji": "naka" }],
+    "commonWords": [
+      { "word": "中国", "readingKana": "ちゅうごく", "readingRomaji": "chuugoku", "meaning": "China" },
+      { "word": "中学", "readingKana": "ちゅうがく", "readingRomaji": "chuugaku", "meaning": "middle school" },
+      { "word": "中", "readingKana": "なか", "readingRomaji": "naka", "meaning": "inside" }
+    ]
+  }
 ]
