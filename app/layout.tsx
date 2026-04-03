@@ -46,6 +46,11 @@ export default function RootLayout({
                 Kanji List
               </Link>
             </li>
+            <li>
+              <Link href="/smash" className="hover:underline">
+                Smash
+              </Link>
+            </li>
           </ul>
         </nav>
         <main className="flex flex-1 px-6 py-8">{children}</main>
