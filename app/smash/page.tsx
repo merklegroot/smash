@@ -1,30 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-type Reading = {
-  kana: string;
-  romaji: string;
-};
-
-type CommonWord = {
-  word: string;
-  readingKana: string;
-  readingRomaji: string;
-  meaning: string;
-};
-
-type KanjiApiItem = {
-  kanji: string;
-  meaning: string;
-  onReading: Reading[];
-  kunReading: Reading[];
-  commonWords: CommonWord[];
-};
-
-type KanjiApiResponse = {
-  kanji: KanjiApiItem[];
-};
+import { formatReadings } from "@/lib/kanji/format";
+import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
 
 type ToastState = {
   id: string;
@@ -33,8 +11,8 @@ type ToastState = {
 };
 
 type RoundState = {
-  target: KanjiApiItem;
-  buttons: KanjiApiItem[];
+  target: KanjiItem;
+  buttons: KanjiItem[];
 };
 
 type PipOutcome = "right" | "wrong";
@@ -45,8 +23,9 @@ const TOAST_EXIT_MS = 300;
 const MAX_TOASTS = 5;
 const CORRECT_FLASH_MS = 450;
 const TRAINING_SET_SIZE = 12;
+const TRAINING_SET_INDEX = 0;
 const MAX_PIPS_PER_KANJI = 8;
-const FALLBACK_KANJI: KanjiApiItem = {
+const FALLBACK_KANJI: KanjiItem = {
   kanji: "?",
   meaning: "Unknown",
   onReading: [],
@@ -54,13 +33,13 @@ const FALLBACK_KANJI: KanjiApiItem = {
   commonWords: [],
 };
 
-function getRandomKanji(items: KanjiApiItem[]) {
+function getRandomKanji(items: KanjiItem[]) {
   const randomIndex = Math.floor(Math.random() * items.length);
   return items[randomIndex] ?? FALLBACK_KANJI;
 }
 
-function chunkKanji(items: KanjiApiItem[], size: number) {
-  const chunks: KanjiApiItem[][] = [];
+function chunkKanji(items: KanjiItem[], size: number) {
+  const chunks: KanjiItem[][] = [];
 
   for (let i = 0; i < items.length; i += size) {
     chunks.push(items.slice(i, i + size));
@@ -86,7 +65,7 @@ function appendOutcomeWithCap(history: PipOutcome[], outcome: PipOutcome) {
   return nextHistory.slice(nextHistory.length - MAX_PIPS_PER_KANJI);
 }
 
-function createRound(items: KanjiApiItem[], previousTargetKanji?: string): RoundState {
+function createRound(items: KanjiItem[], previousTargetKanji?: string): RoundState {
   if (items.length === 0) {
     return {
       target: FALLBACK_KANJI,
@@ -109,10 +88,6 @@ function createRound(items: KanjiApiItem[], previousTargetKanji?: string): Round
   }
 
   return { target, buttons };
-}
-
-function formatReadings(readings: Reading[]) {
-  return readings.map((reading) => `${reading.kana} (${reading.romaji})`).join(", ");
 }
 
 function Toast({
@@ -158,9 +133,8 @@ function Toast({
 }
 
 export default function SmashPage() {
-  const [kanjiItems, setKanjiItems] = useState<KanjiApiItem[]>([]);
+  const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const [toasts, setToasts] = useState<ToastState[]>([]);
-  const [trainingSetIndex] = useState(0);
   const [round, setRound] = useState<RoundState>(() => createRound([]));
   const [pipHistoryByKanji, setPipHistoryByKanji] = useState<Record<string, PipOutcome[]>>(
     {},
@@ -169,11 +143,11 @@ export default function SmashPage() {
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(true);
-  const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiApiItem | null>(null);
+  const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const kanjiSets = chunkKanji(kanjiItems, TRAINING_SET_SIZE);
-  const currentTrainingSet = kanjiSets[trainingSetIndex] ?? [];
+  const currentTrainingSet = kanjiSets[TRAINING_SET_INDEX] ?? [];
   const trainingKanji = Array.from(new Set(currentTrainingSet.map((item) => item.kanji)));
   const allPossibleKanji = Array.from(new Set(kanjiItems.map((item) => item.kanji)));
 
@@ -192,7 +166,7 @@ export default function SmashPage() {
         if (isMounted) {
           setKanjiItems(data.kanji);
           const nextSets = chunkKanji(data.kanji, TRAINING_SET_SIZE);
-          const initialTrainingSet = nextSets[trainingSetIndex] ?? [];
+          const initialTrainingSet = nextSets[TRAINING_SET_INDEX] ?? [];
           setRound(createRound(initialTrainingSet));
           setWrongKanjiChoices([]);
           setCorrectButtonIndex(null);

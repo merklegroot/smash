@@ -1,23 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-type KanjiItem = {
-  kanji: string;
-  meaning: string;
-  onReading: { kana: string; romaji: string }[];
-  kunReading: { kana: string; romaji: string }[];
-  commonWords: {
-    word: string;
-    readingKana: string;
-    readingRomaji: string;
-    meaning: string;
-  }[];
-};
-
-function formatReadings(readings: { kana: string; romaji: string }[]) {
-  return readings.map((reading) => `${reading.kana} (${reading.romaji})`).join(", ");
-}
+import { formatReadings } from "@/lib/kanji/format";
+import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
 
 export default function KanjiList() {
   const [kanji, setKanji] = useState<KanjiItem[]>([]);
@@ -33,7 +18,7 @@ export default function KanjiList() {
           throw new Error("Failed to load kanji.");
         }
 
-        const data: { kanji: KanjiItem[] } = await response.json();
+        const data: KanjiApiResponse = await response.json();
         setKanji(data.kanji);
         setSelectedKanji(data.kanji[0] ?? null);
       } catch {
