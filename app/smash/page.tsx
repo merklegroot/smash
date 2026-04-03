@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type KanjiApiItem = {
   kanji: string;
@@ -12,21 +12,64 @@ type KanjiApiResponse = {
 };
 
 type ToastState = {
+  id: string;
   message: string;
   isCorrect: boolean;
 };
 
 const GRID_SIZE = 9;
+const TOAST_LIFETIME_MS = 2400;
+const TOAST_EXIT_MS = 300;
 
 function getRandomKanji(items: KanjiApiItem[]) {
   const randomIndex = Math.floor(Math.random() * items.length);
   return items[randomIndex] ?? { kanji: "?", meaning: "Unknown" };
 }
 
+function Toast({
+  toast,
+  onDone,
+}: {
+  toast: ToastState;
+  onDone: (toastId: string) => void;
+}) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const enterFrame = requestAnimationFrame(() => {
+      setIsVisible(true);
+    });
+
+    const exitTimer = setTimeout(() => {
+      setIsVisible(false);
+    }, TOAST_LIFETIME_MS - TOAST_EXIT_MS);
+
+    const removeTimer = setTimeout(() => {
+      onDone(toast.id);
+    }, TOAST_LIFETIME_MS);
+
+    return () => {
+      cancelAnimationFrame(enterFrame);
+      clearTimeout(exitTimer);
+      clearTimeout(removeTimer);
+    };
+  }, [onDone, toast.id]);
+
+  return (
+    <p
+      role="status"
+      className={`w-full rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-300 ${
+        isVisible ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
+      } ${toast.isCorrect ? "bg-emerald-600" : "bg-rose-600"}`}
+    >
+      {toast.message}
+    </p>
+  );
+}
+
 export default function SmashPage() {
   const [kanjiItems, setKanjiItems] = useState<KanjiApiItem[]>([]);
-  const [toast, setToast] = useState<ToastState | null>(null);
-  const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [toasts, setToasts] = useState<ToastState[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -64,16 +107,14 @@ export default function SmashPage() {
     return gridKanji[randomIndex] ?? { kanji: "?", meaning: "Unknown" };
   }, [gridKanji]);
 
-  function showToast(nextToast: ToastState) {
-    if (toastTimeoutRef.current) {
-      clearTimeout(toastTimeoutRef.current);
-    }
-
-    setToast(nextToast);
-    toastTimeoutRef.current = setTimeout(() => {
-      setToast(null);
-      toastTimeoutRef.current = null;
-    }, 2000);
+  function showToast(nextToast: Omit<ToastState, "id">) {
+    setToasts((currentToasts) => [
+      ...currentToasts,
+      {
+        id: `${Date.now()}-${Math.random()}`,
+        ...nextToast,
+      },
+    ]);
   }
 
   function handleKanjiClick(clickedKanji: string) {
@@ -84,27 +125,20 @@ export default function SmashPage() {
     });
   }
 
-  useEffect(() => {
-    return () => {
-      if (toastTimeoutRef.current) {
-        clearTimeout(toastTimeoutRef.current);
-      }
-    };
-  }, []);
+  function removeToast(toastId: string) {
+    setToasts((currentToasts) =>
+      currentToasts.filter((toast) => toast.id !== toastId),
+    );
+  }
 
   return (
     <section className="flex flex-1 items-center justify-center p-6">
       <div className="flex flex-col items-center gap-4">
-        {toast ? (
-          <p
-            role="status"
-            className={`rounded-md px-4 py-2 text-sm font-medium text-white ${
-              toast.isCorrect ? "bg-emerald-600" : "bg-rose-600"
-            }`}
-          >
-            {toast.message}
-          </p>
-        ) : null}
+        <div className="w-full max-w-64 space-y-2">
+          {toasts.map((toast) => (
+            <Toast key={toast.id} toast={toast} onDone={removeToast} />
+          ))}
+        </div>
         <p className="text-lg font-medium text-zinc-700">Meaning: {targetKanji.meaning}</p>
         <div className="grid grid-cols-3 gap-4">
           {gridKanji.map((item, index) => (
