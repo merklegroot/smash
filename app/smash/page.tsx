@@ -122,9 +122,9 @@ function Toast({
   return (
     <p
       role="status"
-      className={`w-full cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-300 ${
+      className={`w-full cursor-pointer rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-white shadow-lg backdrop-blur-sm transition-all duration-300 ${
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
-      } ${toast.isCorrect ? "bg-emerald-600" : "bg-rose-600"}`}
+      } ${toast.isCorrect ? "bg-emerald-500/95" : "bg-rose-500/95"}`}
       onClick={() => onDone(toast.id)}
     >
       {toast.message}
@@ -329,28 +329,31 @@ export default function SmashPage() {
   }
 
   return (
-    <section className="relative flex flex-1 items-center justify-center p-6">
+    <section className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl border border-black/10 bg-white/40 p-6 shadow-[0_10px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.10),_transparent_45%),radial-gradient(circle_at_bottom_right,_rgba(16,185,129,0.10),_transparent_40%)]" />
       <div className="absolute right-4 top-4 z-10 w-full max-w-64 space-y-2">
         {toasts.map((toast) => (
           <Toast key={toast.id} toast={toast} onDone={removeToast} />
         ))}
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-start gap-8">
           <div className="flex flex-col items-center gap-4">
-            <p className="text-3xl font-semibold text-zinc-700">{round.target.meaning}</p>
+            <p className="rounded-full border border-black/10 bg-white/70 px-5 py-2 text-3xl font-semibold text-zinc-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-zinc-100">
+              {round.target.meaning}
+            </p>
             <div className="grid grid-cols-3 gap-4">
               {round.buttons.map((item, index) => (
                 <button
                   key={`${item.kanji}-${index}`}
                   type="button"
                   disabled={wrongKanjiChoices.includes(item.kanji) || isAdvancingRound}
-                  className={`aspect-square w-24 rounded-xl border text-4xl font-semibold shadow-sm transition ${
+                  className={`aspect-square w-24 rounded-2xl border text-4xl font-semibold shadow-sm transition duration-150 ${
                     correctButtonIndex === index
-                      ? "cursor-not-allowed border-emerald-500 bg-emerald-500 text-white"
+                      ? "cursor-not-allowed scale-[1.02] border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30"
                       : wrongKanjiChoices.includes(item.kanji)
                       ? "cursor-not-allowed border-rose-500 bg-rose-500 text-white"
-                      : "cursor-pointer border-zinc-300 bg-white hover:bg-zinc-50"
+                      : "cursor-pointer border-zinc-300 bg-white hover:-translate-y-0.5 hover:border-zinc-400 hover:bg-zinc-50 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
                   }`}
                   onClick={() => handleKanjiClick(item.kanji, index)}
                 >
@@ -361,7 +364,7 @@ export default function SmashPage() {
           </div>
           <div className="flex items-start gap-3">
             <div className="flex max-h-[26rem] items-stretch gap-3">
-              <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+              <aside className="w-[22rem] overflow-y-auto rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
                   Currently training
                 </p>
@@ -370,7 +373,7 @@ export default function SmashPage() {
                     <li key={`training-${kanji}`} className="flex flex-col items-center justify-center gap-1">
                       <button
                         type="button"
-                        className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100"
+                        className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
                         onClick={() => openKanjiDetails(kanji)}
                       >
                         <span>{kanji}</span>
@@ -396,7 +399,7 @@ export default function SmashPage() {
                   ))}
                 </ul>
               </aside>
-              <aside className="w-[22rem] overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+              <aside className="w-[22rem] overflow-y-auto rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
                   All kanji
                 </p>
@@ -405,7 +408,7 @@ export default function SmashPage() {
                     <li key={`all-${kanji}`} className="flex items-center justify-center">
                       <button
                         type="button"
-                        className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100"
+                        className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
                         onClick={() => openKanjiDetails(kanji)}
                       >
                         {kanji}
@@ -416,7 +419,7 @@ export default function SmashPage() {
               </aside>
             </div>
             {selectedKanjiDetails ? (
-              <aside className="w-[22rem] rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+              <aside className="w-[22rem] rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
                 <div className="mb-3 flex items-start justify-between gap-3 border-b border-zinc-200 pb-3">
                   <div>
                     <p className="text-4xl font-semibold leading-none">{selectedKanjiDetails.kanji}</p>
@@ -424,7 +427,7 @@ export default function SmashPage() {
                   </div>
                   <button
                     type="button"
-                    className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50"
+                    className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
                     onClick={() => setSelectedKanjiDetails(null)}
                   >
                     Close
@@ -460,14 +463,14 @@ export default function SmashPage() {
             ) : null}
           </div>
         </div>
-        <div className="rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+        <div className="rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
               Debug totals per kanji
             </p>
             <button
               type="button"
-              className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50"
+              className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
               onClick={() => setShowDebugStats((current) => !current)}
             >
               {showDebugStats ? "Hide debug" : "Show debug"}
@@ -486,7 +489,7 @@ export default function SmashPage() {
                 return (
                   <li
                     key={`debug-${kanji}`}
-                    className="flex items-center justify-between gap-2 rounded border border-zinc-200 px-2 py-1"
+                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-200 bg-white/80 px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900/70"
                   >
                     <span className="text-lg font-semibold leading-none text-zinc-900">{kanji}</span>
                     <div className="flex items-center gap-2 text-xs">
