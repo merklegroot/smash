@@ -142,7 +142,7 @@ export default function SmashPage() {
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
-  const [showDebugStats, setShowDebugStats] = useState(true);
+  const [showDebugStats, setShowDebugStats] = useState(false);
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -336,6 +336,15 @@ export default function SmashPage() {
           <Toast key={toast.id} toast={toast} onDone={removeToast} />
         ))}
       </div>
+      <div className="absolute left-4 top-4 z-10">
+        <button
+          type="button"
+          className="cursor-pointer rounded-full border border-zinc-300 bg-white/90 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-700 shadow-sm backdrop-blur transition hover:bg-white dark:border-zinc-600 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:bg-zinc-800"
+          onClick={() => setShowDebugStats((current) => !current)}
+        >
+          {showDebugStats ? "Hide debug" : "Show debug"}
+        </button>
+      </div>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-start gap-8">
           <div className="flex flex-col items-center gap-4">
@@ -463,20 +472,13 @@ export default function SmashPage() {
             ) : null}
           </div>
         </div>
-        <div className="rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
-          <div className="mb-2 flex items-center justify-between">
-            <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-              Debug totals per kanji
-            </p>
-            <button
-              type="button"
-              className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
-              onClick={() => setShowDebugStats((current) => !current)}
-            >
-              {showDebugStats ? "Hide debug" : "Show debug"}
-            </button>
-          </div>
-          {showDebugStats ? (
+        {showDebugStats ? (
+          <div className="rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                Debug totals per kanji
+              </p>
+            </div>
             <ul className="grid max-h-40 grid-cols-2 gap-x-3 gap-y-1 overflow-y-auto text-sm text-zinc-700 sm:grid-cols-3">
               {allPossibleKanji.map((kanji) => {
                 const rightCount = (pipHistoryByKanji[kanji] ?? []).filter(
@@ -530,8 +532,8 @@ export default function SmashPage() {
                 );
               })}
             </ul>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </div>
     </section>
   );
