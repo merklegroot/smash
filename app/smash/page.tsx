@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type KanjiApiItem = {
   kanji: string;
@@ -26,6 +26,7 @@ const GRID_SIZE = 9;
 const TOAST_LIFETIME_MS = 2400;
 const TOAST_EXIT_MS = 300;
 const MAX_TOASTS = 5;
+const CORRECT_FLASH_MS = 450;
 const FALLBACK_KANJI: KanjiApiItem = { kanji: "?", meaning: "Unknown" };
 
 function getRandomKanji(items: KanjiApiItem[]) {
@@ -106,6 +107,9 @@ export default function SmashPage() {
   const [round, setRound] = useState<RoundState>(() => createRound([]));
   const [guessedCorrectKanji, setGuessedCorrectKanji] = useState<string[]>([]);
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
+  const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
+  const [isAdvancingRound, setIsAdvancingRound] = useState(false);
+  const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const allPossibleKanji = Array.from(new Set(kanjiItems.map((item) => item.kanji)));
 
@@ -125,6 +129,8 @@ export default function SmashPage() {
           setKanjiItems(data.kanji);
           setRound(createRound(data.kanji));
           setWrongKanjiChoices([]);
+          setCorrectButtonIndex(null);
+          setIsAdvancingRound(false);
         }
       } catch {
         // Ignore fetch failures and keep fallback labels.
@@ -135,6 +141,14 @@ export default function SmashPage() {
 
     return () => {
       isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (roundAdvanceTimeoutRef.current) {
+        clearTimeout(roundAdvanceTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -156,7 +170,11 @@ export default function SmashPage() {
     });
   }
 
-  function handleKanjiClick(clickedKanji: string) {
+  function handleKanjiClick(clickedKanji: string, buttonIndex: number) {
+    if (isAdvancingRound) {
+      return;
+    }
+
     const isCorrect = clickedKanji === round.target.kanji;
     showToast({
       isCorrect,
@@ -169,8 +187,20 @@ export default function SmashPage() {
           ? currentGuesses
           : [...currentGuesses, round.target.kanji],
       );
-      setRound((currentRound) => createRound(kanjiItems, currentRound.target.kanji));
-      setWrongKanjiChoices([]);
+      setCorrectButtonIndex(buttonIndex);
+      setIsAdvancingRound(true);
+
+      if (roundAdvanceTimeoutRef.current) {
+        clearTimeout(roundAdvanceTimeoutRef.current);
+      }
+
+      roundAdvanceTimeoutRef.current = setTimeout(() => {
+        setRound((currentRound) => createRound(kanjiItems, currentRound.target.kanji));
+        setWrongKanjiChoices([]);
+        setCorrectButtonIndex(null);
+        setIsAdvancingRound(false);
+        roundAdvanceTimeoutRef.current = null;
+      }, CORRECT_FLASH_MS);
       return;
     }
 
@@ -202,13 +232,15 @@ export default function SmashPage() {
               <button
                 key={`${item.kanji}-${index}`}
                 type="button"
-                disabled={wrongKanjiChoices.includes(item.kanji)}
+                disabled={wrongKanjiChoices.includes(item.kanji) || isAdvancingRound}
                 className={`aspect-square w-24 rounded-xl border text-4xl font-semibold shadow-sm transition ${
-                  wrongKanjiChoices.includes(item.kanji)
+                  correctButtonIndex === index
+                    ? "cursor-not-allowed border-emerald-500 bg-emerald-500 text-white"
+                    : wrongKanjiChoices.includes(item.kanji)
                     ? "cursor-not-allowed border-rose-500 bg-rose-500 text-white"
                     : "cursor-pointer border-zinc-300 bg-white hover:bg-zinc-50"
                 }`}
-                onClick={() => handleKanjiClick(item.kanji)}
+                onClick={() => handleKanjiClick(item.kanji, index)}
               >
                 {item.kanji}
               </button>
