@@ -41,6 +41,11 @@ export default function RootLayout({
                 About
               </Link>
             </li>
+            <li>
+              <Link href="/kanji-list" className="hover:underline">
+                Kanji List
+              </Link>
+            </li>
           </ul>
         </nav>
         <main className="flex flex-1 px-6 py-8">{children}</main>
