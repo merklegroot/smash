@@ -25,6 +25,7 @@ type RoundState = {
 const GRID_SIZE = 9;
 const TOAST_LIFETIME_MS = 2400;
 const TOAST_EXIT_MS = 300;
+const MAX_TOASTS = 5;
 const FALLBACK_KANJI: KanjiApiItem = { kanji: "?", meaning: "Unknown" };
 
 function getRandomKanji(items: KanjiApiItem[]) {
@@ -103,6 +104,9 @@ export default function SmashPage() {
   const [kanjiItems, setKanjiItems] = useState<KanjiApiItem[]>([]);
   const [toasts, setToasts] = useState<ToastState[]>([]);
   const [round, setRound] = useState<RoundState>(() => createRound([]));
+  const [guessedCorrectKanji, setGuessedCorrectKanji] = useState<string[]>([]);
+
+  const allPossibleKanji = Array.from(new Set(kanjiItems.map((item) => item.kanji)));
 
   useEffect(() => {
     let isMounted = true;
@@ -133,13 +137,21 @@ export default function SmashPage() {
   }, []);
 
   function showToast(nextToast: Omit<ToastState, "id">) {
-    setToasts((currentToasts) => [
-      ...currentToasts,
-      {
-        id: `${Date.now()}-${Math.random()}`,
-        ...nextToast,
-      },
-    ]);
+    setToasts((currentToasts) => {
+      const nextToasts = [
+        ...currentToasts,
+        {
+          id: `${Date.now()}-${Math.random()}`,
+          ...nextToast,
+        },
+      ];
+
+      if (nextToasts.length <= MAX_TOASTS) {
+        return nextToasts;
+      }
+
+      return nextToasts.slice(nextToasts.length - MAX_TOASTS);
+    });
   }
 
   function handleKanjiClick(clickedKanji: string) {
@@ -150,6 +162,11 @@ export default function SmashPage() {
     });
 
     if (isCorrect) {
+      setGuessedCorrectKanji((currentGuesses) =>
+        currentGuesses.includes(round.target.kanji)
+          ? currentGuesses
+          : [...currentGuesses, round.target.kanji],
+      );
       setRound((currentRound) => createRound(kanjiItems, currentRound.target.kanji));
     }
   }
@@ -162,25 +179,42 @@ export default function SmashPage() {
 
   return (
     <section className="relative flex flex-1 items-center justify-center p-6">
-      <div className="absolute left-1/2 top-6 z-10 w-full max-w-64 -translate-x-1/2 space-y-2">
+      <div className="absolute right-4 top-4 z-10 w-full max-w-64 space-y-2">
         {toasts.map((toast) => (
           <Toast key={toast.id} toast={toast} onDone={removeToast} />
         ))}
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <p className="text-lg font-medium text-zinc-700">Meaning: {round.target.meaning}</p>
-        <div className="grid grid-cols-3 gap-4">
-          {round.buttons.map((item, index) => (
-            <button
-              key={`${item.kanji}-${index}`}
-              type="button"
-              className="aspect-square w-24 cursor-pointer rounded-xl border border-zinc-300 bg-white text-4xl font-semibold shadow-sm transition hover:bg-zinc-50"
-              onClick={() => handleKanjiClick(item.kanji)}
-            >
-              {item.kanji}
-            </button>
-          ))}
+      <div className="flex items-start gap-8">
+        <div className="flex flex-col items-center gap-4">
+          <p className="text-lg font-medium text-zinc-700">Meaning: {round.target.meaning}</p>
+          <div className="grid grid-cols-3 gap-4">
+            {round.buttons.map((item, index) => (
+              <button
+                key={`${item.kanji}-${index}`}
+                type="button"
+                className="aspect-square w-24 cursor-pointer rounded-xl border border-zinc-300 bg-white text-4xl font-semibold shadow-sm transition hover:bg-zinc-50"
+                onClick={() => handleKanjiClick(item.kanji)}
+              >
+                {item.kanji}
+              </button>
+            ))}
+          </div>
         </div>
+        <aside className="max-h-[26rem] min-w-16 overflow-y-auto rounded-xl border border-zinc-200 bg-white/70 px-4 py-3 shadow-sm">
+          <ul className="space-y-1 text-center text-2xl font-semibold text-zinc-800">
+            {allPossibleKanji.map((kanji) => (
+              <li key={`list-${kanji}`} className="flex items-center justify-center gap-2">
+                <span>{kanji}</span>
+                {guessedCorrectKanji.includes(kanji) ? (
+                  <span
+                    aria-label="guessed correctly"
+                    className="inline-block size-2 rounded-full bg-emerald-500"
+                  />
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </section>
   );
