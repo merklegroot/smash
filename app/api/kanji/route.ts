@@ -1,18 +1,23 @@
 import { NextResponse } from "next/server";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
-const commonKanji = [
-  { kanji: "日", meaning: "day, sun" },
-  { kanji: "一", meaning: "one" },
-  { kanji: "国", meaning: "country" },
-  { kanji: "人", meaning: "person" },
-  { kanji: "年", meaning: "year" },
-  { kanji: "大", meaning: "big, large" },
-  { kanji: "十", meaning: "ten" },
-  { kanji: "二", meaning: "two" },
-  { kanji: "本", meaning: "book, origin" },
-  { kanji: "中", meaning: "middle, inside" },
-];
+type KanjiItem = {
+  kanji: string;
+  meaning: string;
+};
 
-export function GET() {
-  return NextResponse.json({ kanji: commonKanji });
+export async function GET() {
+  try {
+    const filePath = path.join(process.cwd(), "data", "kanji.json");
+    const fileContent = await readFile(filePath, "utf-8");
+    const kanji = JSON.parse(fileContent) as KanjiItem[];
+
+    return NextResponse.json({ kanji });
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to read kanji data." },
+      { status: 500 },
+    );
+  }
 }
