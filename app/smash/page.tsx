@@ -427,51 +427,59 @@ export default function SmashPage() {
                 </ul>
               </aside>
             </div>
-            {selectedKanjiDetails ? (
-              <aside className="w-[22rem] rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
-                <div className="mb-3 flex items-start justify-between gap-3 border-b border-zinc-200 pb-3">
-                  <div>
-                    <p className="text-4xl font-semibold leading-none">{selectedKanjiDetails.kanji}</p>
-                    <p className="text-sm text-zinc-600">{selectedKanjiDetails.meaning}</p>
-                  </div>
-                  <button
-                    type="button"
-                    className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
-                    onClick={() => setSelectedKanjiDetails(null)}
-                  >
-                    Close
-                  </button>
-                </div>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <p className="font-semibold text-zinc-700">On reading</p>
-                    <p>{formatReadings(selectedKanjiDetails.onReading)}</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-zinc-700">Kun reading</p>
-                    <p>{formatReadings(selectedKanjiDetails.kunReading)}</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-zinc-700">Common words</p>
-                    <ul className="space-y-1">
-                      {selectedKanjiDetails.commonWords.slice(0, 3).map((word) => (
-                        <li
-                          key={`${selectedKanjiDetails.kanji}-${word.word}`}
-                          className="rounded border border-zinc-200 px-2 py-1"
-                        >
-                          <p className="font-medium">{word.word}</p>
-                          <p className="text-xs text-zinc-600">
-                            {word.readingKana} ({word.readingRomaji}) - {word.meaning}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </aside>
-            ) : null}
           </div>
         </div>
+        {selectedKanjiDetails ? (
+          <div className="absolute inset-0 z-20 flex items-center justify-center p-6">
+            <button
+              type="button"
+              aria-label="Close kanji details"
+              className="absolute inset-0 bg-black/20 backdrop-blur-[1px] transition hover:bg-black/25"
+              onClick={() => setSelectedKanjiDetails(null)}
+            />
+            <aside className="relative z-10 max-h-[min(42rem,92%)] w-full max-w-2xl overflow-y-auto rounded-2xl border border-zinc-200 bg-white/95 px-5 py-4 shadow-2xl backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/95">
+              <div className="mb-3 flex items-start justify-between gap-3 border-b border-zinc-200 pb-3 dark:border-zinc-700">
+                <div>
+                  <p className="text-4xl font-semibold leading-none">{selectedKanjiDetails.kanji}</p>
+                  <p className="text-sm text-zinc-600">{selectedKanjiDetails.meaning}</p>
+                </div>
+                <button
+                  type="button"
+                  className="cursor-pointer rounded-md border border-zinc-300 bg-white px-2 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                  onClick={() => setSelectedKanjiDetails(null)}
+                >
+                  Close
+                </button>
+              </div>
+              <div className="space-y-3 text-sm">
+                <div>
+                  <p className="font-semibold text-zinc-700 dark:text-zinc-200">On reading</p>
+                  <p>{formatReadings(selectedKanjiDetails.onReading)}</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-700 dark:text-zinc-200">Kun reading</p>
+                  <p>{formatReadings(selectedKanjiDetails.kunReading)}</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-700 dark:text-zinc-200">Common words</p>
+                  <ul className="space-y-1">
+                    {selectedKanjiDetails.commonWords.slice(0, 3).map((word) => (
+                      <li
+                        key={`${selectedKanjiDetails.kanji}-${word.word}`}
+                        className="rounded border border-zinc-200 px-2 py-1 dark:border-zinc-700"
+                      >
+                        <p className="font-medium">{word.word}</p>
+                        <p className="text-xs text-zinc-600 dark:text-zinc-300">
+                          {word.readingKana} ({word.readingRomaji}) - {word.meaning}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          </div>
+        ) : null}
         {showDebugStats ? (
           <div className="rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
             <div className="mb-2 flex items-center justify-between">
