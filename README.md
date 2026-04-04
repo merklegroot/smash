@@ -4,23 +4,39 @@ Whack-a-mole style kanji training
 
 ## Initial Kanji
 
-The user's training set should consist of just a few of the most basic kanji.  
+The training set starts with the first **12** unique kanji from the deck (API order). Additional kanji can enter when a slot opens (see **Training strategy**).
 
 ## Success and failure
 
 When the user selects the correct answer, the kanji is given a green pip.  
-When the user selects the wrong answer, the kanji is given a red pip.  
+When the user selects the wrong answer, the kanji is given a red pip.
 
-A kanji can have have a max of 8 pips.  
-Once it gets 8, new pips overwrite the old ones.  
+A kanji can have at most **8** pips shown.  
+Once it reaches 8, new pips overwrite the oldest ones.
 
 ## Training strategy
 
--- TODO: This strategy isn't fully thought through.
+Each round shows an English **meaning**; the player picks the matching kanji from a grid.
 
-Enough successes for a kanji should cause the kanji not to be in the training set for a while.
+### Who becomes the prompt?
 
-Failure should make a kanji to be more likely to be quizzed on.
+Among kanji that are **not resting** (see below), the app picks the next meaning prompt at random using **weights**:
 
-New kanji should be able to enter the training set when th user has demonstrated that there's space for them to be added to the training set.
+- **Wrong pips:** each red pip on a kanji adds to its weight, so kanji you struggle with show up as the prompt more often.
+- **Spacing:** each round you have not seen that kanji as the meaning prompt adds a small extra weight, capped so the session still mixes characters instead of only chasing mistakes.
+- The **previous** prompt is avoided when there is another choice.
 
+If every kanji in the pool is resting, the app falls back and may pick any of them.
+
+### Resting after a strong streak
+
+If the pip strip for a kanji ends with **three green pips in a row** (three correct rounds in a row where that kanji was the target), that kanji **rests**: it is not chosen as the meaning prompt for a fixed number of rounds (the count ticks down after each round).
+
+- If there is another kanji in the deck not yet in the active set, it **takes that slot** while the mastered kanji is listed as on break.
+- If there is no such kanji, the mastered kanji stays in the roster but still rests (cooldown) until the timer ends.
+
+### UI
+
+- **Currently training:** the active roster, with resting timers where applicable.
+- **On break:** kanji that were swapped out while a new deck character uses their slot.
+- **Outside training:** kanji that are neither in the current training set nor on break (e.g. not yet reached in the deck).

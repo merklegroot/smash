@@ -36,6 +36,9 @@ const MAX_PIPS_PER_KANJI = 8;
 const MASTERY_TRAILING_RIGHTS = 3;
 /** Rounds where a resting kanji is not chosen as the quiz target. */
 const REST_ROUNDS_AFTER_MASTERY = 10;
+/** Extra selection weight per round since this kanji was last the meaning prompt (interleaving). */
+const SPACING_WEIGHT_PER_ROUND = 0.18;
+const MAX_SPACING_ROUNDS = 18;
 const FALLBACK_KANJI: KanjiItem = {
   kanji: "?",
   meaning: "Unknown",
@@ -161,6 +164,7 @@ function wrongPipCount(pipHistoryByKanji: Record<string, PipOutcome[]>, kanji: s
 function pickWeightedTarget(
   eligible: KanjiItem[],
   pipHistoryByKanji: Record<string, PipOutcome[]>,
+  roundsSinceLastTarget: Record<string, number>,
   previousTargetKanji?: string,
 ): KanjiItem {
   const pool =
@@ -174,9 +178,14 @@ function pickWeightedTarget(
     return FALLBACK_KANJI;
   }
 
-  const weights = pickFrom.map(
-    (item) => 1 + wrongPipCount(pipHistoryByKanji, item.kanji),
-  );
+  const weights = pickFrom.map((item) => {
+    const wrong = wrongPipCount(pipHistoryByKanji, item.kanji);
+    const since = roundsSinceLastTarget[item.kanji] ?? 0;
+    const spacing =
+      SPACING_WEIGHT_PER_ROUND * Math.min(since, MAX_SPACING_ROUNDS);
+
+    return 1 + wrong + spacing;
+  });
   const total = weights.reduce((sum, weight) => sum + weight, 0);
   let roll = Math.random() * total;
 
@@ -195,6 +204,7 @@ function createRound(
   poolItems: KanjiItem[],
   pipHistoryByKanji: Record<string, PipOutcome[]>,
   cooldownRoundsLeft: Record<string, number>,
+  roundsSinceLastTarget: Record<string, number>,
   previousTargetKanji?: string,
 ): RoundState {
   if (poolItems.length === 0) {
@@ -210,7 +220,12 @@ function createRound(
     eligible = poolItems;
   }
 
-  const target = pickWeightedTarget(eligible, pipHistoryByKanji, previousTargetKanji);
+  const target = pickWeightedTarget(
+    eligible,
+    pipHistoryByKanji,
+    roundsSinceLastTarget,
+    previousTargetKanji,
+  );
   const buttons = Array.from({ length: GRID_SIZE }, () => getRandomKanji(poolItems));
 
   // Guarantee at least one correct answer in every board.
@@ -285,7 +300,7 @@ function itemsForActiveChars(chars: string[], lookup: Map<string, KanjiItem>): K
 export default function SmashPage() {
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const [toasts, setToasts] = useState<ToastState[]>([]);
-  const [round, setRound] = useState<RoundState>(() => createRound([], {}, {}));
+  const [round, setRound] = useState<RoundState>(() => createRound([], {}, {}, {}));
   const [pipHistoryByKanji, setPipHistoryByKanji] = useState<Record<string, PipOutcome[]>>(
     {},
   );
@@ -297,12 +312,14 @@ export default function SmashPage() {
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [cooldownRoundsLeft, setCooldownRoundsLeft] = useState<Record<string, number>>({});
   const [pendingRestSwaps, setPendingRestSwaps] = useState<PendingRestSwap[]>([]);
+  const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const kanjiItemsRef = useRef<KanjiItem[]>([]);
   const pipHistoryRef = useRef<Record<string, PipOutcome[]>>({});
   const cooldownRef = useRef<Record<string, number>>({});
   const activeKanjiRef = useRef<string[]>([]);
   const pendingSwapsRef = useRef<PendingRestSwap[]>([]);
+  const roundsSinceRef = useRef<Record<string, number>>({});
 
   const orderedItems = useMemo(() => buildOrderedUniqueItems(kanjiItems), [kanjiItems]);
   const itemLookup = useMemo(() => buildItemLookup(kanjiItems), [kanjiItems]);
@@ -329,6 +346,10 @@ export default function SmashPage() {
   }, [pendingRestSwaps]);
 
   useEffect(() => {
+    roundsSinceRef.current = roundsSinceLastTarget;
+  }, [roundsSinceLastTarget]);
+
+  useEffect(() => {
     if (!selectedKanjiDetails) {
       return;
     }
@@ -342,10 +363,22 @@ export default function SmashPage() {
   }, [selectedKanjiDetails]);
 
   const trainingKanji = activeKanjiChars;
+
   const allPossibleKanji = useMemo(
     () => Array.from(new Set(kanjiItems.map((item) => item.kanji))),
     [kanjiItems],
   );
+
+  /** Deck kanji that are neither in the current training roster nor on break (incl. swapped-out rest). */
+  const kanjiOutsideTrainingOrBreak = useMemo(() => {
+    const excluded = new Set<string>(activeKanjiChars);
+
+    for (const swap of pendingRestSwaps) {
+      excluded.add(swap.restingKanji);
+    }
+
+    return orderedKanjiChars.filter((kanji) => !excluded.has(kanji));
+  }, [orderedKanjiChars, activeKanjiChars, pendingRestSwaps]);
 
   useEffect(() => {
     let isMounted = true;
@@ -370,7 +403,8 @@ export default function SmashPage() {
           setActiveKanjiChars(initialChars);
           setCooldownRoundsLeft({});
           setPendingRestSwaps([]);
-          setRound(createRound(initialPool, {}, {}, undefined));
+          setRoundsSinceLastTarget({});
+          setRound(createRound(initialPool, {}, {}, {}, undefined));
           setWrongKanjiChoices([]);
           setCorrectButtonIndex(null);
           setIsAdvancingRound(false);
@@ -394,6 +428,44 @@ export default function SmashPage() {
       }
     };
   }, []);
+
+  function bootstrapNearMasteryTransition() {
+    if (isAdvancingRound || kanjiItems.length === 0) {
+      return;
+    }
+
+    const targetKanji = round.target.kanji;
+
+    if (targetKanji === FALLBACK_KANJI.kanji) {
+      return;
+    }
+
+    if (roundAdvanceTimeoutRef.current) {
+      clearTimeout(roundAdvanceTimeoutRef.current);
+      roundAdvanceTimeoutRef.current = null;
+    }
+
+    setIsAdvancingRound(false);
+    setCorrectButtonIndex(null);
+    setWrongKanjiChoices([]);
+
+    setPipHistoryByKanji((current) => {
+      const twoTrailingGreens = appendOutcomeWithCap(
+        appendOutcomeWithCap([], "right"),
+        "right",
+      );
+
+      return {
+        ...current,
+        [targetKanji]: twoTrailingGreens,
+      };
+    });
+
+    showToast({
+      isCorrect: true,
+      message: `Ready: ${targetKanji} has two greens — one more correct answer here triggers rest / swap.`,
+    });
+  }
 
   function showToast(nextToast: Omit<ToastState, "id">) {
     setToasts((currentToasts) => {
@@ -495,14 +567,26 @@ export default function SmashPage() {
         const lookup = buildItemLookup(kanjiItemsRef.current);
         const poolItems = itemsForActiveChars(nextActive, lookup);
 
+        const nextRoundsSince: Record<string, number> = {};
+
+        for (const k of nextActive) {
+          if (k === previousTargetKanji) {
+            nextRoundsSince[k] = 0;
+          } else {
+            nextRoundsSince[k] = (roundsSinceRef.current[k] ?? 0) + 1;
+          }
+        }
+
         setCooldownRoundsLeft(nextCooldown);
         setActiveKanjiChars(nextActive);
         setPendingRestSwaps(nextSwaps);
+        setRoundsSinceLastTarget(nextRoundsSince);
         setRound(
           createRound(
             poolItems,
             pipHistoryRef.current,
             nextCooldown,
+            nextRoundsSince,
             previousTargetKanji,
           ),
         );
@@ -680,13 +764,22 @@ export default function SmashPage() {
           <Toast key={toast.id} toast={toast} onDone={removeToast} />
         ))}
       </div>
-      <div className="absolute left-4 top-4 z-10">
+      <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-2">
         <button
           type="button"
           className="cursor-pointer rounded-full border border-zinc-300 bg-white/90 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-700 shadow-sm backdrop-blur transition hover:bg-white dark:border-zinc-600 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:bg-zinc-800"
           onClick={() => setShowDebugStats((current) => !current)}
         >
           {showDebugStats ? "Hide debug" : "Show debug"}
+        </button>
+        <button
+          type="button"
+          title="Set the current prompt’s kanji to two trailing greens so the next correct answer triggers rest or deck swap"
+          disabled={isAdvancingRound || kanjiItems.length === 0 || round.target.kanji === FALLBACK_KANJI.kanji}
+          className="cursor-pointer rounded-full border border-amber-400/80 bg-amber-50/95 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900 shadow-sm backdrop-blur transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-amber-600/60 dark:bg-amber-950/80 dark:text-amber-100 dark:hover:bg-amber-900/80"
+          onClick={bootstrapNearMasteryTransition}
+        >
+          Bootstrap
         </button>
       </div>
       <div className="relative z-10 flex flex-col gap-4">
@@ -695,10 +788,11 @@ export default function SmashPage() {
             <p className="text-center text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
               <span className="font-semibold text-zinc-700 dark:text-zinc-200">How practice works: </span>
               Red pips mean you missed that kanji before getting the round right — those kanji are
-              weighted to appear as the prompt more often. Three green pips in a row at the end of
-              your strip (three correct rounds in a row for that kanji) sends it on a short break
-              from being the prompt. If there are more kanji in the deck, a new one takes that slot
-              while the old one rests.
+              weighted to appear as the prompt more often. Kanji you have not seen as the prompt for
+              a while also get a small nudge so the session mixes characters instead of only chasing
+              mistakes. Three green pips in a row at the end of your strip (three correct rounds in a
+              row for that kanji) sends it on a short break from being the prompt. If there are more
+              kanji in the deck, a new one takes that slot while the old one rests.
             </p>
             <p className="rounded-full border border-black/10 bg-white/70 px-5 py-2 text-3xl font-semibold text-zinc-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-zinc-100">
               {round.target.meaning}
@@ -730,9 +824,9 @@ export default function SmashPage() {
                   Currently training
                 </p>
                 <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                  More red pips on a kanji → more likely to appear as the meaning you must match.
-                  &quot;Resting&quot; means it will not be chosen as that prompt for that many rounds
-                  (the count goes down after each round).
+                  More red pips → more likely as the prompt; not seen as the prompt for several
+                  rounds → slight boost too. &quot;Resting&quot; = not chosen as that prompt for
+                  that many rounds (count ticks down after each round).
                 </p>
                 <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
                   {trainingKanji.map((kanji) => {
@@ -793,21 +887,31 @@ export default function SmashPage() {
               </aside>
               <aside className="w-[22rem] overflow-y-auto rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                  All kanji
+                  Outside training
                 </p>
-                <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-                  {allPossibleKanji.map((kanji) => (
-                    <li key={`all-${kanji}`} className="flex items-center justify-center">
-                      <button
-                        type="button"
-                        className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                        onClick={() => openKanjiDetails(kanji)}
-                      >
-                        {kanji}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
+                  Kanji not in the current training set and not on break (including characters listed
+                  under &quot;On break&quot;).
+                </p>
+                {kanjiOutsideTrainingOrBreak.length === 0 ? (
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                    Every kanji in the deck is either in training or on break.
+                  </p>
+                ) : (
+                  <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+                    {kanjiOutsideTrainingOrBreak.map((kanji) => (
+                      <li key={`outside-${kanji}`} className="flex items-center justify-center">
+                        <button
+                          type="button"
+                          className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                          onClick={() => openKanjiDetails(kanji)}
+                        >
+                          {kanji}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </aside>
             </div>
           </div>
