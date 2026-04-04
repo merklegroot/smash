@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { formatReadings } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
@@ -18,14 +18,24 @@ type RoundState = {
 
 type PipOutcome = "right" | "wrong";
 
+type PendingRestSwap = {
+  restingKanji: string;
+  replacementKanji: string;
+  slotIndex: number;
+  roundsLeft: number;
+};
+
 const GRID_SIZE = 9;
 const TOAST_LIFETIME_MS = 2400;
 const TOAST_EXIT_MS = 300;
 const MAX_TOASTS = 5;
 const CORRECT_FLASH_MS = 450;
 const TRAINING_SET_SIZE = 12;
-const TRAINING_SET_INDEX = 0;
 const MAX_PIPS_PER_KANJI = 8;
+/** Trailing green pips (correct answers when this kanji was the target) → rest period. */
+const MASTERY_TRAILING_RIGHTS = 3;
+/** Rounds where a resting kanji is not chosen as the quiz target. */
+const REST_ROUNDS_AFTER_MASTERY = 10;
 const FALLBACK_KANJI: KanjiItem = {
   kanji: "?",
   meaning: "Unknown",
@@ -39,14 +49,69 @@ function getRandomKanji(items: KanjiItem[]) {
   return items[randomIndex] ?? FALLBACK_KANJI;
 }
 
-function chunkKanji(items: KanjiItem[], size: number) {
-  const chunks: KanjiItem[][] = [];
+/** First occurrence wins — stable order for “next kanji in the deck”. */
+function buildOrderedUniqueItems(items: KanjiItem[]): KanjiItem[] {
+  const seen = new Set<string>();
+  const ordered: KanjiItem[] = [];
 
-  for (let i = 0; i < items.length; i += size) {
-    chunks.push(items.slice(i, i + size));
+  for (const item of items) {
+    if (seen.has(item.kanji)) {
+      continue;
+    }
+
+    seen.add(item.kanji);
+    ordered.push(item);
   }
 
-  return chunks;
+  return ordered;
+}
+
+function countTrailingRights(pips: PipOutcome[]): number {
+  let count = 0;
+
+  for (let i = pips.length - 1; i >= 0; i -= 1) {
+    if (pips[i] !== "right") {
+      break;
+    }
+
+    count += 1;
+  }
+
+  return count;
+}
+
+function tickCooldownRounds(map: Record<string, number>): Record<string, number> {
+  const next: Record<string, number> = {};
+
+  for (const [key, value] of Object.entries(map)) {
+    if (value <= 1) {
+      continue;
+    }
+
+    next[key] = value - 1;
+  }
+
+  return next;
+}
+
+function processRestSwaps(
+  activeKanji: string[],
+  swaps: PendingRestSwap[],
+): { nextActive: string[]; nextSwaps: PendingRestSwap[] } {
+  let nextActive = [...activeKanji];
+  const nextSwaps: PendingRestSwap[] = [];
+
+  for (const swap of swaps) {
+    const roundsLeft = swap.roundsLeft - 1;
+
+    if (roundsLeft <= 0) {
+      nextActive[swap.slotIndex] = swap.restingKanji;
+    } else {
+      nextSwaps.push({ ...swap, roundsLeft });
+    }
+  }
+
+  return { nextActive, nextSwaps };
 }
 
 function clampNonNegativeCount(value: number) {
@@ -66,21 +131,87 @@ function appendOutcomeWithCap(history: PipOutcome[], outcome: PipOutcome) {
   return nextHistory.slice(nextHistory.length - MAX_PIPS_PER_KANJI);
 }
 
-function createRound(items: KanjiItem[], previousTargetKanji?: string): RoundState {
-  if (items.length === 0) {
+function computeHistoryAfterCorrectAnswer(
+  currentHistory: Record<string, PipOutcome[]>,
+  targetKanji: string,
+  wrongKanjiChoices: string[],
+): Record<string, PipOutcome[]> {
+  const nextHistory = { ...currentHistory };
+
+  if (wrongKanjiChoices.length > 0) {
+    const wrongOutcomes = [...wrongKanjiChoices, targetKanji];
+
+    for (const kanji of wrongOutcomes) {
+      nextHistory[kanji] = appendOutcomeWithCap(nextHistory[kanji] ?? [], "wrong");
+    }
+  }
+
+  nextHistory[targetKanji] = appendOutcomeWithCap(
+    nextHistory[targetKanji] ?? [],
+    "right",
+  );
+
+  return nextHistory;
+}
+
+function wrongPipCount(pipHistoryByKanji: Record<string, PipOutcome[]>, kanji: string): number {
+  return (pipHistoryByKanji[kanji] ?? []).filter((o) => o === "wrong").length;
+}
+
+function pickWeightedTarget(
+  eligible: KanjiItem[],
+  pipHistoryByKanji: Record<string, PipOutcome[]>,
+  previousTargetKanji?: string,
+): KanjiItem {
+  const pool =
+    eligible.length > 1
+      ? eligible.filter((item) => item.kanji !== previousTargetKanji)
+      : eligible;
+
+  const pickFrom = pool.length > 0 ? pool : eligible;
+
+  if (pickFrom.length === 0) {
+    return FALLBACK_KANJI;
+  }
+
+  const weights = pickFrom.map(
+    (item) => 1 + wrongPipCount(pipHistoryByKanji, item.kanji),
+  );
+  const total = weights.reduce((sum, weight) => sum + weight, 0);
+  let roll = Math.random() * total;
+
+  for (let i = 0; i < pickFrom.length; i += 1) {
+    roll -= weights[i];
+
+    if (roll <= 0) {
+      return pickFrom[i] ?? FALLBACK_KANJI;
+    }
+  }
+
+  return pickFrom[pickFrom.length - 1] ?? FALLBACK_KANJI;
+}
+
+function createRound(
+  poolItems: KanjiItem[],
+  pipHistoryByKanji: Record<string, PipOutcome[]>,
+  cooldownRoundsLeft: Record<string, number>,
+  previousTargetKanji?: string,
+): RoundState {
+  if (poolItems.length === 0) {
     return {
       target: FALLBACK_KANJI,
       buttons: Array.from({ length: GRID_SIZE }, () => FALLBACK_KANJI),
     };
   }
 
-  const targetPool =
-    items.length > 1
-      ? items.filter((item) => item.kanji !== previousTargetKanji)
-      : items;
+  let eligible = poolItems.filter((item) => (cooldownRoundsLeft[item.kanji] ?? 0) === 0);
 
-  const target = getRandomKanji(targetPool.length > 0 ? targetPool : items);
-  const buttons = Array.from({ length: GRID_SIZE }, () => getRandomKanji(items));
+  if (eligible.length === 0) {
+    eligible = poolItems;
+  }
+
+  const target = pickWeightedTarget(eligible, pipHistoryByKanji, previousTargetKanji);
+  const buttons = Array.from({ length: GRID_SIZE }, () => getRandomKanji(poolItems));
 
   // Guarantee at least one correct answer in every board.
   if (!buttons.some((button) => button.kanji === target.kanji)) {
@@ -133,10 +264,28 @@ function Toast({
   );
 }
 
+function buildItemLookup(items: KanjiItem[]): Map<string, KanjiItem> {
+  const map = new Map<string, KanjiItem>();
+
+  for (const item of items) {
+    if (!map.has(item.kanji)) {
+      map.set(item.kanji, item);
+    }
+  }
+
+  return map;
+}
+
+function itemsForActiveChars(chars: string[], lookup: Map<string, KanjiItem>): KanjiItem[] {
+  return chars
+    .map((kanji) => lookup.get(kanji))
+    .filter((item): item is KanjiItem => Boolean(item));
+}
+
 export default function SmashPage() {
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const [toasts, setToasts] = useState<ToastState[]>([]);
-  const [round, setRound] = useState<RoundState>(() => createRound([]));
+  const [round, setRound] = useState<RoundState>(() => createRound([], {}, {}));
   const [pipHistoryByKanji, setPipHistoryByKanji] = useState<Record<string, PipOutcome[]>>(
     {},
   );
@@ -145,7 +294,39 @@ export default function SmashPage() {
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(false);
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
+  const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
+  const [cooldownRoundsLeft, setCooldownRoundsLeft] = useState<Record<string, number>>({});
+  const [pendingRestSwaps, setPendingRestSwaps] = useState<PendingRestSwap[]>([]);
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const kanjiItemsRef = useRef<KanjiItem[]>([]);
+  const pipHistoryRef = useRef<Record<string, PipOutcome[]>>({});
+  const cooldownRef = useRef<Record<string, number>>({});
+  const activeKanjiRef = useRef<string[]>([]);
+  const pendingSwapsRef = useRef<PendingRestSwap[]>([]);
+
+  const orderedItems = useMemo(() => buildOrderedUniqueItems(kanjiItems), [kanjiItems]);
+  const itemLookup = useMemo(() => buildItemLookup(kanjiItems), [kanjiItems]);
+  const orderedKanjiChars = useMemo(() => orderedItems.map((item) => item.kanji), [orderedItems]);
+
+  useEffect(() => {
+    kanjiItemsRef.current = kanjiItems;
+  }, [kanjiItems]);
+
+  useEffect(() => {
+    pipHistoryRef.current = pipHistoryByKanji;
+  }, [pipHistoryByKanji]);
+
+  useEffect(() => {
+    cooldownRef.current = cooldownRoundsLeft;
+  }, [cooldownRoundsLeft]);
+
+  useEffect(() => {
+    activeKanjiRef.current = activeKanjiChars;
+  }, [activeKanjiChars]);
+
+  useEffect(() => {
+    pendingSwapsRef.current = pendingRestSwaps;
+  }, [pendingRestSwaps]);
 
   useEffect(() => {
     if (!selectedKanjiDetails) {
@@ -160,10 +341,11 @@ export default function SmashPage() {
     };
   }, [selectedKanjiDetails]);
 
-  const kanjiSets = chunkKanji(kanjiItems, TRAINING_SET_SIZE);
-  const currentTrainingSet = kanjiSets[TRAINING_SET_INDEX] ?? [];
-  const trainingKanji = Array.from(new Set(currentTrainingSet.map((item) => item.kanji)));
-  const allPossibleKanji = Array.from(new Set(kanjiItems.map((item) => item.kanji)));
+  const trainingKanji = activeKanjiChars;
+  const allPossibleKanji = useMemo(
+    () => Array.from(new Set(kanjiItems.map((item) => item.kanji))),
+    [kanjiItems],
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -179,9 +361,16 @@ export default function SmashPage() {
 
         if (isMounted) {
           setKanjiItems(data.kanji);
-          const nextSets = chunkKanji(data.kanji, TRAINING_SET_SIZE);
-          const initialTrainingSet = nextSets[TRAINING_SET_INDEX] ?? [];
-          setRound(createRound(initialTrainingSet));
+          const ordered = buildOrderedUniqueItems(data.kanji);
+          const initialChars = ordered
+            .slice(0, TRAINING_SET_SIZE)
+            .map((item) => item.kanji);
+          const lookup = buildItemLookup(data.kanji);
+          const initialPool = itemsForActiveChars(initialChars, lookup);
+          setActiveKanjiChars(initialChars);
+          setCooldownRoundsLeft({});
+          setPendingRestSwaps([]);
+          setRound(createRound(initialPool, {}, {}, undefined));
           setWrongKanjiChoices([]);
           setCorrectButtonIndex(null);
           setIsAdvancingRound(false);
@@ -236,23 +425,58 @@ export default function SmashPage() {
     });
 
     if (isCorrect) {
-      setPipHistoryByKanji((currentHistory) => {
-        const nextHistory = { ...currentHistory };
+      const targetKanji = round.target.kanji;
+      const historyBefore = pipHistoryByKanji;
+      const pipsBeforeRightOnTarget = (() => {
+        const draft = { ...historyBefore };
 
         if (wrongKanjiChoices.length > 0) {
-          const wrongOutcomes = [...wrongKanjiChoices, round.target.kanji];
+          const wrongOutcomes = [...wrongKanjiChoices, targetKanji];
+
           for (const kanji of wrongOutcomes) {
-            nextHistory[kanji] = appendOutcomeWithCap(nextHistory[kanji] ?? [], "wrong");
+            draft[kanji] = appendOutcomeWithCap(draft[kanji] ?? [], "wrong");
           }
         }
 
-        nextHistory[round.target.kanji] = appendOutcomeWithCap(
-          nextHistory[round.target.kanji] ?? [],
-          "right",
-        );
+        return draft[targetKanji] ?? [];
+      })();
+      const pipsAfterRightOnTarget = appendOutcomeWithCap(pipsBeforeRightOnTarget, "right");
+      const oldTrailing = countTrailingRights(pipsBeforeRightOnTarget);
+      const newTrailing = countTrailingRights(pipsAfterRightOnTarget);
+      const justMastered =
+        newTrailing >= MASTERY_TRAILING_RIGHTS && oldTrailing < MASTERY_TRAILING_RIGHTS;
 
-        return nextHistory;
-      });
+      setPipHistoryByKanji(() =>
+        computeHistoryAfterCorrectAnswer(historyBefore, targetKanji, wrongKanjiChoices),
+      );
+
+      if (justMastered) {
+        const idx = activeKanjiChars.indexOf(targetKanji);
+        const nextChar = orderedKanjiChars.find((c) => !activeKanjiChars.includes(c));
+
+        if (idx >= 0 && nextChar) {
+          setPendingRestSwaps((previous) => [
+            ...previous,
+            {
+              restingKanji: targetKanji,
+              replacementKanji: nextChar,
+              slotIndex: idx,
+              roundsLeft: REST_ROUNDS_AFTER_MASTERY,
+            },
+          ]);
+          setActiveKanjiChars((previous) => {
+            const next = [...previous];
+            next[idx] = nextChar;
+            return next;
+          });
+        } else {
+          setCooldownRoundsLeft((previous) => ({
+            ...previous,
+            [targetKanji]: REST_ROUNDS_AFTER_MASTERY,
+          }));
+        }
+      }
+
       setCorrectButtonIndex(buttonIndex);
       setIsAdvancingRound(true);
 
@@ -260,8 +484,28 @@ export default function SmashPage() {
         clearTimeout(roundAdvanceTimeoutRef.current);
       }
 
+      const previousTargetKanji = targetKanji;
+
       roundAdvanceTimeoutRef.current = setTimeout(() => {
-        setRound((currentRound) => createRound(currentTrainingSet, currentRound.target.kanji));
+        const nextCooldown = tickCooldownRounds(cooldownRef.current);
+        const { nextActive, nextSwaps } = processRestSwaps(
+          activeKanjiRef.current,
+          pendingSwapsRef.current,
+        );
+        const lookup = buildItemLookup(kanjiItemsRef.current);
+        const poolItems = itemsForActiveChars(nextActive, lookup);
+
+        setCooldownRoundsLeft(nextCooldown);
+        setActiveKanjiChars(nextActive);
+        setPendingRestSwaps(nextSwaps);
+        setRound(
+          createRound(
+            poolItems,
+            pipHistoryRef.current,
+            nextCooldown,
+            previousTargetKanji,
+          ),
+        );
         setWrongKanjiChoices([]);
         setCorrectButtonIndex(null);
         setIsAdvancingRound(false);
@@ -341,6 +585,26 @@ export default function SmashPage() {
       return kanjiItems.find((item) => item.kanji === kanji) ?? null;
     });
   }
+
+  function restRoundsLabelForKanji(kanji: string): string | null {
+    const swap = pendingRestSwaps.find((entry) => entry.restingKanji === kanji);
+
+    if (swap) {
+      return `${swap.roundsLeft} round${swap.roundsLeft === 1 ? "" : "s"}`;
+    }
+
+    const cooldown = cooldownRoundsLeft[kanji];
+
+    if (cooldown && cooldown > 0) {
+      return `${cooldown} round${cooldown === 1 ? "" : "s"}`;
+    }
+
+    return null;
+  }
+
+  const restingNotInRotation = pendingRestSwaps.filter(
+    (entry) => !activeKanjiChars.includes(entry.restingKanji),
+  );
 
   const kanjiDetailsDialog =
     selectedKanjiDetails && typeof document !== "undefined"
@@ -427,7 +691,15 @@ export default function SmashPage() {
       </div>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-start gap-8">
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex max-w-md flex-col items-center gap-3">
+            <p className="text-center text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+              <span className="font-semibold text-zinc-700 dark:text-zinc-200">How practice works: </span>
+              Red pips mean you missed that kanji before getting the round right — those kanji are
+              weighted to appear as the prompt more often. Three green pips in a row at the end of
+              your strip (three correct rounds in a row for that kanji) sends it on a short break
+              from being the prompt. If there are more kanji in the deck, a new one takes that slot
+              while the old one rests.
+            </p>
             <p className="rounded-full border border-black/10 bg-white/70 px-5 py-2 text-3xl font-semibold text-zinc-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-zinc-100">
               {round.target.meaning}
             </p>
@@ -457,8 +729,16 @@ export default function SmashPage() {
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
                   Currently training
                 </p>
+                <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
+                  More red pips on a kanji → more likely to appear as the meaning you must match.
+                  &quot;Resting&quot; means it will not be chosen as that prompt for that many rounds
+                  (the count goes down after each round).
+                </p>
                 <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-                  {trainingKanji.map((kanji) => (
+                  {trainingKanji.map((kanji) => {
+                    const restLabel = restRoundsLabelForKanji(kanji);
+
+                    return (
                     <li key={`training-${kanji}`} className="flex flex-col items-center justify-center gap-1">
                       <button
                         type="button"
@@ -466,6 +746,11 @@ export default function SmashPage() {
                         onClick={() => openKanjiDetails(kanji)}
                       >
                         <span>{kanji}</span>
+                        {restLabel ? (
+                          <span className="block text-[10px] font-medium leading-tight text-sky-700 dark:text-sky-300">
+                            Resting ({restLabel})
+                          </span>
+                        ) : null}
                         <span className="grid min-h-5 grid-cols-4 grid-rows-2 gap-1">
                           {(pipHistoryByKanji[kanji] ?? [])
                             .slice(-MAX_PIPS_PER_KANJI)
@@ -485,8 +770,26 @@ export default function SmashPage() {
                         </span>
                       </button>
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
+                {restingNotInRotation.length > 0 ? (
+                  <div className="mt-3 border-t border-zinc-200 pt-3 dark:border-zinc-700">
+                    <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
+                      On break (slot filled by next kanji)
+                    </p>
+                    <ul className="space-y-1 text-sm text-zinc-700 dark:text-zinc-200">
+                      {restingNotInRotation.map((entry) => (
+                        <li key={entry.restingKanji} className="flex items-center justify-between gap-2">
+                          <span className="text-2xl font-semibold">{entry.restingKanji}</span>
+                          <span className="text-xs text-zinc-500">
+                            {entry.roundsLeft} round{entry.roundsLeft === 1 ? "" : "s"} left
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </aside>
               <aside className="w-[22rem] overflow-y-auto rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">

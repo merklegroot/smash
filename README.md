@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanji Smash
 
-## Getting Started
+Whack-a-mole style kanji training
 
-First, run the development server:
+## Initial Kanji
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The user's training set should consist of just a few of the most basic kanji.  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Success and failure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+When the user selects the correct answer, the kanji is given a green pip.  
+When the user selects the wrong answer, the kanji is given a red pip.  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A kanji can have have a max of 8 pips.  
+Once it gets 8, new pips overwrite the old ones.  
 
-## Learn More
+## Training strategy
 
-To learn more about Next.js, take a look at the following resources:
+-- TODO: This strategy isn't fully thought through.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Enough successes for a kanji should cause the kanji not to be in the training set for a while.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Failure should make a kanji to be more likely to be quizzed on.
 
-## Deploy on Vercel
+New kanji should be able to enter the training set when th user has demonstrated that there's space for them to be added to the training set.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
