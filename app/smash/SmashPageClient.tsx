@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { formatReadings } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
@@ -639,11 +639,11 @@ export default function SmashPage() {
     );
   }
 
-  function removeToast(toastId: string) {
+  const removeToast = useCallback((toastId: string) => {
     setToasts((currentToasts) =>
       currentToasts.filter((toast) => toast.id !== toastId),
     );
-  }
+  }, []);
 
   function updateOutcomeCount(kanji: string, outcome: PipOutcome, nextCount: number) {
     const existingHistory = pipHistoryByKanji[kanji] ?? [];
