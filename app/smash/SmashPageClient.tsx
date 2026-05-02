@@ -314,7 +314,9 @@ export default function SmashPage() {
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(false);
-  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "outside">("training");
+  const [rosterPanelTab, setRosterPanelTab] = useState<
+    "training" | "outside" | "instructions"
+  >("training");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [cooldownRoundsLeft, setCooldownRoundsLeft] = useState<Record<string, number>>({});
@@ -855,15 +857,6 @@ export default function SmashPage() {
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex items-start gap-8">
           <div className="flex max-w-md flex-col items-center gap-3">
-            <p className="text-center text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
-              <span className="font-semibold text-zinc-700 dark:text-zinc-200">How practice works: </span>
-              Red pips mean you missed that kanji before getting the round right — those kanji are
-              weighted to appear as the prompt more often. Kanji you have not seen as the prompt for
-              a while also get a small nudge so the session mixes characters instead of only chasing
-              mistakes. Three green pips in a row at the end of your strip (three correct rounds in a
-              row for that kanji) sends it on a short break from being the prompt. If there are more
-              kanji in the deck, a new one takes that slot while the old one rests.
-            </p>
             <p className="rounded-full border border-black/10 bg-white/70 px-5 py-2 text-3xl font-semibold text-zinc-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-zinc-100">
               {round.target.meaning}
             </p>
@@ -900,7 +893,7 @@ export default function SmashPage() {
                   aria-selected={rosterPanelTab === "training"}
                   id="roster-tab-training"
                   aria-controls="roster-panel-training"
-                  className={`flex-1 rounded-t-lg px-2 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
                     rosterPanelTab === "training"
                       ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
                       : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
@@ -915,7 +908,7 @@ export default function SmashPage() {
                   aria-selected={rosterPanelTab === "outside"}
                   id="roster-tab-outside"
                   aria-controls="roster-panel-outside"
-                  className={`flex-1 rounded-t-lg px-2 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
                     rosterPanelTab === "outside"
                       ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
                       : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
@@ -923,6 +916,21 @@ export default function SmashPage() {
                   onClick={() => setRosterPanelTab("outside")}
                 >
                   Outside training
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rosterPanelTab === "instructions"}
+                  id="roster-tab-instructions"
+                  aria-controls="roster-panel-instructions"
+                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
+                    rosterPanelTab === "instructions"
+                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
+                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
+                  }`}
+                  onClick={() => setRosterPanelTab("instructions")}
+                >
+                  Instructions
                 </button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
@@ -1029,6 +1037,25 @@ export default function SmashPage() {
                       ))}
                     </ul>
                   )}
+                </div>
+                <div
+                  role="tabpanel"
+                  id="roster-panel-instructions"
+                  aria-labelledby="roster-tab-instructions"
+                  hidden={rosterPanelTab !== "instructions"}
+                >
+                  <p className="mb-2 text-xs font-semibold text-zinc-700 dark:text-zinc-200">
+                    How practice works
+                  </p>
+                  <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-300">
+                    Red pips mean you missed that kanji before getting the round right — those kanji
+                    are weighted to appear as the prompt more often. Kanji you have not seen as the
+                    prompt for a while also get a small nudge so the session mixes characters instead
+                    of only chasing mistakes. Three green pips in a row at the end of your strip
+                    (three correct rounds in a row for that kanji) sends it on a short break from
+                    being the prompt. If there are more kanji in the deck, a new one takes that slot
+                    while the old one rests.
+                  </p>
                 </div>
               </div>
             </aside>
