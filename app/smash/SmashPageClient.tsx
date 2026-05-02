@@ -314,6 +314,7 @@ export default function SmashPage() {
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(false);
+  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "outside">("training");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [cooldownRoundsLeft, setCooldownRoundsLeft] = useState<Record<string, number>>({});
@@ -887,102 +888,150 @@ export default function SmashPage() {
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <div className="flex max-h-[26rem] items-stretch gap-3">
-              <aside className="w-[22rem] overflow-y-auto rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+            <aside className="flex max-h-[26rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
+              <div
+                role="tablist"
+                aria-label="Roster"
+                className="flex shrink-0 gap-1 border-b border-zinc-200 px-2 pt-2 dark:border-zinc-700"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rosterPanelTab === "training"}
+                  id="roster-tab-training"
+                  aria-controls="roster-panel-training"
+                  className={`flex-1 rounded-t-lg px-2 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                    rosterPanelTab === "training"
+                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
+                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
+                  }`}
+                  onClick={() => setRosterPanelTab("training")}
+                >
                   Currently training
-                </p>
-                <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                  More red pips → more likely as the prompt; not seen as the prompt for several
-                  rounds → slight boost too. &quot;Resting&quot; = not chosen as that prompt for
-                  that many rounds (count ticks down after each round).
-                </p>
-                <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-                  {trainingKanji.map((kanji) => {
-                    const restLabel = restRoundsLabelForKanji(kanji);
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rosterPanelTab === "outside"}
+                  id="roster-tab-outside"
+                  aria-controls="roster-panel-outside"
+                  className={`flex-1 rounded-t-lg px-2 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                    rosterPanelTab === "outside"
+                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
+                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
+                  }`}
+                  onClick={() => setRosterPanelTab("outside")}
+                >
+                  Outside training
+                </button>
+              </div>
+              <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
+                <div
+                  role="tabpanel"
+                  id="roster-panel-training"
+                  aria-labelledby="roster-tab-training"
+                  hidden={rosterPanelTab !== "training"}
+                >
+                  <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
+                    More red pips → more likely as the prompt; not seen as the prompt for several
+                    rounds → slight boost too. &quot;Resting&quot; = not chosen as that prompt for
+                    that many rounds (count ticks down after each round).
+                  </p>
+                  <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+                    {trainingKanji.map((kanji) => {
+                      const restLabel = restRoundsLabelForKanji(kanji);
 
-                    return (
-                    <li key={`training-${kanji}`} className="flex flex-col items-center justify-center gap-1">
-                      <button
-                        type="button"
-                        className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                        onClick={() => openKanjiDetails(kanji)}
-                      >
-                        <span>{kanji}</span>
-                        {restLabel ? (
-                          <span className="block text-[10px] font-medium leading-tight text-sky-700 dark:text-sky-300">
-                            Resting ({restLabel})
-                          </span>
-                        ) : null}
-                        <span className="grid min-h-5 grid-cols-4 grid-rows-2 gap-1">
-                          {(pipHistoryByKanji[kanji] ?? [])
-                            .slice(-MAX_PIPS_PER_KANJI)
-                            .map((outcome, index) => (
-                              <span
-                                key={`pip-${kanji}-${index}`}
-                                aria-label={
-                                  outcome === "right"
-                                    ? "correct answer"
-                                    : "missed before correct answer"
-                                }
-                                className={`inline-block size-2 rounded-full ${
-                                  outcome === "right" ? "bg-emerald-500" : "bg-rose-500"
-                                }`}
-                              />
-                            ))}
-                        </span>
-                      </button>
-                    </li>
-                    );
-                  })}
-                </ul>
-                {restingNotInRotation.length > 0 ? (
-                  <div className="mt-3 border-t border-zinc-200 pt-3 dark:border-zinc-700">
-                    <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
-                      On break (slot filled by next kanji)
+                      return (
+                        <li
+                          key={`training-${kanji}`}
+                          className="flex flex-col items-center justify-center gap-1"
+                        >
+                          <button
+                            type="button"
+                            className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                            onClick={() => openKanjiDetails(kanji)}
+                          >
+                            <span>{kanji}</span>
+                            {restLabel ? (
+                              <span className="block text-[10px] font-medium leading-tight text-sky-700 dark:text-sky-300">
+                                Resting ({restLabel})
+                              </span>
+                            ) : null}
+                            <span className="grid min-h-5 grid-cols-4 grid-rows-2 gap-1">
+                              {(pipHistoryByKanji[kanji] ?? [])
+                                .slice(-MAX_PIPS_PER_KANJI)
+                                .map((outcome, index) => (
+                                  <span
+                                    key={`pip-${kanji}-${index}`}
+                                    aria-label={
+                                      outcome === "right"
+                                        ? "correct answer"
+                                        : "missed before correct answer"
+                                    }
+                                    className={`inline-block size-2 rounded-full ${
+                                      outcome === "right" ? "bg-emerald-500" : "bg-rose-500"
+                                    }`}
+                                  />
+                                ))}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  {restingNotInRotation.length > 0 ? (
+                    <div className="mt-3 border-t border-zinc-200 pt-3 dark:border-zinc-700">
+                      <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-zinc-500">
+                        On break (slot filled by next kanji)
+                      </p>
+                      <ul className="space-y-1 text-sm text-zinc-700 dark:text-zinc-200">
+                        {restingNotInRotation.map((entry) => (
+                          <li
+                            key={entry.restingKanji}
+                            className="flex items-center justify-between gap-2"
+                          >
+                            <span className="text-2xl font-semibold">{entry.restingKanji}</span>
+                            <span className="text-xs text-zinc-500">
+                              {entry.roundsLeft} round{entry.roundsLeft === 1 ? "" : "s"} left
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+                <div
+                  role="tabpanel"
+                  id="roster-panel-outside"
+                  aria-labelledby="roster-tab-outside"
+                  hidden={rosterPanelTab !== "outside"}
+                >
+                  <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
+                    Kanji not in the current training set and not on break (including characters
+                    listed under &quot;On break&quot;).
+                  </p>
+                  {kanjiOutsideTrainingOrBreak.length === 0 ? (
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                      Every kanji in the deck is either in training or on break.
                     </p>
-                    <ul className="space-y-1 text-sm text-zinc-700 dark:text-zinc-200">
-                      {restingNotInRotation.map((entry) => (
-                        <li key={entry.restingKanji} className="flex items-center justify-between gap-2">
-                          <span className="text-2xl font-semibold">{entry.restingKanji}</span>
-                          <span className="text-xs text-zinc-500">
-                            {entry.roundsLeft} round{entry.roundsLeft === 1 ? "" : "s"} left
-                          </span>
+                  ) : (
+                    <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
+                      {kanjiOutsideTrainingOrBreak.map((kanji) => (
+                        <li key={`outside-${kanji}`} className="flex items-center justify-center">
+                          <button
+                            type="button"
+                            className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                            onClick={() => openKanjiDetails(kanji)}
+                          >
+                            {kanji}
+                          </button>
                         </li>
                       ))}
                     </ul>
-                  </div>
-                ) : null}
-              </aside>
-              <aside className="w-[22rem] overflow-y-auto rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                  Outside training
-                </p>
-                <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                  Kanji not in the current training set and not on break (including characters listed
-                  under &quot;On break&quot;).
-                </p>
-                {kanjiOutsideTrainingOrBreak.length === 0 ? (
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                    Every kanji in the deck is either in training or on break.
-                  </p>
-                ) : (
-                  <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-                    {kanjiOutsideTrainingOrBreak.map((kanji) => (
-                      <li key={`outside-${kanji}`} className="flex items-center justify-center">
-                        <button
-                          type="button"
-                          className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                          onClick={() => openKanjiDetails(kanji)}
-                        >
-                          {kanji}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </aside>
-            </div>
+                  )}
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
         {showDebugStats ? (
