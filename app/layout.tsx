@@ -57,10 +57,10 @@ export default function RootLayout({
             </li>
             <li>
               <Link
-                href="/training-list"
+                href="/training-sets"
                 className="rounded-md px-3 py-1.5 text-black/75 transition hover:bg-black/5 hover:text-black dark:text-white/75 dark:hover:bg-white/10 dark:hover:text-white"
               >
-                Training List
+                Training Sets
               </Link>
             </li>
             <li>
