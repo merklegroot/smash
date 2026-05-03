@@ -68,6 +68,31 @@
   animation: mastery-ring-pulse 1.4s ease-out infinite;
 }
 
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea {
+    cursor: text;
+  }
+
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+
+  a[href] {
+    cursor: pointer;
+  }
+}
+
 body {
   background:
     radial-gradient(circle at 20% 0%, rgba(99, 102, 241, 0.1), transparent 40%),

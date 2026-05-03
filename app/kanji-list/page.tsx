@@ -98,7 +98,7 @@ export default function KanjiList() {
                 placeholder="Meaning, reading, word…"
                 autoComplete="off"
                 spellCheck={false}
-                className="w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none ring-black/20 placeholder:text-black/40 focus:border-black/30 focus:ring-2 dark:border-white/15 dark:bg-black/40 dark:placeholder:text-white/40 dark:focus:border-white/30 dark:focus:ring-white/20"
+                className="w-full cursor-text rounded-xl border border-black/15 bg-white px-3 py-2 text-sm outline-none ring-black/20 placeholder:text-black/40 focus:border-black/30 focus:ring-2 dark:border-white/15 dark:bg-black/40 dark:placeholder:text-white/40 dark:focus:border-white/30 dark:focus:ring-white/20"
               />
             </label>
             <p className="text-xs text-black/50 dark:text-white/50" aria-live="polite">
@@ -127,7 +127,7 @@ export default function KanjiList() {
                         aria-selected={selected}
                         title={item.meaning}
                         onClick={() => setSelectedKanji(item)}
-                        className={`flex aspect-square min-h-[2.75rem] items-center justify-center rounded-lg text-xl font-semibold transition sm:text-2xl ${
+                        className={`flex aspect-square min-h-[2.75rem] cursor-pointer items-center justify-center rounded-lg text-xl font-semibold transition sm:text-2xl ${
                           selected
                             ? "bg-black text-white shadow-md ring-2 ring-black/30 dark:bg-white dark:text-black dark:ring-white/40"
                             : "bg-black/[0.04] hover:bg-black/10 dark:bg-white/[0.06] dark:hover:bg-white/12"

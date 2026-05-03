@@ -1,3 +1,4 @@
+import { DEFAULT_TRAINING_SETS } from "./defaults";
 import type { TrainingSet } from "./types";
 
 const STORAGE_KEY = "smash-training-sets";
@@ -18,7 +19,10 @@ export function loadTrainingSets(): TrainingSet[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
+    if (raw === null) {
+      saveTrainingSets(DEFAULT_TRAINING_SETS);
+      return DEFAULT_TRAINING_SETS.map((s) => ({ ...s }));
+    }
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return [];
     return parsed.filter(isTrainingSet);
