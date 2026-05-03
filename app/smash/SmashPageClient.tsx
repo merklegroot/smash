@@ -1,9 +1,18 @@
 "use client";
 
+import Link from "next/link";
+import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { formatReadings } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
+import {
+  loadSmashPoolPreference,
+  saveSmashPoolPreference,
+  type SmashPoolPreference,
+} from "@/lib/training-sets/preference";
+import { loadTrainingSets } from "@/lib/training-sets/storage";
+import type { TrainingSet } from "@/lib/training-sets/types";
 
 type ToastState = {
   id: string;
@@ -107,7 +116,7 @@ function processRestSwaps(
   activeKanji: string[],
   swaps: PendingRestSwap[],
 ): { nextActive: string[]; nextSwaps: PendingRestSwap[] } {
-  let nextActive = [...activeKanji];
+  const nextActive = [...activeKanji];
   const nextSwaps: PendingRestSwap[] = [];
 
   for (const swap of swaps) {
@@ -303,6 +312,50 @@ function itemsForActiveChars(chars: string[], lookup: Map<string, KanjiItem>): K
     .filter((item): item is KanjiItem => Boolean(item));
 }
 
+function resolveInitialPool(
+  allKanji: KanjiItem[],
+  sets: TrainingSet[],
+  pref: SmashPoolPreference,
+): {
+  mode: "auto" | "training-set";
+  trainingSetId: string | null;
+  chars: string[];
+  preferenceStale: boolean;
+} {
+  const ordered = buildOrderedUniqueItems(allKanji);
+  const lookup = buildItemLookup(allKanji);
+
+  if (pref.mode === "training-set") {
+    const saved = sets.find((s) => s.id === pref.trainingSetId);
+    const resolved = saved
+      ? itemsForActiveChars(saved.kanjiChars, lookup).map((item) => item.kanji)
+      : [];
+
+    if (saved && resolved.length > 0) {
+      return {
+        mode: "training-set",
+        trainingSetId: saved.id,
+        chars: resolved,
+        preferenceStale: false,
+      };
+    }
+
+    return {
+      mode: "auto",
+      trainingSetId: null,
+      chars: ordered.slice(0, TRAINING_SET_SIZE).map((item) => item.kanji),
+      preferenceStale: true,
+    };
+  }
+
+  return {
+    mode: "auto",
+    trainingSetId: null,
+    chars: ordered.slice(0, TRAINING_SET_SIZE).map((item) => item.kanji),
+    preferenceStale: false,
+  };
+}
+
 export default function SmashPage() {
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const [toasts, setToasts] = useState<ToastState[]>([]);
@@ -323,6 +376,9 @@ export default function SmashPage() {
   const [pendingRestSwaps, setPendingRestSwaps] = useState<PendingRestSwap[]>([]);
   const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
   const [masteryCelebration, setMasteryCelebration] = useState<MasteryCelebration | null>(null);
+  const [poolMode, setPoolMode] = useState<"auto" | "training-set">("auto");
+  const [selectedTrainingSetId, setSelectedTrainingSetId] = useState<string | null>(null);
+  const [trainingSets, setTrainingSets] = useState<TrainingSet[]>([]);
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const masteryCelebrationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const kanjiItemsRef = useRef<KanjiItem[]>([]);
@@ -360,6 +416,44 @@ export default function SmashPage() {
     roundsSinceRef.current = roundsSinceLastTarget;
   }, [roundsSinceLastTarget]);
 
+  const applyPracticePool = useCallback(
+    (params: {
+      allKanji: KanjiItem[];
+      chars: string[];
+      mode: "auto" | "training-set";
+      trainingSetId: string | null;
+    }) => {
+      const { allKanji, chars, mode, trainingSetId } = params;
+      const lookup = buildItemLookup(allKanji);
+      const poolItems = itemsForActiveChars(chars, lookup);
+
+      if (roundAdvanceTimeoutRef.current) {
+        clearTimeout(roundAdvanceTimeoutRef.current);
+        roundAdvanceTimeoutRef.current = null;
+      }
+
+      if (masteryCelebrationTimeoutRef.current) {
+        clearTimeout(masteryCelebrationTimeoutRef.current);
+        masteryCelebrationTimeoutRef.current = null;
+      }
+
+      setPoolMode(mode);
+      setSelectedTrainingSetId(trainingSetId);
+      setActiveKanjiChars(chars);
+      setCooldownRoundsLeft({});
+      setPendingRestSwaps([]);
+      setRoundsSinceLastTarget({});
+      setPipHistoryByKanji({});
+      setRound(createRound(poolItems, {}, {}, {}, undefined));
+      setWrongKanjiChoices([]);
+      setCorrectButtonIndex(null);
+      setIsAdvancingRound(false);
+      setMasteryCelebration(null);
+      setToasts([]);
+    },
+    [],
+  );
+
   useEffect(() => {
     if (!selectedKanjiDetails) {
       return;
@@ -391,8 +485,51 @@ export default function SmashPage() {
     return orderedKanjiChars.filter((kanji) => !excluded.has(kanji));
   }, [orderedKanjiChars, activeKanjiChars, pendingRestSwaps]);
 
+  function handlePoolChange(event: ChangeEvent<HTMLSelectElement>) {
+    const value = event.target.value;
+    const ordered = buildOrderedUniqueItems(kanjiItems);
+
+    if (value === "auto") {
+      saveSmashPoolPreference({ mode: "auto" });
+      const chars = ordered.slice(0, TRAINING_SET_SIZE).map((item) => item.kanji);
+      applyPracticePool({
+        allKanji: kanjiItems,
+        chars,
+        mode: "auto",
+        trainingSetId: null,
+      });
+      return;
+    }
+
+    saveSmashPoolPreference({ mode: "training-set", trainingSetId: value });
+    const saved = trainingSets.find((s) => s.id === value);
+    const chars = saved
+      ? itemsForActiveChars(saved.kanjiChars, itemLookup).map((item) => item.kanji)
+      : [];
+
+    if (!saved || chars.length === 0) {
+      saveSmashPoolPreference({ mode: "auto" });
+      applyPracticePool({
+        allKanji: kanjiItems,
+        chars: ordered.slice(0, TRAINING_SET_SIZE).map((item) => item.kanji),
+        mode: "auto",
+        trainingSetId: null,
+      });
+      return;
+    }
+
+    applyPracticePool({
+      allKanji: kanjiItems,
+      chars,
+      mode: "training-set",
+      trainingSetId: saved.id,
+    });
+  }
+
   useEffect(() => {
     let isMounted = true;
+    const savedSets = loadTrainingSets();
+    const pref = loadSmashPoolPreference();
 
     async function loadKanji() {
       try {
@@ -405,20 +542,19 @@ export default function SmashPage() {
 
         if (isMounted) {
           setKanjiItems(data.kanji);
-          const ordered = buildOrderedUniqueItems(data.kanji);
-          const initialChars = ordered
-            .slice(0, TRAINING_SET_SIZE)
-            .map((item) => item.kanji);
-          const lookup = buildItemLookup(data.kanji);
-          const initialPool = itemsForActiveChars(initialChars, lookup);
-          setActiveKanjiChars(initialChars);
-          setCooldownRoundsLeft({});
-          setPendingRestSwaps([]);
-          setRoundsSinceLastTarget({});
-          setRound(createRound(initialPool, {}, {}, {}, undefined));
-          setWrongKanjiChoices([]);
-          setCorrectButtonIndex(null);
-          setIsAdvancingRound(false);
+          setTrainingSets(savedSets);
+          const resolved = resolveInitialPool(data.kanji, savedSets, pref);
+
+          if (resolved.preferenceStale) {
+            saveSmashPoolPreference({ mode: "auto" });
+          }
+
+          applyPracticePool({
+            allKanji: data.kanji,
+            chars: resolved.chars,
+            mode: resolved.mode,
+            trainingSetId: resolved.trainingSetId,
+          });
         }
       } catch {
         // Ignore fetch failures and keep fallback labels.
@@ -430,7 +566,7 @@ export default function SmashPage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [applyPracticePool]);
 
   useEffect(() => {
     return () => {
@@ -551,8 +687,9 @@ export default function SmashPage() {
       if (justMastered) {
         const idx = activeKanjiChars.indexOf(targetKanji);
         const nextChar = orderedKanjiChars.find((c) => !activeKanjiChars.includes(c));
+        const allowDeckSwap = poolMode !== "training-set" && idx >= 0 && Boolean(nextChar);
 
-        if (idx >= 0 && nextChar) {
+        if (allowDeckSwap && nextChar) {
           setMasteryCelebration({
             kind: "swap",
             restingKanji: targetKanji,
@@ -855,6 +992,67 @@ export default function SmashPage() {
         </button>
       </div>
       <div className="relative z-10 flex flex-col gap-4">
+        <div className="flex flex-wrap items-end gap-4 border-b border-zinc-200/80 pb-4 dark:border-zinc-700/80">
+          <label className="flex min-w-[14rem] flex-col gap-1.5">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+              Training pool
+            </span>
+            <select
+              value={
+                poolMode === "training-set" &&
+                selectedTrainingSetId &&
+                trainingSets.some((s) => s.id === selectedTrainingSetId)
+                  ? selectedTrainingSetId
+                  : "auto"
+              }
+              onChange={handlePoolChange}
+              onFocus={() => {
+                const fresh = loadTrainingSets();
+                setTrainingSets(fresh);
+                if (kanjiItems.length === 0) {
+                  return;
+                }
+                if (poolMode !== "training-set" || !selectedTrainingSetId) {
+                  return;
+                }
+                if (fresh.some((s) => s.id === selectedTrainingSetId)) {
+                  return;
+                }
+                const ordered = buildOrderedUniqueItems(kanjiItems);
+                saveSmashPoolPreference({ mode: "auto" });
+                applyPracticePool({
+                  allKanji: kanjiItems,
+                  chars: ordered.slice(0, TRAINING_SET_SIZE).map((item) => item.kanji),
+                  mode: "auto",
+                  trainingSetId: null,
+                });
+              }}
+              disabled={kanjiItems.length === 0}
+              className="cursor-pointer rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm outline-none ring-zinc-400/30 transition hover:border-zinc-400 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:focus:ring-zinc-500/40"
+            >
+              <option value="auto">
+                Automatic (first {TRAINING_SET_SIZE} in deck)
+              </option>
+              {trainingSets.map((set) => (
+                <option key={set.id} value={set.id}>
+                  {set.name} ({set.kanjiChars.length} kanji)
+                </option>
+              ))}
+            </select>
+          </label>
+          <Link
+            href="/training-sets"
+            className="text-xs font-medium text-sky-700 underline-offset-2 hover:underline dark:text-sky-300"
+          >
+            Manage training sets
+          </Link>
+          {poolMode === "training-set" ? (
+            <p className="max-w-md text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
+              Using only kanji from this set. Three greens still sends a kanji on break, without pulling
+              new characters from the full deck.
+            </p>
+          ) : null}
+        </div>
         <div className="flex items-start gap-8">
           <div className="flex max-w-md flex-col items-center gap-3">
             <p className="rounded-full border border-black/10 bg-white/70 px-5 py-2 text-3xl font-semibold text-zinc-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-zinc-100">
