@@ -1,3276 +1,964 @@
 [
   {
     "kanji": "一",
-    "meaning": "one, one radical (no.1)",
+    "primaryMeaning": "one",
+    "otherMeaning": "one radical (no.1)",
     "onReading": [
-      {
-        "kana": "イチ",
-        "romaji": "ichi"
-      },
-      {
-        "kana": "イツ",
-        "romaji": "itsu"
-      }
+      { "kana": "イチ", "romaji": "ichi" },
+      { "kana": "イツ", "romaji": "itsu" }
     ],
     "kunReading": [
-      {
-        "kana": "ひとつ",
-        "romaji": "hitotsu"
-      }
+      { "kana": "ひとつ", "romaji": "hitotsu" }
     ],
     "commonWords": [
-      {
-        "word": "一つ",
-        "readingKana": "ひとつ",
-        "readingRomaji": "hitotsu",
-        "meaning": "one"
-      },
-      {
-        "word": "一番",
-        "readingKana": "いちばん",
-        "readingRomaji": "ichiban",
-        "meaning": "number one"
-      },
-      {
-        "word": "一緒",
-        "readingKana": "いっしょ",
-        "readingRomaji": "issho",
-        "meaning": "(doing) together"
-      }
+      { "word": "一つ", "readingKana": "ひとつ", "readingRomaji": "hitotsu", "meaning": "one" },
+      { "word": "一番", "readingKana": "いちばん", "readingRomaji": "ichiban", "meaning": "number one" },
+      { "word": "一緒", "readingKana": "いっしょ", "readingRomaji": "issho", "meaning": "(doing) together" }
     ]
   },
   {
     "kanji": "七",
-    "meaning": "seven",
-    "onReading": [
-      {
-        "kana": "シチ",
-        "romaji": "shichi"
-      }
-    ],
+    "primaryMeaning": "seven",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "シチ", "romaji": "shichi" }],
     "kunReading": [
-      {
-        "kana": "なな",
-        "romaji": "nana"
-      },
-      {
-        "kana": "なの",
-        "romaji": "nano"
-      },
-      {
-        "kana": "ななつ",
-        "romaji": "nanatsu"
-      }
+      { "kana": "なな", "romaji": "nana" },
+      { "kana": "なの", "romaji": "nano" },
+      { "kana": "ななつ", "romaji": "nanatsu" }
     ],
     "commonWords": [
-      {
-        "word": "七つ",
-        "readingKana": "ななつ",
-        "readingRomaji": "nanatsu",
-        "meaning": "seven"
-      },
-      {
-        "word": "七",
-        "readingKana": "しち",
-        "readingRomaji": "shichi",
-        "meaning": "seven"
-      },
-      {
-        "word": "七夕",
-        "readingKana": "たなばた",
-        "readingRomaji": "tanabata",
-        "meaning": "Star Festival (held in July or August)"
-      }
+      { "word": "七つ", "readingKana": "ななつ", "readingRomaji": "nanatsu", "meaning": "seven" },
+      { "word": "七", "readingKana": "しち", "readingRomaji": "shichi", "meaning": "seven" },
+      { "word": "七夕", "readingKana": "たなばた", "readingRomaji": "tanabata", "meaning": "Star Festival" }
     ]
   },
   {
     "kanji": "九",
-    "meaning": "nine",
+    "primaryMeaning": "nine",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "キュウ",
-        "romaji": "kyuu"
-      },
-      {
-        "kana": "ク",
-        "romaji": "ku"
-      }
+      { "kana": "キュウ", "romaji": "kyuu" },
+      { "kana": "ク", "romaji": "ku" }
     ],
     "kunReading": [
-      {
-        "kana": "ここの",
-        "romaji": "kokono"
-      },
-      {
-        "kana": "ここのつ",
-        "romaji": "kokonotsu"
-      }
+      { "kana": "ここの", "romaji": "kokono" },
+      { "kana": "ここのつ", "romaji": "kokonotsu" }
     ],
     "commonWords": [
-      {
-        "word": "九つ",
-        "readingKana": "ここのつ",
-        "readingRomaji": "kokonotsu",
-        "meaning": "nine"
-      },
-      {
-        "word": "九",
-        "readingKana": "きゅう",
-        "readingRomaji": "kyuu",
-        "meaning": "nine"
-      },
-      {
-        "word": "九重",
-        "readingKana": "ここのえ",
-        "readingRomaji": "kokonoe",
-        "meaning": "ninefold"
-      }
+      { "word": "九つ", "readingKana": "ここのつ", "readingRomaji": "kokonotsu", "meaning": "nine" },
+      { "word": "九", "readingKana": "きゅう", "readingRomaji": "kyuu", "meaning": "nine" }
     ]
   },
   {
     "kanji": "二",
-    "meaning": "two, two radical (no. 7)",
+    "primaryMeaning": "two",
+    "otherMeaning": "two radical (no. 7)",
     "onReading": [
-      {
-        "kana": "ジ",
-        "romaji": "ji"
-      },
-      {
-        "kana": "ニ",
-        "romaji": "ni"
-      }
+      { "kana": "ジ", "romaji": "ji" },
+      { "kana": "ニ", "romaji": "ni" }
     ],
     "kunReading": [
-      {
-        "kana": "ふた",
-        "romaji": "futa"
-      },
-      {
-        "kana": "ふたつ",
-        "romaji": "futatsu"
-      },
-      {
-        "kana": "ふたたび",
-        "romaji": "futatabi"
-      }
+      { "kana": "ふた", "romaji": "futa" },
+      { "kana": "ふたつ", "romaji": "futatsu" },
+      { "kana": "ふたたび", "romaji": "futatabi" }
     ],
     "commonWords": [
-      {
-        "word": "二つ",
-        "readingKana": "ふたつ",
-        "readingRomaji": "futatsu",
-        "meaning": "two"
-      },
-      {
-        "word": "二人",
-        "readingKana": "ふたり",
-        "readingRomaji": "futari",
-        "meaning": "two persons"
-      },
-      {
-        "word": "二",
-        "readingKana": "に",
-        "readingRomaji": "ni",
-        "meaning": "two"
-      }
+      { "word": "二つ", "readingKana": "ふたつ", "readingRomaji": "futatsu", "meaning": "two" },
+      { "word": "二人", "readingKana": "ふたり", "readingRomaji": "futari", "meaning": "two persons" }
     ]
   },
   {
     "kanji": "人",
-    "meaning": "person",
+    "primaryMeaning": "person",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ジン",
-        "romaji": "jin"
-      },
-      {
-        "kana": "ニン",
-        "romaji": "nin"
-      }
+      { "kana": "ジン", "romaji": "jin" },
+      { "kana": "ニン", "romaji": "nin" }
     ],
-    "kunReading": [
-      {
-        "kana": "ひと",
-        "romaji": "hito"
-      }
-    ],
+    "kunReading": [{ "kana": "ひと", "romaji": "hito" }],
     "commonWords": [
-      {
-        "word": "人",
-        "readingKana": "ひと",
-        "readingRomaji": "hito",
-        "meaning": "person"
-      },
-      {
-        "word": "人口",
-        "readingKana": "じんこう",
-        "readingRomaji": "jinkou",
-        "meaning": "population"
-      },
-      {
-        "word": "人間",
-        "readingKana": "にんげん",
-        "readingRomaji": "ningen",
-        "meaning": "human being"
-      }
+      { "word": "人", "readingKana": "ひと", "readingRomaji": "hito", "meaning": "person" },
+      { "word": "人口", "readingKana": "じんこう", "readingRomaji": "jinkou", "meaning": "population" }
     ]
   },
   {
     "kanji": "入",
-    "meaning": "enter, insert",
+    "primaryMeaning": "enter",
+    "otherMeaning": "insert",
     "onReading": [
-      {
-        "kana": "ジュ",
-        "romaji": "ju"
-      },
-      {
-        "kana": "ニュウ",
-        "romaji": "nyuu"
-      }
+      { "kana": "ジュ", "romaji": "ju" },
+      { "kana": "ニュウ", "romaji": "nyuu" }
     ],
     "kunReading": [
-      {
-        "kana": "いる",
-        "romaji": "iru"
-      },
-      {
-        "kana": "いれる",
-        "romaji": "ireru"
-      },
-      {
-        "kana": "はいる",
-        "romaji": "hairu"
-      }
+      { "kana": "いる", "romaji": "iru" },
+      { "kana": "いれる", "romaji": "ireru" },
+      { "kana": "はいる", "romaji": "hairu" }
     ],
     "commonWords": [
-      {
-        "word": "入る",
-        "readingKana": "はいる",
-        "readingRomaji": "hairu",
-        "meaning": "to enter"
-      },
-      {
-        "word": "入れる",
-        "readingKana": "いれる",
-        "readingRomaji": "ireru",
-        "meaning": "to put in"
-      },
-      {
-        "word": "入れ物",
-        "readingKana": "いれもの",
-        "readingRomaji": "iremono",
-        "meaning": "container"
-      }
+      { "word": "入る", "readingKana": "はいる", "readingRomaji": "hairu", "meaning": "to enter" },
+      { "word": "入れる", "readingKana": "いれる", "readingRomaji": "ireru", "meaning": "to put in" }
     ]
   },
   {
     "kanji": "八",
-    "meaning": "eight, eight radical (no. 12)",
+    "primaryMeaning": "eight",
+    "otherMeaning": "eight radical (no. 12)",
     "onReading": [
-      {
-        "kana": "ハチ",
-        "romaji": "hachi"
-      },
-      {
-        "kana": "ハツ",
-        "romaji": "hatsu"
-      }
+      { "kana": "ハチ", "romaji": "hachi" },
+      { "kana": "ハツ", "romaji": "hatsu" }
     ],
     "kunReading": [
-      {
-        "kana": "や",
-        "romaji": "ya"
-      },
-      {
-        "kana": "やつ",
-        "romaji": "yatsu"
-      },
-      {
-        "kana": "よう",
-        "romaji": "you"
-      }
+      { "kana": "や", "romaji": "ya" },
+      { "kana": "やつ", "romaji": "yatsu" },
+      { "kana": "よう", "romaji": "you" }
     ],
     "commonWords": [
-      {
-        "word": "八つ",
-        "readingKana": "やっつ",
-        "readingRomaji": "yattsu",
-        "meaning": "eight"
-      },
-      {
-        "word": "八百屋",
-        "readingKana": "やおや",
-        "readingRomaji": "yaoya",
-        "meaning": "greengrocer"
-      },
-      {
-        "word": "八",
-        "readingKana": "はち",
-        "readingRomaji": "hachi",
-        "meaning": "eight"
-      }
+      { "word": "八つ", "readingKana": "やっつ", "readingRomaji": "yattsu", "meaning": "eight" },
+      { "word": "八", "readingKana": "はち", "readingRomaji": "hachi", "meaning": "eight" }
     ]
   },
   {
     "kanji": "十",
-    "meaning": "ten",
+    "primaryMeaning": "ten",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ジッ",
-        "romaji": "ji"
-      },
-      {
-        "kana": "ジュウ",
-        "romaji": "juu"
-      },
-      {
-        "kana": "ジュッ",
-        "romaji": "ju"
-      }
+      { "kana": "ジッ", "romaji": "ji" },
+      { "kana": "ジュウ", "romaji": "juu" },
+      { "kana": "ジュッ", "romaji": "ju" }
     ],
     "kunReading": [
-      {
-        "kana": "そ",
-        "romaji": "so"
-      },
-      {
-        "kana": "と",
-        "romaji": "to"
-      },
-      {
-        "kana": "とお",
-        "romaji": "too"
-      }
+      { "kana": "そ", "romaji": "so" },
+      { "kana": "と", "romaji": "to" },
+      { "kana": "とお", "romaji": "too" }
     ],
     "commonWords": [
-      {
-        "word": "十",
-        "readingKana": "じゅう",
-        "readingRomaji": "juu",
-        "meaning": "ten"
-      },
-      {
-        "word": "十分",
-        "readingKana": "じゅうぶん",
-        "readingRomaji": "juubun",
-        "meaning": "enough"
-      },
-      {
-        "word": "十字路",
-        "readingKana": "じゅうじろ",
-        "readingRomaji": "juujiro",
-        "meaning": "crossroads"
-      }
+      { "word": "十", "readingKana": "じゅう", "readingRomaji": "juu", "meaning": "ten" },
+      { "word": "十分", "readingKana": "じゅうぶん", "readingRomaji": "juubun", "meaning": "enough" }
     ]
   },
   {
     "kanji": "万",
-    "meaning": "10,000, ten thousand",
+    "primaryMeaning": "ten thousand",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "バン",
-        "romaji": "ban"
-      },
-      {
-        "kana": "マン",
-        "romaji": "man"
-      }
+      { "kana": "バン", "romaji": "ban" },
+      { "kana": "マン", "romaji": "man" }
     ],
-    "kunReading": [
-      {
-        "kana": "よろず",
-        "romaji": "yorozu"
-      }
-    ],
+    "kunReading": [{ "kana": "よろず", "romaji": "yorozu" }],
     "commonWords": [
-      {
-        "word": "万年筆",
-        "readingKana": "まんねんひつ",
-        "readingRomaji": "mannenhitsu",
-        "meaning": "fountain pen"
-      },
-      {
-        "word": "万",
-        "readingKana": "まん",
-        "readingRomaji": "man",
-        "meaning": "10,000"
-      },
-      {
-        "word": "万一",
-        "readingKana": "まんいち",
-        "readingRomaji": "man'ichi",
-        "meaning": "(unlikely event of) emergency"
-      }
+      { "word": "万", "readingKana": "まん", "readingRomaji": "man", "meaning": "ten thousand" },
+      { "word": "万年筆", "readingKana": "まんねんひつ", "readingRomaji": "mannenhitsu", "meaning": "fountain pen" }
     ]
   },
   {
     "kanji": "三",
-    "meaning": "three",
+    "primaryMeaning": "three",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "サン",
-        "romaji": "san"
-      },
-      {
-        "kana": "ゾウ",
-        "romaji": "zou"
-      }
+      { "kana": "サン", "romaji": "san" },
+      { "kana": "ゾウ", "romaji": "zou" }
     ],
     "kunReading": [
-      {
-        "kana": "み",
-        "romaji": "mi"
-      },
-      {
-        "kana": "みつ",
-        "romaji": "mitsu"
-      },
-      {
-        "kana": "みっつ",
-        "romaji": "mittsu"
-      }
+      { "kana": "み", "romaji": "mi" },
+      { "kana": "みつ", "romaji": "mitsu" },
+      { "kana": "みっつ", "romaji": "mittsu" }
     ],
     "commonWords": [
-      {
-        "word": "三つ",
-        "readingKana": "みっつ",
-        "readingRomaji": "mittsu",
-        "meaning": "three"
-      },
-      {
-        "word": "三",
-        "readingKana": "さん",
-        "readingRomaji": "san",
-        "meaning": "three"
-      },
-      {
-        "word": "三味線",
-        "readingKana": "しゃみせん",
-        "readingRomaji": "shamisen",
-        "meaning": "shamisen"
-      }
+      { "word": "三つ", "readingKana": "みっつ", "readingRomaji": "mittsu", "meaning": "three" },
+      { "word": "三", "readingKana": "さん", "readingRomaji": "san", "meaning": "three" }
     ]
   },
   {
     "kanji": "上",
-    "meaning": "above, up",
+    "primaryMeaning": "above",
+    "otherMeaning": "up",
     "onReading": [
-      {
-        "kana": "シャン",
-        "romaji": "shan"
-      },
-      {
-        "kana": "ショウ",
-        "romaji": "shou"
-      },
-      {
-        "kana": "ジョウ",
-        "romaji": "jou"
-      }
+      { "kana": "シャン", "romaji": "shan" },
+      { "kana": "ショウ", "romaji": "shou" },
+      { "kana": "ジョウ", "romaji": "jou" }
     ],
     "kunReading": [
-      {
-        "kana": "うえ",
-        "romaji": "ue"
-      },
-      {
-        "kana": "かみ",
-        "romaji": "kami"
-      },
-      {
-        "kana": "あがり",
-        "romaji": "agari"
-      }
+      { "kana": "うえ", "romaji": "ue" },
+      { "kana": "かみ", "romaji": "kami" }
     ],
     "commonWords": [
-      {
-        "word": "上る",
-        "readingKana": "のぼる",
-        "readingRomaji": "noboru",
-        "meaning": "to ascend"
-      },
-      {
-        "word": "上着",
-        "readingKana": "うわぎ",
-        "readingRomaji": "uwagi",
-        "meaning": "coat"
-      },
-      {
-        "word": "上げる",
-        "readingKana": "あげる",
-        "readingRomaji": "ageru",
-        "meaning": "to raise"
-      }
+      { "word": "上る", "readingKana": "のぼる", "readingRomaji": "noboru", "meaning": "to ascend" },
+      { "word": "上げる", "readingKana": "あげる", "readingRomaji": "ageru", "meaning": "to raise" }
     ]
   },
   {
     "kanji": "下",
-    "meaning": "below, descend, down, give, inferior, low",
+    "primaryMeaning": "below",
+    "otherMeaning": "down, descend, give, inferior, low",
     "onReading": [
-      {
-        "kana": "カ",
-        "romaji": "ka"
-      },
-      {
-        "kana": "ゲ",
-        "romaji": "ge"
-      }
+      { "kana": "カ", "romaji": "ka" },
+      { "kana": "ゲ", "romaji": "ge" }
     ],
     "kunReading": [
-      {
-        "kana": "した",
-        "romaji": "shita"
-      },
-      {
-        "kana": "しも",
-        "romaji": "shimo"
-      },
-      {
-        "kana": "もと",
-        "romaji": "moto"
-      }
+      { "kana": "した", "romaji": "shita" },
+      { "kana": "しも", "romaji": "shimo" }
     ],
     "commonWords": [
-      {
-        "word": "下手",
-        "readingKana": "へた",
-        "readingRomaji": "heta",
-        "meaning": "unskillful"
-      },
-      {
-        "word": "下さい",
-        "readingKana": "ください",
-        "readingRomaji": "kudasai",
-        "meaning": "please (give me)"
-      },
-      {
-        "word": "下",
-        "readingKana": "した",
-        "readingRomaji": "shita",
-        "meaning": "below"
-      }
+      { "word": "下", "readingKana": "した", "readingRomaji": "shita", "meaning": "below" },
+      { "word": "下さい", "readingKana": "ください", "readingRomaji": "kudasai", "meaning": "please (give me)" }
     ]
   },
   {
     "kanji": "千",
-    "meaning": "thousand",
-    "onReading": [
-      {
-        "kana": "セン",
-        "romaji": "sen"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "ち",
-        "romaji": "chi"
-      }
-    ],
+    "primaryMeaning": "thousand",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "セン", "romaji": "sen" }],
+    "kunReading": [{ "kana": "ち", "romaji": "chi" }],
     "commonWords": [
-      {
-        "word": "千",
-        "readingKana": "せん",
-        "readingRomaji": "sen",
-        "meaning": "thousand"
-      },
-      {
-        "word": "千里",
-        "readingKana": "せんり",
-        "readingRomaji": "senri",
-        "meaning": "1000 ri"
-      },
-      {
-        "word": "千尋",
-        "readingKana": "せんじん",
-        "readingRomaji": "senjin",
-        "meaning": "great depth"
-      }
+      { "word": "千", "readingKana": "せん", "readingRomaji": "sen", "meaning": "thousand" }
     ]
   },
   {
     "kanji": "土",
-    "meaning": "Turkey, earth, ground, soil",
+    "primaryMeaning": "soil",
+    "otherMeaning": "earth, ground",
     "onReading": [
-      {
-        "kana": "ト",
-        "romaji": "to"
-      },
-      {
-        "kana": "ド",
-        "romaji": "do"
-      }
+      { "kana": "ト", "romaji": "to" },
+      { "kana": "ド", "romaji": "do" }
     ],
-    "kunReading": [
-      {
-        "kana": "つち",
-        "romaji": "tsuchi"
-      }
-    ],
+    "kunReading": [{ "kana": "つち", "romaji": "tsuchi" }],
     "commonWords": [
-      {
-        "word": "土曜日",
-        "readingKana": "どようび",
-        "readingRomaji": "doyoubi",
-        "meaning": "Saturday"
-      },
-      {
-        "word": "土地",
-        "readingKana": "とち",
-        "readingRomaji": "tochi",
-        "meaning": "plot of land"
-      },
-      {
-        "word": "土手",
-        "readingKana": "どて",
-        "readingRomaji": "dote",
-        "meaning": "embankment"
-      }
+      { "word": "土曜日", "readingKana": "どようび", "readingRomaji": "doyoubi", "meaning": "Saturday" },
+      { "word": "土地", "readingKana": "とち", "readingRomaji": "tochi", "meaning": "plot of land" }
     ]
   },
   {
     "kanji": "大",
-    "meaning": "big, large",
+    "primaryMeaning": "big",
+    "otherMeaning": "large",
     "onReading": [
-      {
-        "kana": "タイ",
-        "romaji": "tai"
-      },
-      {
-        "kana": "ダイ",
-        "romaji": "dai"
-      }
+      { "kana": "タイ", "romaji": "tai" },
+      { "kana": "ダイ", "romaji": "dai" }
     ],
-    "kunReading": [
-      {
-        "kana": "おおきい",
-        "romaji": "ookii"
-      }
-    ],
+    "kunReading": [{ "kana": "おおきい", "romaji": "ookii" }],
     "commonWords": [
-      {
-        "word": "大人",
-        "readingKana": "おとな",
-        "readingRomaji": "otona",
-        "meaning": "adult"
-      },
-      {
-        "word": "大学",
-        "readingKana": "だいがく",
-        "readingRomaji": "daigaku",
-        "meaning": "university"
-      },
-      {
-        "word": "大使館",
-        "readingKana": "たいしかん",
-        "readingRomaji": "taishikan",
-        "meaning": "embassy"
-      }
+      { "word": "大人", "readingKana": "おとな", "readingRomaji": "otona", "meaning": "adult" },
+      { "word": "大学", "readingKana": "だいがく", "readingRomaji": "daigaku", "meaning": "university" }
     ]
   },
   {
     "kanji": "女",
-    "meaning": "female, woman",
+    "primaryMeaning": "woman",
+    "otherMeaning": "female",
     "onReading": [
-      {
-        "kana": "ジョ",
-        "romaji": "jo"
-      },
-      {
-        "kana": "ニョ",
-        "romaji": "nyo"
-      },
-      {
-        "kana": "ニョウ",
-        "romaji": "nyou"
-      }
+      { "kana": "ジョ", "romaji": "jo" },
+      { "kana": "ニョ", "romaji": "nyo" }
     ],
     "kunReading": [
-      {
-        "kana": "め",
-        "romaji": "me"
-      },
-      {
-        "kana": "おんな",
-        "romaji": "onna"
-      }
+      { "kana": "め", "romaji": "me" },
+      { "kana": "おんな", "romaji": "onna" }
     ],
     "commonWords": [
-      {
-        "word": "女の子",
-        "readingKana": "おんなのこ",
-        "readingRomaji": "onnanoko",
-        "meaning": "girl"
-      },
-      {
-        "word": "女",
-        "readingKana": "おんな",
-        "readingRomaji": "onna",
-        "meaning": "woman"
-      },
-      {
-        "word": "女子",
-        "readingKana": "じょし",
-        "readingRomaji": "joshi",
-        "meaning": "woman"
-      }
+      { "word": "女の子", "readingKana": "おんなのこ", "readingRomaji": "onnanoko", "meaning": "girl" },
+      { "word": "女", "readingKana": "おんな", "readingRomaji": "onna", "meaning": "woman" }
     ]
   },
   {
     "kanji": "子",
-    "meaning": "11PM-1AM, child, first sign of Chinese zodiac, sign of the rat",
+    "primaryMeaning": "child",
+    "otherMeaning": "11PM-1AM, first sign of Chinese zodiac, sign of the rat",
     "onReading": [
-      {
-        "kana": "シ",
-        "romaji": "shi"
-      },
-      {
-        "kana": "ス",
-        "romaji": "su"
-      },
-      {
-        "kana": "ツ",
-        "romaji": "tsu"
-      }
+      { "kana": "シ", "romaji": "shi" },
+      { "kana": "ス", "romaji": "su" }
     ],
     "kunReading": [
-      {
-        "kana": "こ",
-        "romaji": "ko"
-      },
-      {
-        "kana": "ね",
-        "romaji": "ne"
-      }
+      { "kana": "こ", "romaji": "ko" },
+      { "kana": "ね", "romaji": "ne" }
     ],
     "commonWords": [
-      {
-        "word": "子供",
-        "readingKana": "こども",
-        "readingRomaji": "kodomo",
-        "meaning": "child"
-      },
-      {
-        "word": "子孫",
-        "readingKana": "しそん",
-        "readingRomaji": "shison",
-        "meaning": "descendant"
-      },
-      {
-        "word": "子息",
-        "readingKana": "しそく",
-        "readingRomaji": "shisoku",
-        "meaning": "(another's) son"
-      }
+      { "word": "子供", "readingKana": "こども", "readingRomaji": "kodomo", "meaning": "child" }
     ]
   },
   {
     "kanji": "小",
-    "meaning": "little, small",
-    "onReading": [
-      {
-        "kana": "ショウ",
-        "romaji": "shou"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "ちいさい",
-        "romaji": "chiisai"
-      }
-    ],
+    "primaryMeaning": "small",
+    "otherMeaning": "little",
+    "onReading": [{ "kana": "ショウ", "romaji": "shou" }],
+    "kunReading": [{ "kana": "ちいさい", "romaji": "chiisai" }],
     "commonWords": [
-      {
-        "word": "小説",
-        "readingKana": "しょうせつ",
-        "readingRomaji": "shousetsu",
-        "meaning": "novel"
-      },
-      {
-        "word": "小学校",
-        "readingKana": "しょうがっこう",
-        "readingRomaji": "shougakkou",
-        "meaning": "primary school"
-      },
-      {
-        "word": "小",
-        "readingKana": "しょう",
-        "readingRomaji": "shou",
-        "meaning": "smallness"
-      }
+      { "word": "小さい", "readingKana": "ちいさい", "readingRomaji": "chiisai", "meaning": "small" },
+      { "word": "小学校", "readingKana": "しょうがっこう", "readingRomaji": "shougakkou", "meaning": "primary school" }
     ]
   },
   {
     "kanji": "山",
-    "meaning": "mountain",
+    "primaryMeaning": "mountain",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "サン",
-        "romaji": "san"
-      },
-      {
-        "kana": "セン",
-        "romaji": "sen"
-      }
+      { "kana": "サン", "romaji": "san" },
+      { "kana": "セン", "romaji": "sen" }
     ],
-    "kunReading": [
-      {
-        "kana": "やま",
-        "romaji": "yama"
-      }
-    ],
+    "kunReading": [{ "kana": "やま", "romaji": "yama" }],
     "commonWords": [
-      {
-        "word": "山",
-        "readingKana": "やま",
-        "readingRomaji": "yama",
-        "meaning": "mountain"
-      },
-      {
-        "word": "山岳",
-        "readingKana": "さんがく",
-        "readingRomaji": "sangaku",
-        "meaning": "mountain chain"
-      },
-      {
-        "word": "山腹",
-        "readingKana": "さんぷく",
-        "readingRomaji": "sanpuku",
-        "meaning": "hillside"
-      }
+      { "word": "山", "readingKana": "やま", "readingRomaji": "yama", "meaning": "mountain" }
     ]
   },
   {
     "kanji": "川",
-    "meaning": "river, river or three-stroke river radical (no. 47), stream",
-    "onReading": [
-      {
-        "kana": "セン",
-        "romaji": "sen"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "かわ",
-        "romaji": "kawa"
-      }
-    ],
+    "primaryMeaning": "river",
+    "otherMeaning": "stream",
+    "onReading": [{ "kana": "セン", "romaji": "sen" }],
+    "kunReading": [{ "kana": "かわ", "romaji": "kawa" }],
     "commonWords": [
-      {
-        "word": "川",
-        "readingKana": "かわ",
-        "readingRomaji": "kawa",
-        "meaning": "river"
-      },
-      {
-        "word": "川上",
-        "readingKana": "かわかみ",
-        "readingRomaji": "kawakami",
-        "meaning": "upper reaches of a river"
-      },
-      {
-        "word": "川岸",
-        "readingKana": "かわぎし",
-        "readingRomaji": "kawagishi",
-        "meaning": "riverbank"
-      }
+      { "word": "川", "readingKana": "かわ", "readingRomaji": "kawa", "meaning": "river" }
     ]
   },
   {
     "kanji": "中",
-    "meaning": "center, in, inside, mean, middle",
-    "onReading": [
-      {
-        "kana": "チュウ",
-        "romaji": "chuu"
-      }
-    ],
+    "primaryMeaning": "middle",
+    "otherMeaning": "center, in, inside",
+    "onReading": [{ "kana": "チュウ", "romaji": "chuu" }],
     "kunReading": [
-      {
-        "kana": "うち",
-        "romaji": "uchi"
-      },
-      {
-        "kana": "なか",
-        "romaji": "naka"
-      },
-      {
-        "kana": "あたる",
-        "romaji": "ataru"
-      }
+      { "kana": "なか", "romaji": "naka" },
+      { "kana": "うち", "romaji": "uchi" }
     ],
     "commonWords": [
-      {
-        "word": "中",
-        "readingKana": "なか",
-        "readingRomaji": "naka",
-        "meaning": "inside"
-      },
-      {
-        "word": "中心",
-        "readingKana": "ちゅうしん",
-        "readingRomaji": "chuushin",
-        "meaning": "center"
-      },
-      {
-        "word": "中世",
-        "readingKana": "ちゅうせい",
-        "readingRomaji": "chuusei",
-        "meaning": "Middle Ages (in Japan esp. the Kamakura and Muromachi periods)"
-      }
+      { "word": "中", "readingKana": "なか", "readingRomaji": "naka", "meaning": "inside" }
     ]
   },
   {
     "kanji": "五",
-    "meaning": "five",
-    "onReading": [
-      {
-        "kana": "ゴ",
-        "romaji": "go"
-      }
-    ],
+    "primaryMeaning": "five",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "ゴ", "romaji": "go" }],
     "kunReading": [
-      {
-        "kana": "いつ",
-        "romaji": "itsu"
-      },
-      {
-        "kana": "いつつ",
-        "romaji": "itsutsu"
-      }
+      { "kana": "いつ", "romaji": "itsu" },
+      { "kana": "いつつ", "romaji": "itsutsu" }
     ],
     "commonWords": [
-      {
-        "word": "五つ",
-        "readingKana": "いつつ",
-        "readingRomaji": "itsutsu",
-        "meaning": "five"
-      },
-      {
-        "word": "五",
-        "readingKana": "ご",
-        "readingRomaji": "go",
-        "meaning": "five"
-      },
-      {
-        "word": "五十音",
-        "readingKana": "ごじゅうおん",
-        "readingRomaji": "gojuuon",
-        "meaning": "the Japanese syllabary"
-      }
+      { "word": "五つ", "readingKana": "いつつ", "readingRomaji": "itsutsu", "meaning": "five" }
     ]
   },
   {
     "kanji": "今",
-    "meaning": "now",
+    "primaryMeaning": "now",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "キン",
-        "romaji": "kin"
-      },
-      {
-        "kana": "コン",
-        "romaji": "kon"
-      }
+      { "kana": "キン", "romaji": "kin" },
+      { "kana": "コン", "romaji": "kon" }
     ],
-    "kunReading": [
-      {
-        "kana": "いま",
-        "romaji": "ima"
-      }
-    ],
+    "kunReading": [{ "kana": "いま", "romaji": "ima" }],
     "commonWords": [
-      {
-        "word": "今朝",
-        "readingKana": "けさ",
-        "readingRomaji": "kesa",
-        "meaning": "this morning"
-      },
-      {
-        "word": "今日",
-        "readingKana": "きょう",
-        "readingRomaji": "kyou",
-        "meaning": "today"
-      },
-      {
-        "word": "今年",
-        "readingKana": "ことし",
-        "readingRomaji": "kotoshi",
-        "meaning": "this year"
-      }
+      { "word": "今日", "readingKana": "きょう", "readingRomaji": "kyou", "meaning": "today" },
+      { "word": "今年", "readingKana": "ことし", "readingRomaji": "kotoshi", "meaning": "this year" }
     ]
   },
   {
     "kanji": "六",
-    "meaning": "six",
+    "primaryMeaning": "six",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "リク",
-        "romaji": "riku"
-      },
-      {
-        "kana": "ロク",
-        "romaji": "roku"
-      }
+      { "kana": "リク", "romaji": "riku" },
+      { "kana": "ロク", "romaji": "roku" }
     ],
     "kunReading": [
-      {
-        "kana": "む",
-        "romaji": "mu"
-      },
-      {
-        "kana": "むつ",
-        "romaji": "mutsu"
-      },
-      {
-        "kana": "むい",
-        "romaji": "mui"
-      }
+      { "kana": "む", "romaji": "mu" },
+      { "kana": "むつ", "romaji": "mutsu" }
     ],
     "commonWords": [
-      {
-        "word": "六つ",
-        "readingKana": "むっつ",
-        "readingRomaji": "muttsu",
-        "meaning": "six"
-      },
-      {
-        "word": "六",
-        "readingKana": "ろく",
-        "readingRomaji": "roku",
-        "meaning": "six"
-      },
-      {
-        "word": "六道",
-        "readingKana": "ろくどう",
-        "readingRomaji": "rokudou",
-        "meaning": "the six realms (Deva realm, Asura realm, Human realm, Animal realm, Hungry Ghost realm, Naraka realm)"
-      }
+      { "word": "六つ", "readingKana": "むっつ", "readingRomaji": "muttsu", "meaning": "six" }
     ]
   },
   {
     "kanji": "円",
-    "meaning": "circle, round, yen",
-    "onReading": [
-      {
-        "kana": "エン",
-        "romaji": "en"
-      }
-    ],
+    "primaryMeaning": "yen",
+    "otherMeaning": "circle, round",
+    "onReading": [{ "kana": "エン", "romaji": "en" }],
     "kunReading": [
-      {
-        "kana": "まど",
-        "romaji": "mado"
-      },
-      {
-        "kana": "まる",
-        "romaji": "maru"
-      },
-      {
-        "kana": "まどか",
-        "romaji": "madoka"
-      }
+      { "kana": "まる", "romaji": "maru" },
+      { "kana": "まどか", "romaji": "madoka" }
     ],
     "commonWords": [
-      {
-        "word": "円満",
-        "readingKana": "えんまん",
-        "readingRomaji": "enman",
-        "meaning": "harmonious"
-      },
-      {
-        "word": "円滑",
-        "readingKana": "えんかつ",
-        "readingRomaji": "enkatsu",
-        "meaning": "smooth"
-      },
-      {
-        "word": "円",
-        "readingKana": "えん",
-        "readingRomaji": "en",
-        "meaning": "yen (currency of Japan)"
-      }
+      { "word": "円", "readingKana": "えん", "readingRomaji": "en", "meaning": "yen" }
     ]
   },
   {
     "kanji": "午",
-    "meaning": "11AM-1PM, noon, seventh sign of Chinese zodiac, sign of the horse",
-    "onReading": [
-      {
-        "kana": "ゴ",
-        "romaji": "go"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "うま",
-        "romaji": "uma"
-      }
-    ],
+    "primaryMeaning": "noon",
+    "otherMeaning": "11AM-1PM, sign of the horse",
+    "onReading": [{ "kana": "ゴ", "romaji": "go" }],
+    "kunReading": [{ "kana": "うま", "romaji": "uma" }],
     "commonWords": [
-      {
-        "word": "午後",
-        "readingKana": "ごご",
-        "readingRomaji": "gogo",
-        "meaning": "afternoon"
-      },
-      {
-        "word": "午前",
-        "readingKana": "ごぜん",
-        "readingRomaji": "gozen",
-        "meaning": "morning"
-      },
-      {
-        "word": "午後中",
-        "readingKana": "ごごじゅう",
-        "readingRomaji": "gogojuu",
-        "meaning": "throughout the afternoon"
-      }
+      { "word": "午後", "readingKana": "ごご", "readingRomaji": "gogo", "meaning": "afternoon" },
+      { "word": "午前", "readingKana": "ごぜん", "readingRomaji": "gozen", "meaning": "morning" }
     ]
   },
   {
     "kanji": "友",
-    "meaning": "friend",
-    "onReading": [
-      {
-        "kana": "ユウ",
-        "romaji": "yuu"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "とも",
-        "romaji": "tomo"
-      }
-    ],
+    "primaryMeaning": "friend",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "ユウ", "romaji": "yuu" }],
+    "kunReading": [{ "kana": "とも", "romaji": "tomo" }],
     "commonWords": [
-      {
-        "word": "友達",
-        "readingKana": "ともだち",
-        "readingRomaji": "tomodachi",
-        "meaning": "friend"
-      },
-      {
-        "word": "友人",
-        "readingKana": "ゆうじん",
-        "readingRomaji": "yuujin",
-        "meaning": "friend"
-      },
-      {
-        "word": "友好",
-        "readingKana": "ゆうこう",
-        "readingRomaji": "yuukou",
-        "meaning": "friendship"
-      }
+      { "word": "友達", "readingKana": "ともだち", "readingRomaji": "tomodachi", "meaning": "friend" }
     ]
   },
   {
     "kanji": "天",
-    "meaning": "heavens, imperial, sky",
-    "onReading": [
-      {
-        "kana": "テン",
-        "romaji": "ten"
-      }
-    ],
+    "primaryMeaning": "heaven",
+    "otherMeaning": "sky",
+    "onReading": [{ "kana": "テン", "romaji": "ten" }],
     "kunReading": [
-      {
-        "kana": "あめ",
-        "romaji": "ame"
-      },
-      {
-        "kana": "あまつ",
-        "romaji": "amatsu"
-      }
+      { "kana": "あめ", "romaji": "ame" },
+      { "kana": "あまつ", "romaji": "amatsu" }
     ],
     "commonWords": [
-      {
-        "word": "天気",
-        "readingKana": "てんき",
-        "readingRomaji": "tenki",
-        "meaning": "weather"
-      },
-      {
-        "word": "天皇",
-        "readingKana": "てんのう",
-        "readingRomaji": "tennou",
-        "meaning": "Emperor of Japan"
-      },
-      {
-        "word": "天才",
-        "readingKana": "てんさい",
-        "readingRomaji": "tensai",
-        "meaning": "genius"
-      }
+      { "word": "天気", "readingKana": "てんき", "readingRomaji": "tenki", "meaning": "weather" }
     ]
   },
   {
     "kanji": "日",
-    "meaning": "Japan, counter for days, day, sun",
+    "primaryMeaning": "day",
+    "otherMeaning": "sun, Japan",
     "onReading": [
-      {
-        "kana": "ジツ",
-        "romaji": "jitsu"
-      },
-      {
-        "kana": "ニチ",
-        "romaji": "nichi"
-      }
+      { "kana": "ニチ", "romaji": "nichi" },
+      { "kana": "ジツ", "romaji": "jitsu" }
     ],
-    "kunReading": [
-      {
-        "kana": "ひ",
-        "romaji": "hi"
-      }
-    ],
+    "kunReading": [{ "kana": "ひ", "romaji": "hi" }],
     "commonWords": [
-      {
-        "word": "日曜日",
-        "readingKana": "にちようび",
-        "readingRomaji": "nichiyoubi",
-        "meaning": "Sunday"
-      },
-      {
-        "word": "日記",
-        "readingKana": "にっき",
-        "readingRomaji": "nikki",
-        "meaning": "diary"
-      },
-      {
-        "word": "日付",
-        "readingKana": "ひづけ",
-        "readingRomaji": "hizuke",
-        "meaning": "date"
-      }
+      { "word": "日曜日", "readingKana": "にちようび", "readingRomaji": "nichiyoubi", "meaning": "Sunday" },
+      { "word": "今日", "readingKana": "きょう", "readingRomaji": "kyou", "meaning": "today" }
     ]
   },
   {
     "kanji": "月",
-    "meaning": "month, moon",
+    "primaryMeaning": "month",
+    "otherMeaning": "moon",
     "onReading": [
-      {
-        "kana": "ガツ",
-        "romaji": "gatsu"
-      },
-      {
-        "kana": "ゲツ",
-        "romaji": "getsu"
-      }
+      { "kana": "ゲツ", "romaji": "getsu" },
+      { "kana": "ガツ", "romaji": "gatsu" }
     ],
-    "kunReading": [
-      {
-        "kana": "つき",
-        "romaji": "tsuki"
-      }
-    ],
+    "kunReading": [{ "kana": "つき", "romaji": "tsuki" }],
     "commonWords": [
-      {
-        "word": "月曜日",
-        "readingKana": "げつようび",
-        "readingRomaji": "getsuyoubi",
-        "meaning": "Monday"
-      },
-      {
-        "word": "月日",
-        "readingKana": "つきひ",
-        "readingRomaji": "tsukihi",
-        "meaning": "time"
-      },
-      {
-        "word": "月賦",
-        "readingKana": "げっぷ",
-        "readingRomaji": "geppu",
-        "meaning": "monthly installment (instalment)"
-      }
+      { "word": "月曜日", "readingKana": "げつようび", "readingRomaji": "getsuyoubi", "meaning": "Monday" }
     ]
   },
   {
     "kanji": "木",
-    "meaning": "tree, wood",
+    "primaryMeaning": "tree",
+    "otherMeaning": "wood",
     "onReading": [
-      {
-        "kana": "ボク",
-        "romaji": "boku"
-      },
-      {
-        "kana": "モク",
-        "romaji": "moku"
-      }
+      { "kana": "モク", "romaji": "moku" },
+      { "kana": "ボク", "romaji": "boku" }
     ],
-    "kunReading": [
-      {
-        "kana": "き",
-        "romaji": "ki"
-      }
-    ],
+    "kunReading": [{ "kana": "き", "romaji": "ki" }],
     "commonWords": [
-      {
-        "word": "木曜日",
-        "readingKana": "もくようび",
-        "readingRomaji": "mokuyoubi",
-        "meaning": "Thursday"
-      },
-      {
-        "word": "木",
-        "readingKana": "き",
-        "readingRomaji": "ki",
-        "meaning": "tree"
-      },
-      {
-        "word": "木綿",
-        "readingKana": "もめん",
-        "readingRomaji": "momen",
-        "meaning": "cotton (material)"
-      }
+      { "word": "木曜日", "readingKana": "もくようび", "readingRomaji": "mokuyoubi", "meaning": "Thursday" }
     ]
   },
   {
     "kanji": "水",
-    "meaning": "water",
-    "onReading": [
-      {
-        "kana": "スイ",
-        "romaji": "sui"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "みず",
-        "romaji": "mizu"
-      }
-    ],
+    "primaryMeaning": "water",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "スイ", "romaji": "sui" }],
+    "kunReading": [{ "kana": "みず", "romaji": "mizu" }],
     "commonWords": [
-      {
-        "word": "水曜日",
-        "readingKana": "すいようび",
-        "readingRomaji": "suiyoubi",
-        "meaning": "Wednesday"
-      },
-      {
-        "word": "水",
-        "readingKana": "みず",
-        "readingRomaji": "mizu",
-        "meaning": "water (esp. cool or cold)"
-      },
-      {
-        "word": "水素",
-        "readingKana": "すいそ",
-        "readingRomaji": "suiso",
-        "meaning": "hydrogen (H)"
-      }
+      { "word": "水曜日", "readingKana": "すいようび", "readingRomaji": "suiyoubi", "meaning": "Wednesday" }
     ]
   },
   {
     "kanji": "火",
-    "meaning": "fire",
-    "onReading": [
-      {
-        "kana": "カ",
-        "romaji": "ka"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "ひ",
-        "romaji": "hi"
-      }
-    ],
+    "primaryMeaning": "fire",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "カ", "romaji": "ka" }],
+    "kunReading": [{ "kana": "ひ", "romaji": "hi" }],
     "commonWords": [
-      {
-        "word": "火曜日",
-        "readingKana": "かようび",
-        "readingRomaji": "kayoubi",
-        "meaning": "Tuesday"
-      },
-      {
-        "word": "火事",
-        "readingKana": "かじ",
-        "readingRomaji": "kaji",
-        "meaning": "fire"
-      },
-      {
-        "word": "火災",
-        "readingKana": "かさい",
-        "readingRomaji": "kasai",
-        "meaning": "conflagration"
-      }
+      { "word": "火曜日", "readingKana": "かようび", "readingRomaji": "kayoubi", "meaning": "Tuesday" }
     ]
   },
   {
     "kanji": "父",
-    "meaning": "father",
-    "onReading": [
-      {
-        "kana": "フ",
-        "romaji": "fu"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "ちち",
-        "romaji": "chichi"
-      }
-    ],
+    "primaryMeaning": "father",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "フ", "romaji": "fu" }],
+    "kunReading": [{ "kana": "ちち", "romaji": "chichi" }],
     "commonWords": [
-      {
-        "word": "父母",
-        "readingKana": "ふぼ",
-        "readingRomaji": "fubo",
-        "meaning": "father and mother"
-      },
-      {
-        "word": "父親",
-        "readingKana": "ちちおや",
-        "readingRomaji": "chichioya",
-        "meaning": "father"
-      },
-      {
-        "word": "父子",
-        "readingKana": "ふし",
-        "readingRomaji": "fushi",
-        "meaning": "father and child"
-      }
+      { "word": "父親", "readingKana": "ちちおや", "readingRomaji": "chichioya", "meaning": "father" }
     ]
   },
   {
     "kanji": "出",
-    "meaning": "come out, exit, go out, leave, protrude, put out",
+    "primaryMeaning": "exit",
+    "otherMeaning": "come out, go out",
     "onReading": [
-      {
-        "kana": "シュツ",
-        "romaji": "shutsu"
-      },
-      {
-        "kana": "スイ",
-        "romaji": "sui"
-      }
+      { "kana": "シュツ", "romaji": "shutsu" },
+      { "kana": "スイ", "romaji": "sui" }
     ],
     "kunReading": [
-      {
-        "kana": "だす",
-        "romaji": "dasu"
-      },
-      {
-        "kana": "でる",
-        "romaji": "deru"
-      },
-      {
-        "kana": "いだす",
-        "romaji": "idasu"
-      }
+      { "kana": "でる", "romaji": "deru" },
+      { "kana": "だす", "romaji": "dasu" }
     ],
     "commonWords": [
-      {
-        "word": "出る",
-        "readingKana": "でる",
-        "readingRomaji": "deru",
-        "meaning": "to leave"
-      },
-      {
-        "word": "出す",
-        "readingKana": "だす",
-        "readingRomaji": "dasu",
-        "meaning": "to take out"
-      },
-      {
-        "word": "出来る",
-        "readingKana": "できる",
-        "readingRomaji": "dekiru",
-        "meaning": "to be able to do"
-      }
+      { "word": "出る", "readingKana": "でる", "readingRomaji": "deru", "meaning": "to exit" }
     ]
   },
   {
     "kanji": "北",
-    "meaning": "north",
-    "onReading": [
-      {
-        "kana": "ホク",
-        "romaji": "hoku"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "きた",
-        "romaji": "kita"
-      }
-    ],
+    "primaryMeaning": "north",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "ホク", "romaji": "hoku" }],
+    "kunReading": [{ "kana": "きた", "romaji": "kita" }],
     "commonWords": [
-      {
-        "word": "北",
-        "readingKana": "きた",
-        "readingRomaji": "kita",
-        "meaning": "north"
-      },
-      {
-        "word": "北極",
-        "readingKana": "ほっきょく",
-        "readingRomaji": "hokkyoku",
-        "meaning": "North Pole"
-      },
-      {
-        "word": "北欧",
-        "readingKana": "ほくおう",
-        "readingRomaji": "hokuou",
-        "meaning": "Northern Europe"
-      }
+      { "word": "北", "readingKana": "きた", "readingRomaji": "kita", "meaning": "north" }
     ]
   },
   {
     "kanji": "半",
-    "meaning": "half, middle, odd number, part-, semi-",
-    "onReading": [
-      {
-        "kana": "ハン",
-        "romaji": "han"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "なかば",
-        "romaji": "nakaba"
-      }
-    ],
+    "primaryMeaning": "half",
+    "otherMeaning": "middle, semi-",
+    "onReading": [{ "kana": "ハン", "romaji": "han" }],
+    "kunReading": [{ "kana": "なかば", "romaji": "nakaba" }],
     "commonWords": [
-      {
-        "word": "半分",
-        "readingKana": "はんぶん",
-        "readingRomaji": "hanbun",
-        "meaning": "half"
-      },
-      {
-        "word": "半",
-        "readingKana": "はん",
-        "readingRomaji": "han",
-        "meaning": "half"
-      },
-      {
-        "word": "半ば",
-        "readingKana": "なかば",
-        "readingRomaji": "nakaba",
-        "meaning": "middle"
-      }
+      { "word": "半分", "readingKana": "はんぶん", "readingRomaji": "hanbun", "meaning": "half" }
     ]
   },
   {
     "kanji": "右",
-    "meaning": "right",
+    "primaryMeaning": "right",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ウ",
-        "romaji": "u"
-      },
-      {
-        "kana": "ユウ",
-        "romaji": "yuu"
-      }
+      { "kana": "ウ", "romaji": "u" },
+      { "kana": "ユウ", "romaji": "yuu" }
     ],
-    "kunReading": [
-      {
-        "kana": "みぎ",
-        "romaji": "migi"
-      }
-    ],
+    "kunReading": [{ "kana": "みぎ", "romaji": "migi" }],
     "commonWords": [
-      {
-        "word": "右",
-        "readingKana": "みぎ",
-        "readingRomaji": "migi",
-        "meaning": "right"
-      },
-      {
-        "word": "右手",
-        "readingKana": "みぎて",
-        "readingRomaji": "migite",
-        "meaning": "right hand"
-      },
-      {
-        "word": "右折",
-        "readingKana": "うせつ",
-        "readingRomaji": "usetsu",
-        "meaning": "turning to the right"
-      }
+      { "word": "右", "readingKana": "みぎ", "readingRomaji": "migi", "meaning": "right" }
     ]
   },
   {
     "kanji": "四",
-    "meaning": "four",
-    "onReading": [
-      {
-        "kana": "シ",
-        "romaji": "shi"
-      }
-    ],
+    "primaryMeaning": "four",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "シ", "romaji": "shi" }],
     "kunReading": [
-      {
-        "kana": "よ",
-        "romaji": "yo"
-      },
-      {
-        "kana": "よつ",
-        "romaji": "yotsu"
-      },
-      {
-        "kana": "よん",
-        "romaji": "yon"
-      }
+      { "kana": "よ", "romaji": "yo" },
+      { "kana": "よん", "romaji": "yon" }
     ],
     "commonWords": [
-      {
-        "word": "四つ",
-        "readingKana": "よっつ",
-        "readingRomaji": "yottsu",
-        "meaning": "four"
-      },
-      {
-        "word": "四",
-        "readingKana": "し",
-        "readingRomaji": "shi",
-        "meaning": "four"
-      },
-      {
-        "word": "四季",
-        "readingKana": "しき",
-        "readingRomaji": "shiki",
-        "meaning": "the four seasons"
-      }
+      { "word": "四つ", "readingKana": "よっつ", "readingRomaji": "yottsu", "meaning": "four" }
     ]
   },
   {
     "kanji": "外",
-    "meaning": "outside",
+    "primaryMeaning": "outside",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ガイ",
-        "romaji": "gai"
-      },
-      {
-        "kana": "ゲ",
-        "romaji": "ge"
-      }
+      { "kana": "ガイ", "romaji": "gai" },
+      { "kana": "ゲ", "romaji": "ge" }
     ],
     "kunReading": [
-      {
-        "kana": "そと",
-        "romaji": "soto"
-      },
-      {
-        "kana": "ほか",
-        "romaji": "hoka"
-      },
-      {
-        "kana": "はずす",
-        "romaji": "hazusu"
-      }
+      { "kana": "そと", "romaji": "soto" },
+      { "kana": "ほか", "romaji": "hoka" }
     ],
     "commonWords": [
-      {
-        "word": "外国",
-        "readingKana": "がいこく",
-        "readingRomaji": "gaikoku",
-        "meaning": "foreign country"
-      },
-      {
-        "word": "外国人",
-        "readingKana": "がいこくじん",
-        "readingRomaji": "gaikokujin",
-        "meaning": "foreigner"
-      },
-      {
-        "word": "外",
-        "readingKana": "そと",
-        "readingRomaji": "soto",
-        "meaning": "outside"
-      }
+      { "word": "外国", "readingKana": "がいこく", "readingRomaji": "gaikoku", "meaning": "foreign country" }
     ]
   },
   {
     "kanji": "左",
-    "meaning": "left",
+    "primaryMeaning": "left",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "サ",
-        "romaji": "sa"
-      },
-      {
-        "kana": "シャ",
-        "romaji": "sha"
-      }
+      { "kana": "サ", "romaji": "sa" },
+      { "kana": "シャ", "romaji": "sha" }
     ],
-    "kunReading": [
-      {
-        "kana": "ひだり",
-        "romaji": "hidari"
-      }
-    ],
+    "kunReading": [{ "kana": "ひだり", "romaji": "hidari" }],
     "commonWords": [
-      {
-        "word": "左",
-        "readingKana": "ひだり",
-        "readingRomaji": "hidari",
-        "meaning": "left"
-      },
-      {
-        "word": "左右",
-        "readingKana": "さゆう",
-        "readingRomaji": "sayuu",
-        "meaning": "left and right"
-      },
-      {
-        "word": "左利き",
-        "readingKana": "ひだりきき",
-        "readingRomaji": "hidarikiki",
-        "meaning": "left-handedness"
-      }
+      { "word": "左", "readingKana": "ひだり", "readingRomaji": "hidari", "meaning": "left" }
     ]
   },
   {
     "kanji": "本",
-    "meaning": "book, counter for long cylindrical things, main, origin, present, real, true",
-    "onReading": [
-      {
-        "kana": "ホン",
-        "romaji": "hon"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "もと",
-        "romaji": "moto"
-      }
-    ],
+    "primaryMeaning": "book",
+    "otherMeaning": "origin, main",
+    "onReading": [{ "kana": "ホン", "romaji": "hon" }],
+    "kunReading": [{ "kana": "もと", "romaji": "moto" }],
     "commonWords": [
-      {
-        "word": "本棚",
-        "readingKana": "ほんだな",
-        "readingRomaji": "hondana",
-        "meaning": "bookshelves"
-      },
-      {
-        "word": "本当",
-        "readingKana": "ほんとう",
-        "readingRomaji": "hontou",
-        "meaning": "truth"
-      },
-      {
-        "word": "本",
-        "readingKana": "ほん",
-        "readingRomaji": "hon",
-        "meaning": "book"
-      }
+      { "word": "本", "readingKana": "ほん", "readingRomaji": "hon", "meaning": "book" }
     ]
   },
   {
     "kanji": "母",
-    "meaning": "mother",
-    "onReading": [
-      {
-        "kana": "ボ",
-        "romaji": "bo"
-      }
-    ],
+    "primaryMeaning": "mother",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "ボ", "romaji": "bo" }],
     "kunReading": [
-      {
-        "kana": "も",
-        "romaji": "mo"
-      },
-      {
-        "kana": "はは",
-        "romaji": "haha"
-      }
+      { "kana": "はは", "romaji": "haha" }
     ],
     "commonWords": [
-      {
-        "word": "母校",
-        "readingKana": "ぼこう",
-        "readingRomaji": "bokou",
-        "meaning": "alma mater"
-      },
-      {
-        "word": "母親",
-        "readingKana": "ははおや",
-        "readingRomaji": "hahaoya",
-        "meaning": "mother"
-      },
-      {
-        "word": "母音",
-        "readingKana": "ぼいん",
-        "readingRomaji": "boin",
-        "meaning": "vowel"
-      }
+      { "word": "母親", "readingKana": "ははおや", "readingRomaji": "hahaoya", "meaning": "mother" }
     ]
   },
   {
     "kanji": "生",
-    "meaning": "birth, genuine, life",
+    "primaryMeaning": "life",
+    "otherMeaning": "birth, student",
     "onReading": [
-      {
-        "kana": "ショウ",
-        "romaji": "shou"
-      },
-      {
-        "kana": "セイ",
-        "romaji": "sei"
-      }
+      { "kana": "セイ", "romaji": "sei" },
+      { "kana": "ショウ", "romaji": "shou" }
     ],
-    "kunReading": [
-      {
-        "kana": "き",
-        "romaji": "ki"
-      },
-      {
-        "kana": "うむ",
-        "romaji": "umu"
-      },
-      {
-        "kana": "おう",
-        "romaji": "ou"
-      }
-    ],
+    "kunReading": [{ "kana": "いきる", "romaji": "ikiru" }],
     "commonWords": [
-      {
-        "word": "生きる",
-        "readingKana": "いきる",
-        "readingRomaji": "ikiru",
-        "meaning": "to live"
-      },
-      {
-        "word": "生活",
-        "readingKana": "せいかつ",
-        "readingRomaji": "seikatsu",
-        "meaning": "life"
-      },
-      {
-        "word": "生産",
-        "readingKana": "せいさん",
-        "readingRomaji": "seisan",
-        "meaning": "production"
-      }
+      { "word": "生徒", "readingKana": "せいと", "readingRomaji": "seito", "meaning": "student" }
     ]
   },
   {
     "kanji": "白",
-    "meaning": "white",
+    "primaryMeaning": "white",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ハク",
-        "romaji": "haku"
-      },
-      {
-        "kana": "ビャク",
-        "romaji": "byaku"
-      }
+      { "kana": "ハク", "romaji": "haku" },
+      { "kana": "ビャク", "romaji": "byaku" }
     ],
     "kunReading": [
-      {
-        "kana": "しろ",
-        "romaji": "shiro"
-      },
-      {
-        "kana": "しろい",
-        "romaji": "shiroi"
-      }
+      { "kana": "しろ", "romaji": "shiro" },
+      { "kana": "しろい", "romaji": "shiroi" }
     ],
     "commonWords": [
-      {
-        "word": "白い",
-        "readingKana": "しろい",
-        "readingRomaji": "shiroi",
-        "meaning": "white"
-      },
-      {
-        "word": "白",
-        "readingKana": "しろ",
-        "readingRomaji": "shiro",
-        "meaning": "white"
-      },
-      {
-        "word": "白状",
-        "readingKana": "はくじょう",
-        "readingRomaji": "hakujou",
-        "meaning": "confession"
-      }
+      { "word": "白い", "readingKana": "しろい", "readingRomaji": "shiroi", "meaning": "white" }
     ]
   },
   {
     "kanji": "休",
-    "meaning": "day off, rest, retire, sleep",
-    "onReading": [
-      {
-        "kana": "キュウ",
-        "romaji": "kyuu"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "やすむ",
-        "romaji": "yasumu"
-      },
-      {
-        "kana": "やすまる",
-        "romaji": "yasumaru"
-      },
-      {
-        "kana": "やすめる",
-        "romaji": "yasumeru"
-      }
-    ],
+    "primaryMeaning": "rest",
+    "otherMeaning": "day off",
+    "onReading": [{ "kana": "キュウ", "romaji": "kyuu" }],
+    "kunReading": [{ "kana": "やすむ", "romaji": "yasumu" }],
     "commonWords": [
-      {
-        "word": "休む",
-        "readingKana": "やすむ",
-        "readingRomaji": "yasumu",
-        "meaning": "to be absent"
-      },
-      {
-        "word": "休み",
-        "readingKana": "やすみ",
-        "readingRomaji": "yasumi",
-        "meaning": "rest"
-      },
-      {
-        "word": "休暇",
-        "readingKana": "きゅうか",
-        "readingRomaji": "kyuuka",
-        "meaning": "holiday"
-      }
+      { "word": "休む", "readingKana": "やすむ", "readingRomaji": "yasumu", "meaning": "to rest" }
     ]
   },
   {
     "kanji": "先",
-    "meaning": "ahead, before, future, precedence, previous",
-    "onReading": [
-      {
-        "kana": "セン",
-        "romaji": "sen"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "さき",
-        "romaji": "saki"
-      },
-      {
-        "kana": "まず",
-        "romaji": "mazu"
-      }
-    ],
+    "primaryMeaning": "before",
+    "otherMeaning": "ahead, previous, future",
+    "onReading": [{ "kana": "セン", "romaji": "sen" }],
+    "kunReading": [{ "kana": "さき", "romaji": "saki" }],
     "commonWords": [
-      {
-        "word": "先生",
-        "readingKana": "せんせい",
-        "readingRomaji": "sensei",
-        "meaning": "teacher"
-      },
-      {
-        "word": "先月",
-        "readingKana": "せんげつ",
-        "readingRomaji": "sengetsu",
-        "meaning": "last month"
-      },
-      {
-        "word": "先週",
-        "readingKana": "せんしゅう",
-        "readingRomaji": "senshuu",
-        "meaning": "last week"
-      }
+      { "word": "先生", "readingKana": "せんせい", "readingRomaji": "sensei", "meaning": "teacher" }
     ]
   },
   {
     "kanji": "名",
-    "meaning": "distinguished, name, noted, reputation",
+    "primaryMeaning": "name",
+    "otherMeaning": "famous",
     "onReading": [
-      {
-        "kana": "ミョウ",
-        "romaji": "myou"
-      },
-      {
-        "kana": "メイ",
-        "romaji": "mei"
-      }
+      { "kana": "メイ", "romaji": "mei" },
+      { "kana": "ミョウ", "romaji": "myou" }
     ],
-    "kunReading": [
-      {
-        "kana": "な",
-        "romaji": "na"
-      }
-    ],
+    "kunReading": [{ "kana": "な", "romaji": "na" }],
     "commonWords": [
-      {
-        "word": "名前",
-        "readingKana": "なまえ",
-        "readingRomaji": "namae",
-        "meaning": "name"
-      },
-      {
-        "word": "名刺",
-        "readingKana": "めいし",
-        "readingRomaji": "meishi",
-        "meaning": "business card"
-      },
-      {
-        "word": "名詞",
-        "readingKana": "めいし",
-        "readingRomaji": "meishi",
-        "meaning": "noun"
-      }
+      { "word": "名前", "readingKana": "なまえ", "readingRomaji": "namae", "meaning": "name" }
     ]
   },
   {
     "kanji": "年",
-    "meaning": "counter for years, year",
-    "onReading": [
-      {
-        "kana": "ネン",
-        "romaji": "nen"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "とし",
-        "romaji": "toshi"
-      }
-    ],
+    "primaryMeaning": "year",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "ネン", "romaji": "nen" }],
+    "kunReading": [{ "kana": "とし", "romaji": "toshi" }],
     "commonWords": [
-      {
-        "word": "年",
-        "readingKana": "とし",
-        "readingRomaji": "toshi",
-        "meaning": "year"
-      },
-      {
-        "word": "年間",
-        "readingKana": "ねんかん",
-        "readingRomaji": "nenkan",
-        "meaning": "(period of) a year"
-      },
-      {
-        "word": "年齢",
-        "readingKana": "ねんれい",
-        "readingRomaji": "nenrei",
-        "meaning": "age"
-      }
+      { "word": "今年", "readingKana": "ことし", "readingRomaji": "kotoshi", "meaning": "this year" }
     ]
   },
   {
     "kanji": "毎",
-    "meaning": "every",
-    "onReading": [
-      {
-        "kana": "マイ",
-        "romaji": "mai"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "ごと",
-        "romaji": "goto"
-      }
-    ],
+    "primaryMeaning": "every",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "マイ", "romaji": "mai" }],
+    "kunReading": [{ "kana": "ごと", "romaji": "goto" }],
     "commonWords": [
-      {
-        "word": "毎日",
-        "readingKana": "まいにち",
-        "readingRomaji": "mainichi",
-        "meaning": "every day"
-      },
-      {
-        "word": "毎朝",
-        "readingKana": "まいあさ",
-        "readingRomaji": "maiasa",
-        "meaning": "every morning"
-      },
-      {
-        "word": "毎年",
-        "readingKana": "まいとし",
-        "readingRomaji": "maitoshi",
-        "meaning": "every year"
-      }
+      { "word": "毎日", "readingKana": "まいにち", "readingRomaji": "mainichi", "meaning": "every day" }
     ]
   },
   {
     "kanji": "気",
-    "meaning": "air, atmosphere, mind, mood, spirit",
+    "primaryMeaning": "spirit",
+    "otherMeaning": "mind, mood, air",
     "onReading": [
-      {
-        "kana": "キ",
-        "romaji": "ki"
-      },
-      {
-        "kana": "ケ",
-        "romaji": "ke"
-      }
+      { "kana": "キ", "romaji": "ki" },
+      { "kana": "ケ", "romaji": "ke" }
     ],
-    "kunReading": [
-      {
-        "kana": "き",
-        "romaji": "ki"
-      }
-    ],
+    "kunReading": [{ "kana": "き", "romaji": "ki" }],
     "commonWords": [
-      {
-        "word": "気分",
-        "readingKana": "きぶん",
-        "readingRomaji": "kibun",
-        "meaning": "feeling"
-      },
-      {
-        "word": "気候",
-        "readingKana": "きこう",
-        "readingRomaji": "kikou",
-        "meaning": "climate"
-      },
-      {
-        "word": "気圧",
-        "readingKana": "きあつ",
-        "readingRomaji": "kiatsu",
-        "meaning": "atmospheric pressure"
-      }
+      { "word": "元気", "readingKana": "げんき", "readingRomaji": "genki", "meaning": "healthy" }
     ]
   },
   {
     "kanji": "百",
-    "meaning": "hundred",
+    "primaryMeaning": "hundred",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ヒャク",
-        "romaji": "hyaku"
-      },
-      {
-        "kana": "ビャク",
-        "romaji": "byaku"
-      }
+      { "kana": "ヒャク", "romaji": "hyaku" },
+      { "kana": "ビャク", "romaji": "byaku" }
     ],
-    "kunReading": [
-      {
-        "kana": "もも",
-        "romaji": "momo"
-      }
-    ],
+    "kunReading": [{ "kana": "もも", "romaji": "momo" }],
     "commonWords": [
-      {
-        "word": "百",
-        "readingKana": "ひゃく",
-        "readingRomaji": "hyaku",
-        "meaning": "hundred"
-      },
-      {
-        "word": "百科事典",
-        "readingKana": "ひゃっかじてん",
-        "readingRomaji": "hyakkajiten",
-        "meaning": "encyclopedia"
-      },
-      {
-        "word": "百合",
-        "readingKana": "ゆり",
-        "readingRomaji": "yuri",
-        "meaning": "lily (Lilium spp.)"
-      }
+      { "word": "百", "readingKana": "ひゃく", "readingRomaji": "hyaku", "meaning": "hundred" }
     ]
   },
   {
     "kanji": "行",
-    "meaning": "act, bank, carry out, conduct, going, journey, line, row",
+    "primaryMeaning": "go",
+    "otherMeaning": "act, journey",
     "onReading": [
-      {
-        "kana": "アン",
-        "romaji": "an"
-      },
-      {
-        "kana": "ギョウ",
-        "romaji": "gyou"
-      },
-      {
-        "kana": "コウ",
-        "romaji": "kou"
-      }
+      { "kana": "コウ", "romaji": "kou" },
+      { "kana": "ギョウ", "romaji": "gyou" }
     ],
     "kunReading": [
-      {
-        "kana": "いく",
-        "romaji": "iku"
-      },
-      {
-        "kana": "ゆく",
-        "romaji": "yuku"
-      },
-      {
-        "kana": "おこなう",
-        "romaji": "okonau"
-      }
+      { "kana": "いく", "romaji": "iku" },
+      { "kana": "おこなう", "romaji": "okonau" }
     ],
     "commonWords": [
-      {
-        "word": "行く",
-        "readingKana": "いく",
-        "readingRomaji": "iku",
-        "meaning": "to go"
-      },
-      {
-        "word": "行動",
-        "readingKana": "こうどう",
-        "readingRomaji": "koudou",
-        "meaning": "action"
-      },
-      {
-        "word": "行う",
-        "readingKana": "おこなう",
-        "readingRomaji": "okonau",
-        "meaning": "to perform"
-      }
+      { "word": "行く", "readingKana": "いく", "readingRomaji": "iku", "meaning": "to go" }
     ]
   },
   {
     "kanji": "西",
-    "meaning": "Spain, west",
+    "primaryMeaning": "west",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "サイ",
-        "romaji": "sai"
-      },
-      {
-        "kana": "ス",
-        "romaji": "su"
-      },
-      {
-        "kana": "セイ",
-        "romaji": "sei"
-      }
+      { "kana": "セイ", "romaji": "sei" },
+      { "kana": "サイ", "romaji": "sai" }
     ],
-    "kunReading": [
-      {
-        "kana": "にし",
-        "romaji": "nishi"
-      }
-    ],
+    "kunReading": [{ "kana": "にし", "romaji": "nishi" }],
     "commonWords": [
-      {
-        "word": "西",
-        "readingKana": "にし",
-        "readingRomaji": "nishi",
-        "meaning": "west"
-      },
-      {
-        "word": "西日",
-        "readingKana": "にしび",
-        "readingRomaji": "nishibi",
-        "meaning": "westering sun"
-      },
-      {
-        "word": "西洋",
-        "readingKana": "せいよう",
-        "readingRomaji": "seiyou",
-        "meaning": "the West"
-      }
+      { "word": "西", "readingKana": "にし", "readingRomaji": "nishi", "meaning": "west" }
     ]
   },
   {
     "kanji": "何",
-    "meaning": "what",
-    "onReading": [
-      {
-        "kana": "カ",
-        "romaji": "ka"
-      }
-    ],
+    "primaryMeaning": "what",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "カ", "romaji": "ka" }],
     "kunReading": [
-      {
-        "kana": "なに",
-        "romaji": "nani"
-      },
-      {
-        "kana": "なん",
-        "romaji": "nan"
-      }
+      { "kana": "なに", "romaji": "nani" },
+      { "kana": "なん", "romaji": "nan" }
     ],
     "commonWords": [
-      {
-        "word": "何の",
-        "readingKana": "どの",
-        "readingRomaji": "dono",
-        "meaning": "which"
-      },
-      {
-        "word": "何処",
-        "readingKana": "どこ",
-        "readingRomaji": "doko",
-        "meaning": "where"
-      },
-      {
-        "word": "何故",
-        "readingKana": "なぜ",
-        "readingRomaji": "naze",
-        "meaning": "why"
-      }
+      { "word": "何", "readingKana": "なに", "readingRomaji": "nani", "meaning": "what" }
     ]
   },
   {
     "kanji": "来",
-    "meaning": "become, cause, come, due, next",
+    "primaryMeaning": "come",
+    "otherMeaning": "next",
     "onReading": [
-      {
-        "kana": "タイ",
-        "romaji": "tai"
-      },
-      {
-        "kana": "ライ",
-        "romaji": "rai"
-      }
+      { "kana": "ライ", "romaji": "rai" }
     ],
     "kunReading": [
-      {
-        "kana": "き",
-        "romaji": "ki"
-      },
-      {
-        "kana": "こ",
-        "romaji": "ko"
-      },
-      {
-        "kana": "くる",
-        "romaji": "kuru"
-      }
+      { "kana": "くる", "romaji": "kuru" }
     ],
     "commonWords": [
-      {
-        "word": "来る",
-        "readingKana": "くる",
-        "readingRomaji": "kuru",
-        "meaning": "to come (spatially or temporally)"
-      },
-      {
-        "word": "来年",
-        "readingKana": "らいねん",
-        "readingRomaji": "rainen",
-        "meaning": "next year"
-      },
-      {
-        "word": "来月",
-        "readingKana": "らいげつ",
-        "readingRomaji": "raigetsu",
-        "meaning": "next month"
-      }
+      { "word": "来る", "readingKana": "くる", "readingRomaji": "kuru", "meaning": "to come" }
     ]
   },
   {
     "kanji": "男",
-    "meaning": "male",
+    "primaryMeaning": "man",
+    "otherMeaning": "male",
     "onReading": [
-      {
-        "kana": "ダン",
-        "romaji": "dan"
-      },
-      {
-        "kana": "ナン",
-        "romaji": "nan"
-      }
+      { "kana": "ダン", "romaji": "dan" },
+      { "kana": "ナン", "romaji": "nan" }
     ],
     "kunReading": [
-      {
-        "kana": "お",
-        "romaji": "o"
-      },
-      {
-        "kana": "おとこ",
-        "romaji": "otoko"
-      }
+      { "kana": "おとこ", "romaji": "otoko" }
     ],
     "commonWords": [
-      {
-        "word": "男の子",
-        "readingKana": "おとこのこ",
-        "readingRomaji": "otokonoko",
-        "meaning": "boy"
-      },
-      {
-        "word": "男",
-        "readingKana": "おとこ",
-        "readingRomaji": "otoko",
-        "meaning": "man"
-      },
-      {
-        "word": "男子",
-        "readingKana": "だんし",
-        "readingRomaji": "danshi",
-        "meaning": "boy"
-      }
+      { "word": "男の子", "readingKana": "おとこのこ", "readingRomaji": "otokonoko", "meaning": "boy" }
     ]
   },
   {
     "kanji": "見",
-    "meaning": "chances, hopes, idea, look at, opinion, see, visible",
-    "onReading": [
-      {
-        "kana": "ケン",
-        "romaji": "ken"
-      }
-    ],
+    "primaryMeaning": "see",
+    "otherMeaning": "look",
+    "onReading": [{ "kana": "ケン", "romaji": "ken" }],
     "kunReading": [
-      {
-        "kana": "みる",
-        "romaji": "miru"
-      },
-      {
-        "kana": "みえる",
-        "romaji": "mieru"
-      },
-      {
-        "kana": "みせる",
-        "romaji": "miseru"
-      }
+      { "kana": "みる", "romaji": "miru" },
+      { "kana": "みえる", "romaji": "mieru" }
     ],
     "commonWords": [
-      {
-        "word": "見る",
-        "readingKana": "みる",
-        "readingRomaji": "miru",
-        "meaning": "to see"
-      },
-      {
-        "word": "見せる",
-        "readingKana": "みせる",
-        "readingRomaji": "miseru",
-        "meaning": "to show"
-      },
-      {
-        "word": "見合い",
-        "readingKana": "みあい",
-        "readingRomaji": "miai",
-        "meaning": "(formal) meeting with a view to marriage"
-      }
+      { "word": "見る", "readingKana": "みる", "readingRomaji": "miru", "meaning": "to see" }
     ]
   },
   {
     "kanji": "車",
-    "meaning": "car",
-    "onReading": [
-      {
-        "kana": "シャ",
-        "romaji": "sha"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "くるま",
-        "romaji": "kuruma"
-      }
-    ],
+    "primaryMeaning": "car",
+    "otherMeaning": "vehicle",
+    "onReading": [{ "kana": "シャ", "romaji": "sha" }],
+    "kunReading": [{ "kana": "くるま", "romaji": "kuruma" }],
     "commonWords": [
-      {
-        "word": "車",
-        "readingKana": "くるま",
-        "readingRomaji": "kuruma",
-        "meaning": "car"
-      },
-      {
-        "word": "車庫",
-        "readingKana": "しゃこ",
-        "readingRomaji": "shako",
-        "meaning": "garage"
-      },
-      {
-        "word": "車輪",
-        "readingKana": "しゃりん",
-        "readingRomaji": "sharin",
-        "meaning": "(vehicle) wheel"
-      }
+      { "word": "車", "readingKana": "くるま", "readingRomaji": "kuruma", "meaning": "car" }
     ]
   },
   {
     "kanji": "国",
-    "meaning": "country",
-    "onReading": [
-      {
-        "kana": "コク",
-        "romaji": "koku"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "くに",
-        "romaji": "kuni"
-      }
-    ],
+    "primaryMeaning": "country",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "コク", "romaji": "koku" }],
+    "kunReading": [{ "kana": "くに", "romaji": "kuni" }],
     "commonWords": [
-      {
-        "word": "国",
-        "readingKana": "くに",
-        "readingRomaji": "kuni",
-        "meaning": "country"
-      },
-      {
-        "word": "国家",
-        "readingKana": "こっか",
-        "readingRomaji": "kokka",
-        "meaning": "state"
-      },
-      {
-        "word": "国語",
-        "readingKana": "こくご",
-        "readingRomaji": "kokugo",
-        "meaning": "national language"
-      }
+      { "word": "国", "readingKana": "くに", "readingRomaji": "kuni", "meaning": "country" }
     ]
   },
   {
     "kanji": "学",
-    "meaning": "learning, science, study",
-    "onReading": [
-      {
-        "kana": "ガク",
-        "romaji": "gaku"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "まなぶ",
-        "romaji": "manabu"
-      }
-    ],
+    "primaryMeaning": "study",
+    "otherMeaning": "learning, school",
+    "onReading": [{ "kana": "ガク", "romaji": "gaku" }],
+    "kunReading": [{ "kana": "まなぶ", "romaji": "manabu" }],
     "commonWords": [
-      {
-        "word": "学校",
-        "readingKana": "がっこう",
-        "readingRomaji": "gakkou",
-        "meaning": "school"
-      },
-      {
-        "word": "学生",
-        "readingKana": "がくせい",
-        "readingRomaji": "gakusei",
-        "meaning": "student (esp. a university student)"
-      },
-      {
-        "word": "学期",
-        "readingKana": "がっき",
-        "readingRomaji": "gakki",
-        "meaning": "school term"
-      }
+      { "word": "学校", "readingKana": "がっこう", "readingRomaji": "gakkou", "meaning": "school" }
     ]
   },
   {
     "kanji": "東",
-    "meaning": "east",
-    "onReading": [
-      {
-        "kana": "トウ",
-        "romaji": "tou"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "ひがし",
-        "romaji": "higashi"
-      }
-    ],
+    "primaryMeaning": "east",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "トウ", "romaji": "tou" }],
+    "kunReading": [{ "kana": "ひがし", "romaji": "higashi" }],
     "commonWords": [
-      {
-        "word": "東",
-        "readingKana": "ひがし",
-        "readingRomaji": "higashi",
-        "meaning": "east"
-      },
-      {
-        "word": "東洋",
-        "readingKana": "とうよう",
-        "readingRomaji": "touyou",
-        "meaning": "the East"
-      },
-      {
-        "word": "東西",
-        "readingKana": "とうざい",
-        "readingRomaji": "touzai",
-        "meaning": "east and west"
-      }
+      { "word": "東", "readingKana": "ひがし", "readingRomaji": "higashi", "meaning": "east" }
     ]
   },
   {
     "kanji": "金",
-    "meaning": "gold",
+    "primaryMeaning": "gold",
+    "otherMeaning": "money",
     "onReading": [
-      {
-        "kana": "キン",
-        "romaji": "kin"
-      },
-      {
-        "kana": "コン",
-        "romaji": "kon"
-      },
-      {
-        "kana": "ゴン",
-        "romaji": "gon"
-      }
+      { "kana": "キン", "romaji": "kin" },
+      { "kana": "コン", "romaji": "kon" }
     ],
-    "kunReading": [
-      {
-        "kana": "かね",
-        "romaji": "kane"
-      }
-    ],
+    "kunReading": [{ "kana": "かね", "romaji": "kane" }],
     "commonWords": [
-      {
-        "word": "金曜日",
-        "readingKana": "きんようび",
-        "readingRomaji": "kin'youbi",
-        "meaning": "Friday"
-      },
-      {
-        "word": "金庫",
-        "readingKana": "きんこ",
-        "readingRomaji": "kinko",
-        "meaning": "safe"
-      },
-      {
-        "word": "黄金",
-        "readingKana": "おうごん",
-        "readingRomaji": "ougon",
-        "meaning": "gold (Au)"
-      }
+      { "word": "金曜日", "readingKana": "きんようび", "readingRomaji": "kin'youbi", "meaning": "Friday" }
     ]
   },
   {
     "kanji": "長",
-    "meaning": "leader, long, senior, superior",
-    "onReading": [
-      {
-        "kana": "チョウ",
-        "romaji": "chou"
-      }
-    ],
+    "primaryMeaning": "long",
+    "otherMeaning": "leader",
+    "onReading": [{ "kana": "チョウ", "romaji": "chou" }],
     "kunReading": [
-      {
-        "kana": "おさ",
-        "romaji": "osa"
-      },
-      {
-        "kana": "ながい",
-        "romaji": "nagai"
-      }
+      { "kana": "ながい", "romaji": "nagai" }
     ],
     "commonWords": [
-      {
-        "word": "長い",
-        "readingKana": "ながい",
-        "readingRomaji": "nagai",
-        "meaning": "long (distance, length)"
-      },
-      {
-        "word": "長期",
-        "readingKana": "ちょうき",
-        "readingRomaji": "chouki",
-        "meaning": "long-term"
-      },
-      {
-        "word": "長所",
-        "readingKana": "ちょうしょ",
-        "readingRomaji": "chousho",
-        "meaning": "strong point"
-      }
+      { "word": "長い", "readingKana": "ながい", "readingRomaji": "nagai", "meaning": "long" }
     ]
   },
   {
     "kanji": "雨",
-    "meaning": "rain",
-    "onReading": [
-      {
-        "kana": "ウ",
-        "romaji": "u"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "あめ",
-        "romaji": "ame"
-      }
-    ],
+    "primaryMeaning": "rain",
+    "otherMeaning": "",
+    "onReading": [{ "kana": "ウ", "romaji": "u" }],
+    "kunReading": [{ "kana": "あめ", "romaji": "ame" }],
     "commonWords": [
-      {
-        "word": "雨",
-        "readingKana": "あめ",
-        "readingRomaji": "ame",
-        "meaning": "rain"
-      },
-      {
-        "word": "雨戸",
-        "readingKana": "あまど",
-        "readingRomaji": "amado",
-        "meaning": "sliding storm shutter"
-      },
-      {
-        "word": "雨天",
-        "readingKana": "うてん",
-        "readingRomaji": "uten",
-        "meaning": "rainy weather"
-      }
+      { "word": "雨", "readingKana": "あめ", "readingRomaji": "ame", "meaning": "rain" }
     ]
   },
   {
     "kanji": "前",
-    "meaning": "before, in front",
-    "onReading": [
-      {
-        "kana": "ゼン",
-        "romaji": "zen"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "まえ",
-        "romaji": "mae"
-      }
-    ],
+    "primaryMeaning": "before",
+    "otherMeaning": "front",
+    "onReading": [{ "kana": "ゼン", "romaji": "zen" }],
+    "kunReading": [{ "kana": "まえ", "romaji": "mae" }],
     "commonWords": [
-      {
-        "word": "前",
-        "readingKana": "まえ",
-        "readingRomaji": "mae",
-        "meaning": "in front (of)"
-      },
-      {
-        "word": "前後",
-        "readingKana": "ぜんご",
-        "readingRomaji": "zengo",
-        "meaning": "front and rear"
-      },
-      {
-        "word": "前途",
-        "readingKana": "ぜんと",
-        "readingRomaji": "zento",
-        "meaning": "future"
-      }
+      { "word": "前", "readingKana": "まえ", "readingRomaji": "mae", "meaning": "before" }
     ]
   },
   {
     "kanji": "南",
-    "meaning": "south",
+    "primaryMeaning": "south",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "ナ",
-        "romaji": "na"
-      },
-      {
-        "kana": "ナン",
-        "romaji": "nan"
-      }
+      { "kana": "ナン", "romaji": "nan" }
     ],
-    "kunReading": [
-      {
-        "kana": "みなみ",
-        "romaji": "minami"
-      }
-    ],
+    "kunReading": [{ "kana": "みなみ", "romaji": "minami" }],
     "commonWords": [
-      {
-        "word": "南",
-        "readingKana": "みなみ",
-        "readingRomaji": "minami",
-        "meaning": "south"
-      },
-      {
-        "word": "南米",
-        "readingKana": "なんべい",
-        "readingRomaji": "nanbei",
-        "meaning": "South America"
-      },
-      {
-        "word": "南北",
-        "readingKana": "なんぼく",
-        "readingRomaji": "nanboku",
-        "meaning": "north and south"
-      }
+      { "word": "南", "readingKana": "みなみ", "readingRomaji": "minami", "meaning": "south" }
     ]
   },
   {
     "kanji": "後",
-    "meaning": "back, behind, later",
+    "primaryMeaning": "after",
+    "otherMeaning": "behind, later",
     "onReading": [
-      {
-        "kana": "コウ",
-        "romaji": "kou"
-      },
-      {
-        "kana": "ゴ",
-        "romaji": "go"
-      }
+      { "kana": "コウ", "romaji": "kou" },
+      { "kana": "ゴ", "romaji": "go" }
     ],
     "kunReading": [
-      {
-        "kana": "あと",
-        "romaji": "ato"
-      },
-      {
-        "kana": "のち",
-        "romaji": "nochi"
-      },
-      {
-        "kana": "うしろ",
-        "romaji": "ushiro"
-      }
+      { "kana": "あと", "romaji": "ato" },
+      { "kana": "うしろ", "romaji": "ushiro" }
     ],
     "commonWords": [
-      {
-        "word": "後ろ",
-        "readingKana": "うしろ",
-        "readingRomaji": "ushiro",
-        "meaning": "back"
-      },
-      {
-        "word": "後",
-        "readingKana": "あと",
-        "readingRomaji": "ato",
-        "meaning": "behind"
-      },
-      {
-        "word": "後者",
-        "readingKana": "こうしゃ",
-        "readingRomaji": "kousha",
-        "meaning": "the latter"
-      }
+      { "word": "後", "readingKana": "あと", "readingRomaji": "ato", "meaning": "after" }
     ]
   },
   {
     "kanji": "食",
-    "meaning": "eat, food",
+    "primaryMeaning": "eat",
+    "otherMeaning": "food",
     "onReading": [
-      {
-        "kana": "ショク",
-        "romaji": "shoku"
-      },
-      {
-        "kana": "ジキ",
-        "romaji": "jiki"
-      }
+      { "kana": "ショク", "romaji": "shoku" }
     ],
     "kunReading": [
-      {
-        "kana": "くう",
-        "romaji": "kuu"
-      },
-      {
-        "kana": "はむ",
-        "romaji": "hamu"
-      },
-      {
-        "kana": "くらう",
-        "romaji": "kurau"
-      }
+      { "kana": "たべる", "romaji": "taberu" }
     ],
     "commonWords": [
-      {
-        "word": "食べる",
-        "readingKana": "たべる",
-        "readingRomaji": "taberu",
-        "meaning": "to eat"
-      },
-      {
-        "word": "食べ物",
-        "readingKana": "たべもの",
-        "readingRomaji": "tabemono",
-        "meaning": "food"
-      },
-      {
-        "word": "食堂",
-        "readingKana": "しょくどう",
-        "readingRomaji": "shokudou",
-        "meaning": "dining room"
-      }
+      { "word": "食べる", "readingKana": "たべる", "readingRomaji": "taberu", "meaning": "to eat" }
     ]
   },
   {
     "kanji": "時",
-    "meaning": "hour, time",
-    "onReading": [
-      {
-        "kana": "ジ",
-        "romaji": "ji"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "とき",
-        "romaji": "toki"
-      }
-    ],
+    "primaryMeaning": "time",
+    "otherMeaning": "hour",
+    "onReading": [{ "kana": "ジ", "romaji": "ji" }],
+    "kunReading": [{ "kana": "とき", "romaji": "toki" }],
     "commonWords": [
-      {
-        "word": "時間",
-        "readingKana": "じかん",
-        "readingRomaji": "jikan",
-        "meaning": "time"
-      },
-      {
-        "word": "時計",
-        "readingKana": "とけい",
-        "readingRomaji": "tokei",
-        "meaning": "clock"
-      },
-      {
-        "word": "時々",
-        "readingKana": "ときどき",
-        "readingRomaji": "tokidoki",
-        "meaning": "sometimes"
-      }
-    ]
-  },
-  {
-    "kanji": "書",
-    "meaning": "write",
-    "onReading": [
-      {
-        "kana": "ショ",
-        "romaji": "sho"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "かく",
-        "romaji": "kaku"
-      }
-    ],
-    "commonWords": [
-      {
-        "word": "書く",
-        "readingKana": "かく",
-        "readingRomaji": "kaku",
-        "meaning": "to write"
-      },
-      {
-        "word": "書斎",
-        "readingKana": "しょさい",
-        "readingRomaji": "shosai",
-        "meaning": "study"
-      },
-      {
-        "word": "書店",
-        "readingKana": "しょてん",
-        "readingRomaji": "shoten",
-        "meaning": "bookshop"
-      }
+      { "word": "時間", "readingKana": "じかん", "readingRomaji": "jikan", "meaning": "time" }
     ]
   },
   {
     "kanji": "校",
-    "meaning": "correction, exam, printing, proof, school",
+    "primaryMeaning": "school",
+    "otherMeaning": "",
     "onReading": [
-      {
-        "kana": "キョウ",
-        "romaji": "kyou"
-      },
-      {
-        "kana": "コウ",
-        "romaji": "kou"
-      }
+      { "kana": "コウ", "romaji": "kou" }
     ],
     "kunReading": [],
     "commonWords": [
-      {
-        "word": "校舎",
-        "readingKana": "こうしゃ",
-        "readingRomaji": "kousha",
-        "meaning": "school building"
-      },
-      {
-        "word": "校庭",
-        "readingKana": "こうてい",
-        "readingRomaji": "koutei",
-        "meaning": "schoolyard"
-      },
-      {
-        "word": "校長",
-        "readingKana": "こうちょう",
-        "readingRomaji": "kouchou",
-        "meaning": "principal"
-      }
+      { "word": "学校", "readingKana": "がっこう", "readingRomaji": "gakkou", "meaning": "school" }
     ]
   },
   {
     "kanji": "高",
-    "meaning": "expensive, high, tall",
-    "onReading": [
-      {
-        "kana": "コウ",
-        "romaji": "kou"
-      }
-    ],
+    "primaryMeaning": "high",
+    "otherMeaning": "expensive, tall",
+    "onReading": [{ "kana": "コウ", "romaji": "kou" }],
     "kunReading": [
-      {
-        "kana": "たか",
-        "romaji": "taka"
-      },
-      {
-        "kana": "たかい",
-        "romaji": "takai"
-      },
-      {
-        "kana": "たかまる",
-        "romaji": "takamaru"
-      }
+      { "kana": "たかい", "romaji": "takai" }
     ],
     "commonWords": [
-      {
-        "word": "高い",
-        "readingKana": "たかい",
-        "readingRomaji": "takai",
-        "meaning": "high"
-      },
-      {
-        "word": "高価",
-        "readingKana": "こうか",
-        "readingRomaji": "kouka",
-        "meaning": "highly priced"
-      },
-      {
-        "word": "高度",
-        "readingKana": "こうど",
-        "readingRomaji": "koudo",
-        "meaning": "altitude"
-      }
+      { "word": "高い", "readingKana": "たかい", "readingRomaji": "takai", "meaning": "high / expensive" }
     ]
   },
   {
     "kanji": "間",
-    "meaning": "interval, space",
+    "primaryMeaning": "interval",
+    "otherMeaning": "space, time span",
     "onReading": [
-      {
-        "kana": "カン",
-        "romaji": "kan"
-      },
-      {
-        "kana": "ケン",
-        "romaji": "ken"
-      }
+      { "kana": "カン", "romaji": "kan" }
     ],
     "kunReading": [
-      {
-        "kana": "ま",
-        "romaji": "ma"
-      },
-      {
-        "kana": "あい",
-        "romaji": "ai"
-      },
-      {
-        "kana": "あいだ",
-        "romaji": "aida"
-      }
+      { "kana": "あいだ", "romaji": "aida" }
     ],
     "commonWords": [
-      {
-        "word": "間隔",
-        "readingKana": "かんかく",
-        "readingRomaji": "kankaku",
-        "meaning": "space"
-      },
-      {
-        "word": "間違い",
-        "readingKana": "まちがい",
-        "readingRomaji": "machigai",
-        "meaning": "mistake"
-      },
-      {
-        "word": "間に合う",
-        "readingKana": "まにあう",
-        "readingRomaji": "maniau",
-        "meaning": "to be in time (for)"
-      }
-    ]
-  },
-  {
-    "kanji": "話",
-    "meaning": "tale, talk",
-    "onReading": [
-      {
-        "kana": "ワ",
-        "romaji": "wa"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "はなす",
-        "romaji": "hanasu"
-      },
-      {
-        "kana": "はなし",
-        "romaji": "hanashi"
-      }
-    ],
-    "commonWords": [
-      {
-        "word": "話す",
-        "readingKana": "はなす",
-        "readingRomaji": "hanasu",
-        "meaning": "to talk"
-      },
-      {
-        "word": "話",
-        "readingKana": "はなし",
-        "readingRomaji": "hanashi",
-        "meaning": "talk"
-      },
-      {
-        "word": "話題",
-        "readingKana": "わだい",
-        "readingRomaji": "wadai",
-        "meaning": "topic"
-      }
-    ]
-  },
-  {
-    "kanji": "電",
-    "meaning": "electricity",
-    "onReading": [
-      {
-        "kana": "デン",
-        "romaji": "den"
-      }
-    ],
-    "kunReading": [],
-    "commonWords": [
-      {
-        "word": "電話",
-        "readingKana": "でんわ",
-        "readingRomaji": "denwa",
-        "meaning": "telephone call"
-      },
-      {
-        "word": "電気",
-        "readingKana": "でんき",
-        "readingRomaji": "denki",
-        "meaning": "electricity"
-      },
-      {
-        "word": "電車",
-        "readingKana": "でんしゃ",
-        "readingRomaji": "densha",
-        "meaning": "train"
-      }
-    ]
-  },
-  {
-    "kanji": "聞",
-    "meaning": "ask, hear, listen",
-    "onReading": [
-      {
-        "kana": "ブン",
-        "romaji": "bun"
-      },
-      {
-        "kana": "モン",
-        "romaji": "mon"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "きく",
-        "romaji": "kiku"
-      },
-      {
-        "kana": "きこえる",
-        "romaji": "kikoeru"
-      }
-    ],
-    "commonWords": [
-      {
-        "word": "聞く",
-        "readingKana": "きく",
-        "readingRomaji": "kiku",
-        "meaning": "to hear"
-      },
-      {
-        "word": "聞こえる",
-        "readingKana": "きこえる",
-        "readingRomaji": "kikoeru",
-        "meaning": "to be heard"
-      },
-      {
-        "word": "聞き取り",
-        "readingKana": "ききとり",
-        "readingRomaji": "kikitori",
-        "meaning": "listening comprehension"
-      }
-    ]
-  },
-  {
-    "kanji": "語",
-    "meaning": "language, speech, word",
-    "onReading": [
-      {
-        "kana": "ゴ",
-        "romaji": "go"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "かたる",
-        "romaji": "kataru"
-      },
-      {
-        "kana": "かたらう",
-        "romaji": "katarau"
-      }
-    ],
-    "commonWords": [
-      {
-        "word": "語彙",
-        "readingKana": "ごい",
-        "readingRomaji": "goi",
-        "meaning": "vocabulary"
-      },
-      {
-        "word": "語句",
-        "readingKana": "ごく",
-        "readingRomaji": "goku",
-        "meaning": "words and phrases"
-      },
-      {
-        "word": "語源",
-        "readingKana": "ごげん",
-        "readingRomaji": "gogen",
-        "meaning": "origin of a word"
-      }
-    ]
-  },
-  {
-    "kanji": "読",
-    "meaning": "read",
-    "onReading": [
-      {
-        "kana": "トウ",
-        "romaji": "tou"
-      },
-      {
-        "kana": "トク",
-        "romaji": "toku"
-      },
-      {
-        "kana": "ドク",
-        "romaji": "doku"
-      }
-    ],
-    "kunReading": [
-      {
-        "kana": "よむ",
-        "romaji": "yomu"
-      }
-    ],
-    "commonWords": [
-      {
-        "word": "読む",
-        "readingKana": "よむ",
-        "readingRomaji": "yomu",
-        "meaning": "to read"
-      },
-      {
-        "word": "読み",
-        "readingKana": "よみ",
-        "readingRomaji": "yomi",
-        "meaning": "reading"
-      },
-      {
-        "word": "読書",
-        "readingKana": "どくしょ",
-        "readingRomaji": "dokusho",
-        "meaning": "reading (books)"
-      }
+      { "word": "時間", "readingKana": "じかん", "readingRomaji": "jikan", "meaning": "time" }
     ]
   }
 ]

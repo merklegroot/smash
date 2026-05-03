@@ -12,7 +12,10 @@ export type CommonWord = {
 
 export type KanjiItem = {
   kanji: string;
-  meaning: string;
+  /** Main gloss; may include several comma- or slash-separated senses in one string. */
+  primaryMeaning: string;
+  /** Optional extra glosses or notes (e.g. secondary sense, disambiguation). */
+  otherMeaning?: string;
   onReading: Reading[];
   kunReading: Reading[];
   commonWords: CommonWord[];

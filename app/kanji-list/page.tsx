@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { formatReadings } from "@/lib/kanji/format";
+import { formatKanjiGlosses, formatReadings, kanjiGlossSearchText } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
 
 function matchesFilter(item: KanjiItem, query: string): boolean {
   if (!query) return true;
   const q = query.toLowerCase();
   if (item.kanji.includes(query)) return true;
-  if (item.meaning.toLowerCase().includes(q)) return true;
+  if (kanjiGlossSearchText(item).toLowerCase().includes(q)) return true;
   for (const r of [...item.onReading, ...item.kunReading]) {
     if (r.kana.toLowerCase().includes(q) || r.romaji.toLowerCase().includes(q)) {
       return true;
@@ -125,7 +125,7 @@ export default function KanjiList() {
                         type="button"
                         role="option"
                         aria-selected={selected}
-                        title={item.meaning}
+                        title={formatKanjiGlosses(item)}
                         onClick={() => setSelectedKanji(item)}
                         className={`flex aspect-square min-h-[2.75rem] cursor-pointer items-center justify-center rounded-lg text-xl font-semibold transition sm:text-2xl ${
                           selected
@@ -145,13 +145,20 @@ export default function KanjiList() {
           <aside className="min-h-0 rounded-2xl border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 lg:max-h-[min(720px,calc(100vh-7rem))] lg:overflow-y-auto">
             {selectedKanji && filteredKanji.length > 0 ? (
               <div className="space-y-5">
-                <div className="flex flex-col gap-3 border-b border-black/10 pb-4 sm:flex-row sm:items-end sm:justify-between dark:border-white/10">
+                <div className="flex flex-col gap-2 border-b border-black/10 pb-4 sm:flex-row sm:items-end sm:justify-between dark:border-white/10">
                   <h2 className="text-5xl font-semibold leading-none tracking-tight">
                     {selectedKanji.kanji}
                   </h2>
-                  <p className="max-w-prose text-sm leading-snug text-black/75 dark:text-white/75">
-                    {selectedKanji.meaning}
-                  </p>
+                  <div className="max-w-prose text-right sm:text-right">
+                    <p className="text-sm leading-snug text-black/85 dark:text-white/85">
+                      {selectedKanji.primaryMeaning}
+                    </p>
+                    {selectedKanji.otherMeaning ? (
+                      <p className="mt-1 text-sm leading-snug text-black/60 dark:text-white/60">
+                        {selectedKanji.otherMeaning}
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-xl border border-black/10 bg-black/[0.03] p-3 dark:border-white/10 dark:bg-white/[0.03]">

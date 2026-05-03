@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { formatKanjiGlosses, kanjiGlossSearchText } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
 import { DEFAULT_TRAINING_SETS } from "@/lib/training-sets/defaults";
 import { saveSmashPoolPreference } from "@/lib/training-sets/preference";
@@ -49,7 +50,7 @@ export default function TrainingSets() {
     return kanji.filter(
       (k) =>
         k.kanji.includes(q) ||
-        k.meaning.toLowerCase().includes(q),
+        kanjiGlossSearchText(k).toLowerCase().includes(q),
     );
   }, [kanji, filter]);
 
@@ -174,15 +175,18 @@ export default function TrainingSets() {
                       </button>
                     </div>
                     <div className="mt-2 flex flex-wrap gap-1">
-                      {set.kanjiChars.map((c) => (
-                        <span
-                          key={`${set.id}-${c}`}
-                          className="inline-flex min-w-[1.75rem] items-center justify-center rounded-md bg-black/[0.06] px-1.5 py-0.5 text-base font-semibold tabular-nums dark:bg-white/[0.08]"
-                          title={kanji.find((k) => k.kanji === c)?.meaning}
-                        >
-                          {c}
-                        </span>
-                      ))}
+                      {set.kanjiChars.map((c) => {
+                        const kItem = kanji.find((j) => j.kanji === c);
+                        return (
+                          <span
+                            key={`${set.id}-${c}`}
+                            className="inline-flex min-w-[1.75rem] items-center justify-center rounded-md bg-black/[0.06] px-1.5 py-0.5 text-base font-semibold tabular-nums dark:bg-white/[0.08]"
+                            title={kItem ? formatKanjiGlosses(kItem) : undefined}
+                          >
+                            {c}
+                          </span>
+                        );
+                      })}
                     </div>
                   </li>
                 ))}
@@ -266,7 +270,7 @@ export default function TrainingSets() {
                       <li key={item.kanji}>
                         <label
                           className="flex cursor-pointer items-center gap-1.5 rounded-lg px-1.5 py-1.5 transition hover:bg-black/5 dark:hover:bg-white/5"
-                          title={item.meaning}
+                          title={formatKanjiGlosses(item)}
                         >
                           <input
                             type="checkbox"
@@ -276,7 +280,7 @@ export default function TrainingSets() {
                           />
                           <span className="text-lg font-semibold leading-none">{item.kanji}</span>
                           <span className="hidden min-w-0 flex-1 truncate text-[11px] leading-tight text-black/60 md:inline dark:text-white/60">
-                            {item.meaning}
+                            {item.primaryMeaning}
                           </span>
                         </label>
                       </li>
