@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { formatKanjiGlosses, formatReadings } from "@/lib/kanji/format";
+import { formatReadings } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
 import {
   loadSmashPoolPreference,
@@ -1060,8 +1060,15 @@ export default function SmashPage() {
         </div>
         <div className="flex items-start gap-8">
           <div className="flex max-w-md flex-col items-center gap-3">
-            <p className="max-w-md rounded-full border border-black/10 bg-white/70 px-5 py-2 text-center text-3xl font-semibold leading-snug text-zinc-700 shadow-sm dark:border-white/10 dark:bg-white/10 dark:text-zinc-100">
-              {formatKanjiGlosses(round.target)}
+            <p className="max-w-md rounded-full border border-black/10 bg-white/70 px-5 py-2 text-center leading-snug shadow-sm dark:border-white/10 dark:bg-white/10">
+              <span className="text-3xl font-semibold text-zinc-700 dark:text-zinc-100">
+                {round.target.primaryMeaning}
+              </span>
+              {round.target.otherMeaning?.trim() ? (
+                <span className="mt-1.5 block text-sm font-normal text-zinc-500 dark:text-zinc-400">
+                  {round.target.otherMeaning.trim()}
+                </span>
+              ) : null}
             </p>
             <div className="grid grid-cols-3 gap-4">
               {round.buttons.map((item, index) => (
