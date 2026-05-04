@@ -100,7 +100,7 @@ export default function TrainingSets() {
   const handleRestoreDefaults = () => {
     if (
       !window.confirm(
-        "Replace all training sets with the built-in defaults? Your current sets will be removed. If Smash was using a training set, it will switch to the full kanji pool. This cannot be undone.",
+        "Replace all training sets with the built-in defaults? Your current sets will be removed. Smash will use the first default set. This cannot be undone.",
       )
     ) {
       return;
@@ -110,7 +110,9 @@ export default function TrainingSets() {
       kanjiChars: [...s.kanjiChars],
     }));
     persist(fresh);
-    saveSmashPoolPreference({ mode: "auto" });
+    if (fresh[0]) {
+      saveSmashPoolPreference(fresh[0].id);
+    }
   };
 
   return (
