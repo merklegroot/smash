@@ -4,7 +4,7 @@ import type { TrainingSet } from "./types";
  * Seeded when localStorage has no training sets yet (`smash-training-sets` missing).
  *
  * Themed after a common N5 study breakdown. Each set only includes characters that
- * exist in `data/kanji.json` (this app’s N5 list). Omitted: body parts, 分/週/店/駅/道,
+ * exist in `data/n5.json` (this app’s N5 list). Omitted: body parts, 分/週/店/駅/道,
  * several nature/adjective/school characters not in the deck, and the “look-alike”
  * set (not enough of those kanji in data). Meanings in the source list are for study
  * reference; the app stores kanji only.

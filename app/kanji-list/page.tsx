@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { formatKanjiGlosses, formatReadings, kanjiGlossSearchText } from "@/lib/kanji/format";
-import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
+import type { KanjiApiResponse, KanjiItem, KanjiLevelId } from "@/lib/kanji/types";
 
 function matchesFilter(item: KanjiItem, query: string): boolean {
   if (!query) return true;
@@ -24,11 +24,14 @@ function matchesFilter(item: KanjiItem, query: string): boolean {
 }
 
 export default function KanjiList() {
-  const [kanji, setKanji] = useState<KanjiItem[]>([]);
+  const [decks, setDecks] = useState<{ n5: KanjiItem[]; n4: KanjiItem[] }>({ n5: [], n4: [] });
+  const [level, setLevel] = useState<KanjiLevelId>("n5");
   const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [filter, setFilter] = useState("");
+
+  const kanji = decks[level];
 
   useEffect(() => {
     async function loadKanji() {
@@ -39,8 +42,8 @@ export default function KanjiList() {
         }
 
         const data: KanjiApiResponse = await response.json();
-        setKanji(data.kanji);
-        setSelectedKanji(data.kanji[0] ?? null);
+        setDecks({ n5: data.n5, n4: data.n4 });
+        setSelectedKanji(data.n5[0] ?? data.n4[0] ?? null);
       } catch {
         setHasError(true);
       } finally {
@@ -67,12 +70,54 @@ export default function KanjiList() {
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-5">
-      <header className="space-y-1">
-        <h1 className="text-3xl font-semibold tracking-tight">Kanji List</h1>
-        <p className="text-sm text-black/60 dark:text-white/60">
-          Browse {kanji.length > 0 ? `${kanji.length} ` : ""}
-          JLPT N5–style kanji. Filter by character, reading, meaning, or vocabulary.
-        </p>
+      <header className="space-y-3">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-semibold tracking-tight">Kanji List</h1>
+          <p className="text-sm text-black/60 dark:text-white/60">
+            Browse JLPT N5 and N4 kanji
+            {!isLoading && !hasError
+              ? ` (${decks.n5.length + decks.n4.length} unique across both levels)`
+              : null}
+            . Filter by character, reading, meaning, or vocabulary.
+          </p>
+        </div>
+        {!isLoading && !hasError && (decks.n5.length > 0 || decks.n4.length > 0) ? (
+          <div
+            role="tablist"
+            aria-label="JLPT level"
+            className="flex max-w-md gap-1 rounded-xl border border-black/10 bg-black/[0.02] p-1 dark:border-white/10 dark:bg-white/[0.04]"
+          >
+            {(
+              [
+                { id: "n5" as const, label: "N5", count: decks.n5.length },
+                { id: "n4" as const, label: "N4", count: decks.n4.length },
+              ] satisfies { id: KanjiLevelId; label: string; count: number }[]
+            ).map(({ id, label, count }) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={level === id}
+                id={`kanji-list-tab-${id}`}
+                aria-controls="kanji-list-tab-panel"
+                disabled={count === 0}
+                className={`flex-1 cursor-pointer rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                  level === id
+                    ? "bg-white text-black shadow-sm ring-1 ring-black/10 dark:bg-zinc-900 dark:text-white dark:ring-white/15"
+                    : "text-black/55 hover:bg-black/[0.06] hover:text-black/80 disabled:cursor-not-allowed disabled:opacity-40 dark:text-white/55 dark:hover:bg-white/[0.08] dark:hover:text-white/85"
+                }`}
+                onClick={() => setLevel(id)}
+              >
+                {label}
+                {count > 0 ? (
+                  <span className="ml-1.5 tabular-nums text-black/45 dark:text-white/45">
+                    ({count})
+                  </span>
+                ) : null}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </header>
       {isLoading && (
         <div className="rounded-2xl border border-black/10 bg-black/[0.02] px-4 py-10 text-center text-black/60 dark:border-white/10 dark:bg-white/[0.02] dark:text-white/60">
@@ -85,7 +130,12 @@ export default function KanjiList() {
         </div>
       )}
       {!isLoading && !hasError && (
-        <div className="flex min-h-0 flex-1 flex-col gap-5 lg:grid lg:min-h-[min(720px,calc(100vh-10rem))] lg:grid-cols-[minmax(260px,340px)_1fr] lg:gap-6 lg:items-start">
+        <div
+          id="kanji-list-tab-panel"
+          role="tabpanel"
+          aria-labelledby={`kanji-list-tab-${level}`}
+          className="flex min-h-0 flex-1 flex-col gap-5 lg:grid lg:min-h-[min(720px,calc(100vh-10rem))] lg:grid-cols-[minmax(260px,340px)_1fr] lg:gap-6 lg:items-start"
+        >
           <div className="flex min-h-0 flex-col gap-3 lg:sticky lg:top-20 lg:max-h-[min(720px,calc(100vh-7rem))]">
             <label className="flex flex-col gap-1.5">
               <span className="text-xs font-medium uppercase tracking-wide text-black/50 dark:text-white/50">
@@ -121,7 +171,7 @@ export default function KanjiList() {
                     const selected = selectedKanji?.kanji === item.kanji;
                     return (
                       <button
-                        key={item.kanji}
+                        key={`${level}-${item.kanji}`}
                         type="button"
                         role="option"
                         aria-selected={selected}

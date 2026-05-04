@@ -21,6 +21,11 @@ export type KanjiItem = {
   commonWords: CommonWord[];
 };
 
+export type KanjiLevelId = "n5" | "n4";
+
 export type KanjiApiResponse = {
+  /** N5 first, then N4 entries whose character is not already in N5 (stable pool for drills). */
   kanji: KanjiItem[];
+  n5: KanjiItem[];
+  n4: KanjiItem[];
 };

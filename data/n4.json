@@ -1,0 +1,1197 @@
+[
+    {
+      "kanji": "会",
+      "primaryMeaning": "meet",
+      "otherMeaning": "meeting, society",
+      "onReading": [{ "kana": "カイ", "romaji": "kai" }],
+      "kunReading": [{ "kana": "あう", "romaji": "au" }],
+      "commonWords": [
+        { "word": "会社", "readingKana": "かいしゃ", "readingRomaji": "kaisha", "meaning": "company" },
+        { "word": "会議", "readingKana": "かいぎ", "readingRomaji": "kaigi", "meaning": "meeting" }
+      ]
+    },
+    {
+      "kanji": "同",
+      "primaryMeaning": "same",
+      "otherMeaning": "agree",
+      "onReading": [{ "kana": "ドウ", "romaji": "dou" }],
+      "kunReading": [{ "kana": "おなじ", "romaji": "onaji" }],
+      "commonWords": [{ "word": "同じ", "readingKana": "おなじ", "readingRomaji": "onaji", "meaning": "same" }]
+    },
+    {
+      "kanji": "事",
+      "primaryMeaning": "thing",
+      "otherMeaning": "matter, fact",
+      "onReading": [{ "kana": "ジ", "romaji": "ji" }],
+      "kunReading": [{ "kana": "こと", "romaji": "koto" }],
+      "commonWords": [{ "word": "仕事", "readingKana": "しごと", "readingRomaji": "shigoto", "meaning": "work" }]
+    },
+    {
+      "kanji": "自",
+      "primaryMeaning": "self",
+      "otherMeaning": "oneself",
+      "onReading": [{ "kana": "ジ", "romaji": "ji" }, { "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "みずから", "romaji": "mizukara" }],
+      "commonWords": [{ "word": "自分", "readingKana": "じぶん", "readingRomaji": "jibun", "meaning": "oneself" }]
+    },
+    {
+      "kanji": "社",
+      "primaryMeaning": "company",
+      "otherMeaning": "shrine",
+      "onReading": [{ "kana": "シャ", "romaji": "sha" }],
+      "kunReading": [{ "kana": "やしろ", "romaji": "yashiro" }],
+      "commonWords": [{ "word": "会社", "readingKana": "かいしゃ", "readingRomaji": "kaisha", "meaning": "company" }]
+    },
+    {
+      "kanji": "発",
+      "primaryMeaning": "depart",
+      "otherMeaning": "emit, start",
+      "onReading": [{ "kana": "ハツ", "romaji": "hatsu" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "発車", "readingKana": "はっしゃ", "readingRomaji": "hassha", "meaning": "departure" }]
+    },
+    {
+      "kanji": "者",
+      "primaryMeaning": "person",
+      "otherMeaning": "someone",
+      "onReading": [{ "kana": "シャ", "romaji": "sha" }],
+      "kunReading": [{ "kana": "もの", "romaji": "mono" }],
+      "commonWords": [{ "word": "学者", "readingKana": "がくしゃ", "readingRomaji": "gakusha", "meaning": "scholar" }]
+    },
+    {
+      "kanji": "地",
+      "primaryMeaning": "ground",
+      "otherMeaning": "earth",
+      "onReading": [{ "kana": "チ", "romaji": "chi" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "地図", "readingKana": "ちず", "readingRomaji": "chizu", "meaning": "map" }]
+    },
+    {
+      "kanji": "業",
+      "primaryMeaning": "business",
+      "otherMeaning": "work",
+      "onReading": [{ "kana": "ギョウ", "romaji": "gyou" }],
+      "kunReading": [{ "kana": "わざ", "romaji": "waza" }],
+      "commonWords": [{ "word": "授業", "readingKana": "じゅぎょう", "readingRomaji": "jugyou", "meaning": "lesson" }]
+    },
+    {
+      "kanji": "方",
+      "primaryMeaning": "direction",
+      "otherMeaning": "person, way",
+      "onReading": [{ "kana": "ホウ", "romaji": "hou" }],
+      "kunReading": [{ "kana": "かた", "romaji": "kata" }],
+      "commonWords": [{ "word": "方", "readingKana": "かた", "readingRomaji": "kata", "meaning": "person (polite)" }]
+    },
+    {
+      "kanji": "新",
+      "primaryMeaning": "new",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シン", "romaji": "shin" }],
+      "kunReading": [{ "kana": "あたらしい", "romaji": "atarashii" }],
+      "commonWords": [{ "word": "新しい", "readingKana": "あたらしい", "readingRomaji": "atarashii", "meaning": "new" }]
+    },
+    {
+      "kanji": "場",
+      "primaryMeaning": "place",
+      "otherMeaning": "location",
+      "onReading": [{ "kana": "ジョウ", "romaji": "jou" }],
+      "kunReading": [{ "kana": "ば", "romaji": "ba" }],
+      "commonWords": [{ "word": "場所", "readingKana": "ばしょ", "readingRomaji": "basho", "meaning": "place" }]
+    },
+    {
+      "kanji": "員",
+      "primaryMeaning": "member",
+      "otherMeaning": "employee",
+      "onReading": [{ "kana": "イン", "romaji": "in" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "社員", "readingKana": "しゃいん", "readingRomaji": "shain", "meaning": "employee" }]
+    },
+    {
+      "kanji": "立",
+      "primaryMeaning": "stand",
+      "otherMeaning": "rise",
+      "onReading": [{ "kana": "リツ", "romaji": "ritsu" }],
+      "kunReading": [{ "kana": "たつ", "romaji": "tatsu" }],
+      "commonWords": [{ "word": "立つ", "readingKana": "たつ", "readingRomaji": "tatsu", "meaning": "to stand" }]
+    },
+    {
+      "kanji": "開",
+      "primaryMeaning": "open",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "カイ", "romaji": "kai" }],
+      "kunReading": [{ "kana": "ひらく", "romaji": "hiraku" }, { "kana": "あける", "romaji": "akeru" }],
+      "commonWords": [{ "word": "開く", "readingKana": "ひらく", "readingRomaji": "hiraku", "meaning": "to open" }]
+    },
+    {
+      "kanji": "手",
+      "primaryMeaning": "hand",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シュ", "romaji": "shu" }],
+      "kunReading": [{ "kana": "て", "romaji": "te" }],
+      "commonWords": [{ "word": "手紙", "readingKana": "てがみ", "readingRomaji": "tegami", "meaning": "letter" }]
+    },
+    {
+      "kanji": "力",
+      "primaryMeaning": "power",
+      "otherMeaning": "strength",
+      "onReading": [{ "kana": "リョク", "romaji": "ryoku" }],
+      "kunReading": [{ "kana": "ちから", "romaji": "chikara" }],
+      "commonWords": [{ "word": "力", "readingKana": "ちから", "readingRomaji": "chikara", "meaning": "power" }]
+    },
+    {
+      "kanji": "問",
+      "primaryMeaning": "question",
+      "otherMeaning": "problem",
+      "onReading": [{ "kana": "モン", "romaji": "mon" }],
+      "kunReading": [{ "kana": "とう", "romaji": "tou" }],
+      "commonWords": [{ "word": "問題", "readingKana": "もんだい", "readingRomaji": "mondai", "meaning": "problem" }]
+    },
+    {
+      "kanji": "代",
+      "primaryMeaning": "generation",
+      "otherMeaning": "substitute",
+      "onReading": [{ "kana": "ダイ", "romaji": "dai" }],
+      "kunReading": [{ "kana": "かわる", "romaji": "kawaru" }],
+      "commonWords": [{ "word": "時代", "readingKana": "じだい", "readingRomaji": "jidai", "meaning": "era" }]
+    },
+    {
+      "kanji": "明",
+      "primaryMeaning": "bright",
+      "otherMeaning": "clear",
+      "onReading": [{ "kana": "メイ", "romaji": "mei" }],
+      "kunReading": [{ "kana": "あかるい", "romaji": "akarui" }],
+      "commonWords": [{ "word": "明るい", "readingKana": "あかるい", "readingRomaji": "akarui", "meaning": "bright" }]
+    },
+    {
+      "kanji": "動",
+      "primaryMeaning": "move",
+      "otherMeaning": "motion",
+      "onReading": [{ "kana": "ドウ", "romaji": "dou" }],
+      "kunReading": [{ "kana": "うごく", "romaji": "ugoku" }],
+      "commonWords": [{ "word": "動く", "readingKana": "うごく", "readingRomaji": "ugoku", "meaning": "to move" }]
+    },
+    {
+      "kanji": "京",
+      "primaryMeaning": "capital",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "キョウ", "romaji": "kyou" }],
+      "kunReading": [{ "kana": "みやこ", "romaji": "miyako" }],
+      "commonWords": [{ "word": "東京", "readingKana": "とうきょう", "readingRomaji": "toukyou", "meaning": "Tokyo" }]
+    },
+    {
+      "kanji": "目",
+      "primaryMeaning": "eye",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "モク", "romaji": "moku" }],
+      "kunReading": [{ "kana": "め", "romaji": "me" }],
+      "commonWords": [{ "word": "目", "readingKana": "め", "readingRomaji": "me", "meaning": "eye" }]
+    },
+    {
+      "kanji": "通",
+      "primaryMeaning": "pass",
+      "otherMeaning": "traffic",
+      "onReading": [{ "kana": "ツウ", "romaji": "tsuu" }],
+      "kunReading": [{ "kana": "とおる", "romaji": "tooru" }],
+      "commonWords": [{ "word": "通る", "readingKana": "とおる", "readingRomaji": "tooru", "meaning": "to pass" }]
+    },
+    {
+      "kanji": "言",
+      "primaryMeaning": "say",
+      "otherMeaning": "word",
+      "onReading": [{ "kana": "ゲン", "romaji": "gen" }],
+      "kunReading": [{ "kana": "いう", "romaji": "iu" }],
+      "commonWords": [{ "word": "言う", "readingKana": "いう", "readingRomaji": "iu", "meaning": "to say" }]
+    },
+    {
+      "kanji": "理",
+      "primaryMeaning": "reason",
+      "otherMeaning": "logic",
+      "onReading": [{ "kana": "リ", "romaji": "ri" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "理由", "readingKana": "りゆう", "readingRomaji": "riyuu", "meaning": "reason" }]
+    },
+    {
+      "kanji": "体",
+      "primaryMeaning": "body",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "タイ", "romaji": "tai" }],
+      "kunReading": [{ "kana": "からだ", "romaji": "karada" }],
+      "commonWords": [{ "word": "体", "readingKana": "からだ", "readingRomaji": "karada", "meaning": "body" }]
+    },
+    {
+      "kanji": "田",
+      "primaryMeaning": "rice field",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "デン", "romaji": "den" }],
+      "kunReading": [{ "kana": "た", "romaji": "ta" }],
+      "commonWords": [{ "word": "田", "readingKana": "た", "readingRomaji": "ta", "meaning": "rice field" }]
+    },
+    {
+      "kanji": "主",
+      "primaryMeaning": "main",
+      "otherMeaning": "master",
+      "onReading": [{ "kana": "シュ", "romaji": "shu" }],
+      "kunReading": [{ "kana": "ぬし", "romaji": "nushi" }],
+      "commonWords": [{ "word": "主人", "readingKana": "しゅじん", "readingRomaji": "shujin", "meaning": "husband / master" }]
+    },
+    {
+      "kanji": "題",
+      "primaryMeaning": "topic",
+      "otherMeaning": "subject",
+      "onReading": [{ "kana": "ダイ", "romaji": "dai" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "問題", "readingKana": "もんだい", "readingRomaji": "mondai", "meaning": "problem" }]
+    },
+    {
+      "kanji": "意",
+      "primaryMeaning": "mind",
+      "otherMeaning": "idea",
+      "onReading": [{ "kana": "イ", "romaji": "i" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "意味", "readingKana": "いみ", "readingRomaji": "imi", "meaning": "meaning" }]
+    },
+    {
+      "kanji": "不",
+      "primaryMeaning": "not",
+      "otherMeaning": "negative",
+      "onReading": [{ "kana": "フ", "romaji": "fu" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "不味い", "readingKana": "まずい", "readingRomaji": "mazui", "meaning": "bad tasting" }]
+    },
+    {
+      "kanji": "作",
+      "primaryMeaning": "make",
+      "otherMeaning": "produce",
+      "onReading": [{ "kana": "サク", "romaji": "saku" }],
+      "kunReading": [{ "kana": "つくる", "romaji": "tsukuru" }],
+      "commonWords": [{ "word": "作る", "readingKana": "つくる", "readingRomaji": "tsukuru", "meaning": "to make" }]
+    },
+    {
+      "kanji": "用",
+      "primaryMeaning": "use",
+      "otherMeaning": "utilize",
+      "onReading": [{ "kana": "ヨウ", "romaji": "you" }],
+      "kunReading": [{ "kana": "もちいる", "romaji": "mochiiru" }],
+      "commonWords": [{ "word": "用事", "readingKana": "ようじ", "readingRomaji": "youji", "meaning": "errand" }]
+    },
+    {
+      "kanji": "度",
+      "primaryMeaning": "degree",
+      "otherMeaning": "time",
+      "onReading": [{ "kana": "ド", "romaji": "do" }],
+      "kunReading": [{ "kana": "たび", "romaji": "tabi" }],
+      "commonWords": [{ "word": "一度", "readingKana": "いちど", "readingRomaji": "ichido", "meaning": "once" }]
+    },
+    {
+      "kanji": "強",
+      "primaryMeaning": "strong",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "キョウ", "romaji": "kyou" }],
+      "kunReading": [{ "kana": "つよい", "romaji": "tsuyoi" }],
+      "commonWords": [{ "word": "強い", "readingKana": "つよい", "readingRomaji": "tsuyoi", "meaning": "strong" }]
+    },
+    {
+      "kanji": "公",
+      "primaryMeaning": "public",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "公園", "readingKana": "こうえん", "readingRomaji": "kouen", "meaning": "park" }]
+    },
+    {
+      "kanji": "持",
+      "primaryMeaning": "hold",
+      "otherMeaning": "have",
+      "onReading": [{ "kana": "ジ", "romaji": "ji" }],
+      "kunReading": [{ "kana": "もつ", "romaji": "motsu" }],
+      "commonWords": [{ "word": "持つ", "readingKana": "もつ", "readingRomaji": "motsu", "meaning": "to hold" }]
+    },
+    {
+      "kanji": "野",
+      "primaryMeaning": "field",
+      "otherMeaning": "plain",
+      "onReading": [{ "kana": "ヤ", "romaji": "ya" }],
+      "kunReading": [{ "kana": "の", "romaji": "no" }],
+      "commonWords": [{ "word": "野原", "readingKana": "のはら", "readingRomaji": "nohara", "meaning": "field" }]
+    },
+    {
+      "kanji": "以",
+      "primaryMeaning": "by means of",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "イ", "romaji": "i" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "以上", "readingKana": "いじょう", "readingRomaji": "ijou", "meaning": "more than" }]
+    },
+    {
+      "kanji": "思",
+      "primaryMeaning": "think",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "おもう", "romaji": "omou" }],
+      "commonWords": [{ "word": "思う", "readingKana": "おもう", "readingRomaji": "omou", "meaning": "to think" }]
+    },
+    {
+      "kanji": "家",
+      "primaryMeaning": "house",
+      "otherMeaning": "home",
+      "onReading": [{ "kana": "カ", "romaji": "ka" }],
+      "kunReading": [{ "kana": "いえ", "romaji": "ie" }, { "kana": "や", "romaji": "ya" }],
+      "commonWords": [{ "word": "家", "readingKana": "いえ", "readingRomaji": "ie", "meaning": "house" }]
+    },
+    {
+      "kanji": "画",
+      "primaryMeaning": "picture",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ガ", "romaji": "ga" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "映画", "readingKana": "えいが", "readingRomaji": "eiga", "meaning": "movie" }]
+    },
+    {
+      "kanji": "海",
+      "primaryMeaning": "sea",
+      "otherMeaning": "ocean",
+      "onReading": [{ "kana": "カイ", "romaji": "kai" }],
+      "kunReading": [{ "kana": "うみ", "romaji": "umi" }],
+      "commonWords": [{ "word": "海", "readingKana": "うみ", "readingRomaji": "umi", "meaning": "sea" }]
+    },
+    {
+      "kanji": "回",
+      "primaryMeaning": "times",
+      "otherMeaning": "turn",
+      "onReading": [{ "kana": "カイ", "romaji": "kai" }],
+      "kunReading": [{ "kana": "まわす", "romaji": "mawasu" }],
+      "commonWords": [{ "word": "回る", "readingKana": "まわる", "readingRomaji": "mawaru", "meaning": "to turn" }]
+    },
+    {
+      "kanji": "界",
+      "primaryMeaning": "world",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "カイ", "romaji": "kai" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "世界", "readingKana": "せかい", "readingRomaji": "sekai", "meaning": "world" }]
+    },
+    {
+      "kanji": "楽",
+      "primaryMeaning": "comfort",
+      "otherMeaning": "music",
+      "onReading": [{ "kana": "ガク", "romaji": "gaku" }],
+      "kunReading": [{ "kana": "たのしい", "romaji": "tanoshii" }],
+      "commonWords": [{ "word": "音楽", "readingKana": "おんがく", "readingRomaji": "ongaku", "meaning": "music" }]
+    },
+    {
+      "kanji": "館",
+      "primaryMeaning": "building",
+      "otherMeaning": "hall",
+      "onReading": [{ "kana": "カン", "romaji": "kan" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "図書館", "readingKana": "としょかん", "readingRomaji": "toshokan", "meaning": "library" }]
+    },
+    {
+      "kanji": "漢",
+      "primaryMeaning": "China",
+      "otherMeaning": "Chinese",
+      "onReading": [{ "kana": "カン", "romaji": "kan" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "漢字", "readingKana": "かんじ", "readingRomaji": "kanji", "meaning": "kanji" }]
+    },
+    {
+      "kanji": "寒",
+      "primaryMeaning": "cold",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "カン", "romaji": "kan" }],
+      "kunReading": [{ "kana": "さむい", "romaji": "samui" }],
+      "commonWords": [{ "word": "寒い", "readingKana": "さむい", "readingRomaji": "samui", "meaning": "cold" }]
+    },
+    {
+      "kanji": "顔",
+      "primaryMeaning": "face",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ガン", "romaji": "gan" }],
+      "kunReading": [{ "kana": "かお", "romaji": "kao" }],
+      "commonWords": [{ "word": "顔", "readingKana": "かお", "readingRomaji": "kao", "meaning": "face" }]
+    },
+    {
+      "kanji": "帰",
+      "primaryMeaning": "return",
+      "otherMeaning": "go home",
+      "onReading": [{ "kana": "キ", "romaji": "ki" }],
+      "kunReading": [{ "kana": "かえる", "romaji": "kaeru" }],
+      "commonWords": [{ "word": "帰る", "readingKana": "かえる", "readingRomaji": "kaeru", "meaning": "to return home" }]
+    },
+    {
+      "kanji": "起",
+      "primaryMeaning": "wake up",
+      "otherMeaning": "rise",
+      "onReading": [{ "kana": "キ", "romaji": "ki" }],
+      "kunReading": [{ "kana": "おきる", "romaji": "okiru" }],
+      "commonWords": [{ "word": "起きる", "readingKana": "おきる", "readingRomaji": "okiru", "meaning": "to wake up" }]
+    },
+    {
+      "kanji": "究",
+      "primaryMeaning": "research",
+      "otherMeaning": "investigate",
+      "onReading": [{ "kana": "キュウ", "romaji": "kyuu" }],
+      "kunReading": [{ "kana": "きわめる", "romaji": "kiwameru" }],
+      "commonWords": [{ "word": "研究", "readingKana": "けんきゅう", "readingRomaji": "kenkyuu", "meaning": "research" }]
+    },
+    {
+      "kanji": "急",
+      "primaryMeaning": "urgent",
+      "otherMeaning": "sudden",
+      "onReading": [{ "kana": "キュウ", "romaji": "kyuu" }],
+      "kunReading": [{ "kana": "いそぐ", "romaji": "isogu" }],
+      "commonWords": [{ "word": "急ぐ", "readingKana": "いそぐ", "readingRomaji": "isogu", "meaning": "to hurry" }]
+    },
+    {
+      "kanji": "牛",
+      "primaryMeaning": "cow",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ギュウ", "romaji": "gyuu" }],
+      "kunReading": [{ "kana": "うし", "romaji": "ushi" }],
+      "commonWords": [{ "word": "牛", "readingKana": "うし", "readingRomaji": "ushi", "meaning": "cow" }]
+    },
+    {
+      "kanji": "去",
+      "primaryMeaning": "leave",
+      "otherMeaning": "past",
+      "onReading": [{ "kana": "キョ", "romaji": "kyo" }],
+      "kunReading": [{ "kana": "さる", "romaji": "saru" }],
+      "commonWords": [{ "word": "去年", "readingKana": "きょねん", "readingRomaji": "kyonen", "meaning": "last year" }]
+    },
+    {
+      "kanji": "教",
+      "primaryMeaning": "teach",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "キョウ", "romaji": "kyou" }],
+      "kunReading": [{ "kana": "おしえる", "romaji": "oshieru" }],
+      "commonWords": [{ "word": "教える", "readingKana": "おしえる", "readingRomaji": "oshieru", "meaning": "to teach" }]
+    },
+    {
+      "kanji": "近",
+      "primaryMeaning": "near",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "キン", "romaji": "kin" }],
+      "kunReading": [{ "kana": "ちかい", "romaji": "chikai" }],
+      "commonWords": [{ "word": "近い", "readingKana": "ちかい", "readingRomaji": "chikai", "meaning": "near" }]
+    },
+    {
+      "kanji": "銀",
+      "primaryMeaning": "silver",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ギン", "romaji": "gin" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "銀行", "readingKana": "ぎんこう", "readingRomaji": "ginkou", "meaning": "bank" }]
+    },
+    {
+      "kanji": "区",
+      "primaryMeaning": "district",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ク", "romaji": "ku" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "区", "readingKana": "く", "readingRomaji": "ku", "meaning": "ward / district" }]
+    },
+    {
+      "kanji": "計",
+      "primaryMeaning": "measure",
+      "otherMeaning": "plan",
+      "onReading": [{ "kana": "ケイ", "romaji": "kei" }],
+      "kunReading": [{ "kana": "はかる", "romaji": "hakaru" }],
+      "commonWords": [{ "word": "計画", "readingKana": "けいかく", "readingRomaji": "keikaku", "meaning": "plan" }]
+    },
+    {
+      "kanji": "兄",
+      "primaryMeaning": "older brother",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ケイ", "romaji": "kei" }],
+      "kunReading": [{ "kana": "あに", "romaji": "ani" }],
+      "commonWords": [{ "word": "兄", "readingKana": "あに", "readingRomaji": "ani", "meaning": "older brother" }]
+    },
+    {
+      "kanji": "軽",
+      "primaryMeaning": "light",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ケイ", "romaji": "kei" }],
+      "kunReading": [{ "kana": "かるい", "romaji": "karui" }],
+      "commonWords": [{ "word": "軽い", "readingKana": "かるい", "readingRomaji": "karui", "meaning": "light" }]
+    },
+    {
+      "kanji": "犬",
+      "primaryMeaning": "dog",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ケン", "romaji": "ken" }],
+      "kunReading": [{ "kana": "いぬ", "romaji": "inu" }],
+      "commonWords": [{ "word": "犬", "readingKana": "いぬ", "readingRomaji": "inu", "meaning": "dog" }]
+    },
+    {
+      "kanji": "研",
+      "primaryMeaning": "polish",
+      "otherMeaning": "research",
+      "onReading": [{ "kana": "ケン", "romaji": "ken" }],
+      "kunReading": [{ "kana": "とぐ", "romaji": "togu" }],
+      "commonWords": [{ "word": "研究", "readingKana": "けんきゅう", "readingRomaji": "kenkyuu", "meaning": "research" }]
+    },
+    {
+      "kanji": "県",
+      "primaryMeaning": "prefecture",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ケン", "romaji": "ken" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "県", "readingKana": "けん", "readingRomaji": "ken", "meaning": "prefecture" }]
+    },
+    {
+      "kanji": "建",
+      "primaryMeaning": "build",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ケン", "romaji": "ken" }],
+      "kunReading": [{ "kana": "たてる", "romaji": "tateru" }],
+      "commonWords": [{ "word": "建物", "readingKana": "たてもの", "readingRomaji": "tatemono", "meaning": "building" }]
+    },
+    {
+      "kanji": "験",
+      "primaryMeaning": "test",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ケン", "romaji": "ken" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "試験", "readingKana": "しけん", "readingRomaji": "shiken", "meaning": "exam" }]
+    },
+    {
+      "kanji": "元",
+      "primaryMeaning": "origin",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ゲン", "romaji": "gen" }],
+      "kunReading": [{ "kana": "もと", "romaji": "moto" }],
+      "commonWords": [{ "word": "元気", "readingKana": "げんき", "readingRomaji": "genki", "meaning": "healthy" }]
+    },
+    {
+      "kanji": "工",
+      "primaryMeaning": "work",
+      "otherMeaning": "construction",
+      "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "工場", "readingKana": "こうじょう", "readingRomaji": "koujou", "meaning": "factory" }]
+    },
+    {
+      "kanji": "広",
+      "primaryMeaning": "wide",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+      "kunReading": [{ "kana": "ひろい", "romaji": "hiroi" }],
+      "commonWords": [{ "word": "広い", "readingKana": "ひろい", "readingRomaji": "hiroi", "meaning": "wide" }]
+    },
+    {
+      "kanji": "考",
+      "primaryMeaning": "think",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+      "kunReading": [{ "kana": "かんがえる", "romaji": "kangaeru" }],
+      "commonWords": [{ "word": "考える", "readingKana": "かんがえる", "readingRomaji": "kangaeru", "meaning": "to think" }]
+    },
+    {
+      "kanji": "光",
+      "primaryMeaning": "light",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+      "kunReading": [{ "kana": "ひかり", "romaji": "hikari" }],
+      "commonWords": [{ "word": "光", "readingKana": "ひかり", "readingRomaji": "hikari", "meaning": "light" }]
+    },
+    {
+      "kanji": "好",
+      "primaryMeaning": "like",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "コウ", "romaji": "kou" }],
+      "kunReading": [{ "kana": "すき", "romaji": "suki" }],
+      "commonWords": [{ "word": "好き", "readingKana": "すき", "readingRomaji": "suki", "meaning": "like" }]
+    },
+    {
+      "kanji": "合",
+      "primaryMeaning": "fit",
+      "otherMeaning": "join",
+      "onReading": [{ "kana": "ゴウ", "romaji": "gou" }],
+      "kunReading": [{ "kana": "あう", "romaji": "au" }],
+      "commonWords": [{ "word": "合う", "readingKana": "あう", "readingRomaji": "au", "meaning": "to fit" }]
+    },
+    {
+      "kanji": "黒",
+      "primaryMeaning": "black",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "コク", "romaji": "koku" }],
+      "kunReading": [{ "kana": "くろ", "romaji": "kuro" }],
+      "commonWords": [{ "word": "黒い", "readingKana": "くろい", "readingRomaji": "kuroi", "meaning": "black" }]
+    },
+    {
+      "kanji": "菜",
+      "primaryMeaning": "vegetable",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "サイ", "romaji": "sai" }],
+      "kunReading": [{ "kana": "な", "romaji": "na" }],
+      "commonWords": [{ "word": "野菜", "readingKana": "やさい", "readingRomaji": "yasai", "meaning": "vegetable" }]
+    },
+    {
+      "kanji": "産",
+      "primaryMeaning": "produce",
+      "otherMeaning": "birth",
+      "onReading": [{ "kana": "サン", "romaji": "san" }],
+      "kunReading": [{ "kana": "うむ", "romaji": "umu" }],
+      "commonWords": [{ "word": "生産", "readingKana": "せいさん", "readingRomaji": "seisan", "meaning": "production" }]
+    },
+    {
+      "kanji": "紙",
+      "primaryMeaning": "paper",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "かみ", "romaji": "kami" }],
+      "commonWords": [{ "word": "紙", "readingKana": "かみ", "readingRomaji": "kami", "meaning": "paper" }]
+    },
+    {
+      "kanji": "姉",
+      "primaryMeaning": "older sister",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "あね", "romaji": "ane" }],
+      "commonWords": [{ "word": "姉", "readingKana": "あね", "readingRomaji": "ane", "meaning": "older sister" }]
+    },
+    {
+      "kanji": "止",
+      "primaryMeaning": "stop",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "とまる", "romaji": "tomaru" }],
+      "commonWords": [{ "word": "止まる", "readingKana": "とまる", "readingRomaji": "tomaru", "meaning": "to stop" }]
+    },
+    {
+      "kanji": "市",
+      "primaryMeaning": "city",
+      "otherMeaning": "market",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "いち", "romaji": "ichi" }],
+      "commonWords": [{ "word": "市", "readingKana": "し", "readingRomaji": "shi", "meaning": "city" }]
+    },
+    {
+      "kanji": "仕",
+      "primaryMeaning": "serve",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "つかえる", "romaji": "tsukaeru" }],
+      "commonWords": [{ "word": "仕事", "readingKana": "しごと", "readingRomaji": "shigoto", "meaning": "work" }]
+    },
+    {
+      "kanji": "死",
+      "primaryMeaning": "death",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "しぬ", "romaji": "shinu" }],
+      "commonWords": [{ "word": "死ぬ", "readingKana": "しぬ", "readingRomaji": "shinu", "meaning": "to die" }]
+    },
+    {
+      "kanji": "使",
+      "primaryMeaning": "use",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "つかう", "romaji": "tsukau" }],
+      "commonWords": [{ "word": "使う", "readingKana": "つかう", "readingRomaji": "tsukau", "meaning": "to use" }]
+    },
+    {
+      "kanji": "始",
+      "primaryMeaning": "begin",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "はじめる", "romaji": "hajimeru" }],
+      "commonWords": [{ "word": "始まる", "readingKana": "はじまる", "readingRomaji": "hajimaru", "meaning": "to begin" }]
+    },
+    {
+      "kanji": "試",
+      "primaryMeaning": "test",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "ためす", "romaji": "tamesu" }],
+      "commonWords": [{ "word": "試験", "readingKana": "しけん", "readingRomaji": "shiken", "meaning": "exam" }]
+    },
+    {
+      "kanji": "私",
+      "primaryMeaning": "I",
+      "otherMeaning": "private",
+      "onReading": [{ "kana": "シ", "romaji": "shi" }],
+      "kunReading": [{ "kana": "わたし", "romaji": "watashi" }],
+      "commonWords": [{ "word": "私", "readingKana": "わたし", "readingRomaji": "watashi", "meaning": "I" }]
+    },
+    {
+      "kanji": "字",
+      "primaryMeaning": "character",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ジ", "romaji": "ji" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "漢字", "readingKana": "かんじ", "readingRomaji": "kanji", "meaning": "kanji" }]
+    },
+    {
+      "kanji": "室",
+      "primaryMeaning": "room",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シツ", "romaji": "shitsu" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "教室", "readingKana": "きょうしつ", "readingRomaji": "kyoushitsu", "meaning": "classroom" }]
+    },
+    {
+      "kanji": "写",
+      "primaryMeaning": "copy",
+      "otherMeaning": "photograph",
+      "onReading": [{ "kana": "シャ", "romaji": "sha" }],
+      "kunReading": [{ "kana": "うつす", "romaji": "utsusu" }],
+      "commonWords": [{ "word": "写真", "readingKana": "しゃしん", "readingRomaji": "shashin", "meaning": "photo" }]
+    },
+    {
+      "kanji": "借",
+      "primaryMeaning": "borrow",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シャク", "romaji": "shaku" }],
+      "kunReading": [{ "kana": "かりる", "romaji": "kariru" }],
+      "commonWords": [{ "word": "借りる", "readingKana": "かりる", "readingRomaji": "kariru", "meaning": "to borrow" }]
+    },
+    {
+      "kanji": "弱",
+      "primaryMeaning": "weak",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ジャク", "romaji": "jaku" }],
+      "kunReading": [{ "kana": "よわい", "romaji": "yowai" }],
+      "commonWords": [{ "word": "弱い", "readingKana": "よわい", "readingRomaji": "yowai", "meaning": "weak" }]
+    },
+    {
+      "kanji": "首",
+      "primaryMeaning": "neck",
+      "otherMeaning": "head",
+      "onReading": [{ "kana": "シュ", "romaji": "shu" }],
+      "kunReading": [{ "kana": "くび", "romaji": "kubi" }],
+      "commonWords": [{ "word": "首", "readingKana": "くび", "readingRomaji": "kubi", "meaning": "neck" }]
+    },
+    {
+      "kanji": "秋",
+      "primaryMeaning": "autumn",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シュウ", "romaji": "shuu" }],
+      "kunReading": [{ "kana": "あき", "romaji": "aki" }],
+      "commonWords": [{ "word": "秋", "readingKana": "あき", "readingRomaji": "aki", "meaning": "autumn" }]
+    },
+    {
+      "kanji": "集",
+      "primaryMeaning": "gather",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シュウ", "romaji": "shuu" }],
+      "kunReading": [{ "kana": "あつまる", "romaji": "atsumaru" }],
+      "commonWords": [{ "word": "集まる", "readingKana": "あつまる", "readingRomaji": "atsumaru", "meaning": "to gather" }]
+    },
+    {
+      "kanji": "習",
+      "primaryMeaning": "learn",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シュウ", "romaji": "shuu" }],
+      "kunReading": [{ "kana": "ならう", "romaji": "narau" }],
+      "commonWords": [{ "word": "習う", "readingKana": "ならう", "readingRomaji": "narau", "meaning": "to learn" }]
+    },
+    {
+      "kanji": "終",
+      "primaryMeaning": "end",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シュウ", "romaji": "shuu" }],
+      "kunReading": [{ "kana": "おわる", "romaji": "owaru" }],
+      "commonWords": [{ "word": "終わる", "readingKana": "おわる", "readingRomaji": "owaru", "meaning": "to end" }]
+    },
+    {
+      "kanji": "住",
+      "primaryMeaning": "live",
+      "otherMeaning": "reside",
+      "onReading": [{ "kana": "ジュウ", "romaji": "juu" }],
+      "kunReading": [{ "kana": "すむ", "romaji": "sumu" }],
+      "commonWords": [{ "word": "住む", "readingKana": "すむ", "readingRomaji": "sumu", "meaning": "to live" }]
+    },
+    {
+      "kanji": "重",
+      "primaryMeaning": "heavy",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ジュウ", "romaji": "juu" }],
+      "kunReading": [{ "kana": "おもい", "romaji": "omoi" }],
+      "commonWords": [{ "word": "重い", "readingKana": "おもい", "readingRomaji": "omoi", "meaning": "heavy" }]
+    },
+    {
+      "kanji": "春",
+      "primaryMeaning": "spring",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シュン", "romaji": "shun" }],
+      "kunReading": [{ "kana": "はる", "romaji": "haru" }],
+      "commonWords": [{ "word": "春", "readingKana": "はる", "readingRomaji": "haru", "meaning": "spring" }]
+    },
+    {
+      "kanji": "所",
+      "primaryMeaning": "place",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ショ", "romaji": "sho" }],
+      "kunReading": [{ "kana": "ところ", "romaji": "tokoro" }],
+      "commonWords": [{ "word": "所", "readingKana": "ところ", "readingRomaji": "tokoro", "meaning": "place" }]
+    },
+    {
+      "kanji": "暑",
+      "primaryMeaning": "hot",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ショ", "romaji": "sho" }],
+      "kunReading": [{ "kana": "あつい", "romaji": "atsui" }],
+      "commonWords": [{ "word": "暑い", "readingKana": "あつい", "readingRomaji": "atsui", "meaning": "hot" }]
+    },
+    {
+      "kanji": "乗",
+      "primaryMeaning": "ride",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ジョウ", "romaji": "jou" }],
+      "kunReading": [{ "kana": "のる", "romaji": "noru" }],
+      "commonWords": [{ "word": "乗る", "readingKana": "のる", "readingRomaji": "noru", "meaning": "to ride" }]
+    },
+    {
+      "kanji": "色",
+      "primaryMeaning": "color",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ショク", "romaji": "shoku" }],
+      "kunReading": [{ "kana": "いろ", "romaji": "iro" }],
+      "commonWords": [{ "word": "色", "readingKana": "いろ", "readingRomaji": "iro", "meaning": "color" }]
+    },
+    {
+      "kanji": "森",
+      "primaryMeaning": "forest",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シン", "romaji": "shin" }],
+      "kunReading": [{ "kana": "もり", "romaji": "mori" }],
+      "commonWords": [{ "word": "森", "readingKana": "もり", "readingRomaji": "mori", "meaning": "forest" }]
+    },
+    {
+      "kanji": "心",
+      "primaryMeaning": "heart",
+      "otherMeaning": "mind",
+      "onReading": [{ "kana": "シン", "romaji": "shin" }],
+      "kunReading": [{ "kana": "こころ", "romaji": "kokoro" }],
+      "commonWords": [{ "word": "心", "readingKana": "こころ", "readingRomaji": "kokoro", "meaning": "heart" }]
+    },
+    {
+      "kanji": "親",
+      "primaryMeaning": "parent",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シン", "romaji": "shin" }],
+      "kunReading": [{ "kana": "おや", "romaji": "oya" }],
+      "commonWords": [{ "word": "親", "readingKana": "おや", "readingRomaji": "oya", "meaning": "parent" }]
+    },
+    {
+      "kanji": "真",
+      "primaryMeaning": "true",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シン", "romaji": "shin" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "本当に", "readingKana": "ほんとうに", "readingRomaji": "hontouni", "meaning": "really" }]
+    },
+    {
+      "kanji": "進",
+      "primaryMeaning": "advance",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "シン", "romaji": "shin" }],
+      "kunReading": [{ "kana": "すすむ", "romaji": "susumu" }],
+      "commonWords": [{ "word": "進む", "readingKana": "すすむ", "readingRomaji": "susumu", "meaning": "to advance" }]
+    },
+    {
+      "kanji": "図",
+      "primaryMeaning": "drawing",
+      "otherMeaning": "plan",
+      "onReading": [{ "kana": "ズ", "romaji": "zu" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "図書館", "readingKana": "としょかん", "readingRomaji": "toshokan", "meaning": "library" }]
+    },
+    {
+      "kanji": "青",
+      "primaryMeaning": "blue",
+      "otherMeaning": "green",
+      "onReading": [{ "kana": "セイ", "romaji": "sei" }],
+      "kunReading": [{ "kana": "あお", "romaji": "ao" }],
+      "commonWords": [{ "word": "青い", "readingKana": "あおい", "readingRomaji": "aoi", "meaning": "blue" }]
+    },
+    {
+      "kanji": "正",
+      "primaryMeaning": "correct",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セイ", "romaji": "sei" }],
+      "kunReading": [{ "kana": "ただしい", "romaji": "tadashii" }],
+      "commonWords": [{ "word": "正しい", "readingKana": "ただしい", "readingRomaji": "tadashii", "meaning": "correct" }]
+    },
+    {
+      "kanji": "声",
+      "primaryMeaning": "voice",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セイ", "romaji": "sei" }],
+      "kunReading": [{ "kana": "こえ", "romaji": "koe" }],
+      "commonWords": [{ "word": "声", "readingKana": "こえ", "readingRomaji": "koe", "meaning": "voice" }]
+    },
+    {
+      "kanji": "世",
+      "primaryMeaning": "world",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セイ", "romaji": "sei" }],
+      "kunReading": [{ "kana": "よ", "romaji": "yo" }],
+      "commonWords": [{ "word": "世界", "readingKana": "せかい", "readingRomaji": "sekai", "meaning": "world" }]
+    },
+    {
+      "kanji": "赤",
+      "primaryMeaning": "red",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セキ", "romaji": "seki" }],
+      "kunReading": [{ "kana": "あか", "romaji": "aka" }],
+      "commonWords": [{ "word": "赤い", "readingKana": "あかい", "readingRomaji": "akai", "meaning": "red" }]
+    },
+    {
+      "kanji": "夕",
+      "primaryMeaning": "evening",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セキ", "romaji": "seki" }],
+      "kunReading": [{ "kana": "ゆう", "romaji": "yuu" }],
+      "commonWords": [{ "word": "夕方", "readingKana": "ゆうがた", "readingRomaji": "yuugata", "meaning": "evening" }]
+    },
+    {
+      "kanji": "切",
+      "primaryMeaning": "cut",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セツ", "romaji": "setsu" }],
+      "kunReading": [{ "kana": "きる", "romaji": "kiru" }],
+      "commonWords": [{ "word": "切る", "readingKana": "きる", "readingRomaji": "kiru", "meaning": "to cut" }]
+    },
+    {
+      "kanji": "説",
+      "primaryMeaning": "explain",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セツ", "romaji": "setsu" }],
+      "kunReading": [{ "kana": "とく", "romaji": "toku" }],
+      "commonWords": [{ "word": "説明", "readingKana": "せつめい", "readingRomaji": "setsumei", "meaning": "explanation" }]
+    },
+    {
+      "kanji": "洗",
+      "primaryMeaning": "wash",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "セン", "romaji": "sen" }],
+      "kunReading": [{ "kana": "あらう", "romaji": "arau" }],
+      "commonWords": [{ "word": "洗う", "readingKana": "あらう", "readingRomaji": "arau", "meaning": "to wash" }]
+    },
+    {
+      "kanji": "早",
+      "primaryMeaning": "early",
+      "otherMeaning": "fast",
+      "onReading": [{ "kana": "ソウ", "romaji": "sou" }],
+      "kunReading": [{ "kana": "はやい", "romaji": "hayai" }],
+      "commonWords": [{ "word": "早い", "readingKana": "はやい", "readingRomaji": "hayai", "meaning": "early" }]
+    },
+    {
+      "kanji": "走",
+      "primaryMeaning": "run",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ソウ", "romaji": "sou" }],
+      "kunReading": [{ "kana": "はしる", "romaji": "hashiru" }],
+      "commonWords": [{ "word": "走る", "readingKana": "はしる", "readingRomaji": "hashiru", "meaning": "to run" }]
+    },
+    {
+      "kanji": "送",
+      "primaryMeaning": "send",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ソウ", "romaji": "sou" }],
+      "kunReading": [{ "kana": "おくる", "romaji": "okuru" }],
+      "commonWords": [{ "word": "送る", "readingKana": "おくる", "readingRomaji": "okuru", "meaning": "to send" }]
+    },
+    {
+      "kanji": "族",
+      "primaryMeaning": "family",
+      "otherMeaning": "tribe",
+      "onReading": [{ "kana": "ゾク", "romaji": "zoku" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "家族", "readingKana": "かぞく", "readingRomaji": "kazoku", "meaning": "family" }]
+    },
+    {
+      "kanji": "村",
+      "primaryMeaning": "village",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "ソン", "romaji": "son" }],
+      "kunReading": [{ "kana": "むら", "romaji": "mura" }],
+      "commonWords": [{ "word": "村", "readingKana": "むら", "readingRomaji": "mura", "meaning": "village" }]
+    },
+    {
+      "kanji": "太",
+      "primaryMeaning": "thick",
+      "otherMeaning": "big",
+      "onReading": [{ "kana": "タイ", "romaji": "tai" }],
+      "kunReading": [{ "kana": "ふとい", "romaji": "futoi" }],
+      "commonWords": [{ "word": "太い", "readingKana": "ふとい", "readingRomaji": "futoi", "meaning": "thick" }]
+    },
+    {
+      "kanji": "待",
+      "primaryMeaning": "wait",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "タイ", "romaji": "tai" }],
+      "kunReading": [{ "kana": "まつ", "romaji": "matsu" }],
+      "commonWords": [{ "word": "待つ", "readingKana": "まつ", "readingRomaji": "matsu", "meaning": "to wait" }]
+    },
+    {
+      "kanji": "貸",
+      "primaryMeaning": "lend",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "タイ", "romaji": "tai" }],
+      "kunReading": [{ "kana": "かす", "romaji": "kasu" }],
+      "commonWords": [{ "word": "貸す", "readingKana": "かす", "readingRomaji": "kasu", "meaning": "to lend" }]
+    },
+    {
+      "kanji": "台",
+      "primaryMeaning": "stand",
+      "otherMeaning": "platform",
+      "onReading": [{ "kana": "ダイ", "romaji": "dai" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "台所", "readingKana": "だいどころ", "readingRomaji": "daidokoro", "meaning": "kitchen" }]
+    },
+    {
+      "kanji": "短",
+      "primaryMeaning": "short",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "タン", "romaji": "tan" }],
+      "kunReading": [{ "kana": "みじかい", "romaji": "mijikai" }],
+      "commonWords": [{ "word": "短い", "readingKana": "みじかい", "readingRomaji": "mijikai", "meaning": "short" }]
+    },
+    {
+      "kanji": "知",
+      "primaryMeaning": "know",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "チ", "romaji": "chi" }],
+      "kunReading": [{ "kana": "しる", "romaji": "shiru" }],
+      "commonWords": [{ "word": "知る", "readingKana": "しる", "readingRomaji": "shiru", "meaning": "to know" }]
+    },
+    {
+      "kanji": "池",
+      "primaryMeaning": "pond",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "チ", "romaji": "chi" }],
+      "kunReading": [{ "kana": "いけ", "romaji": "ike" }],
+      "commonWords": [{ "word": "池", "readingKana": "いけ", "readingRomaji": "ike", "meaning": "pond" }]
+    },
+    {
+      "kanji": "茶",
+      "primaryMeaning": "tea",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "チャ", "romaji": "cha" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "お茶", "readingKana": "おちゃ", "readingRomaji": "ocha", "meaning": "tea" }]
+    },
+    {
+      "kanji": "着",
+      "primaryMeaning": "wear",
+      "otherMeaning": "arrive",
+      "onReading": [{ "kana": "チャク", "romaji": "chaku" }],
+      "kunReading": [{ "kana": "きる", "romaji": "kiru" }],
+      "commonWords": [{ "word": "着る", "readingKana": "きる", "readingRomaji": "kiru", "meaning": "to wear" }]
+    },
+    {
+      "kanji": "昼",
+      "primaryMeaning": "noon",
+      "otherMeaning": "daytime",
+      "onReading": [{ "kana": "チュウ", "romaji": "chuu" }],
+      "kunReading": [{ "kana": "ひる", "romaji": "hiru" }],
+      "commonWords": [{ "word": "昼", "readingKana": "ひる", "readingRomaji": "hiru", "meaning": "noon" }]
+    },
+    {
+      "kanji": "悪",
+      "primaryMeaning": "bad",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "アク", "romaji": "aku" }],
+      "kunReading": [{ "kana": "わるい", "romaji": "warui" }],
+      "commonWords": [{ "word": "悪い", "readingKana": "わるい", "readingRomaji": "warui", "meaning": "bad" }]
+    },
+    {
+      "kanji": "暗",
+      "primaryMeaning": "dark",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "アン", "romaji": "an" }],
+      "kunReading": [{ "kana": "くらい", "romaji": "kurai" }],
+      "commonWords": [{ "word": "暗い", "readingKana": "くらい", "readingRomaji": "kurai", "meaning": "dark" }]
+    },
+    {
+      "kanji": "医",
+      "primaryMeaning": "medicine",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "イ", "romaji": "i" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "医者", "readingKana": "いしゃ", "readingRomaji": "isha", "meaning": "doctor" }]
+    },
+    {
+      "kanji": "引",
+      "primaryMeaning": "pull",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "イン", "romaji": "in" }],
+      "kunReading": [{ "kana": "ひく", "romaji": "hiku" }],
+      "commonWords": [{ "word": "引く", "readingKana": "ひく", "readingRomaji": "hiku", "meaning": "to pull" }]
+    },
+    {
+      "kanji": "院",
+      "primaryMeaning": "institution",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "イン", "romaji": "in" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "病院", "readingKana": "びょういん", "readingRomaji": "byouin", "meaning": "hospital" }]
+    },
+    {
+      "kanji": "運",
+      "primaryMeaning": "carry",
+      "otherMeaning": "luck",
+      "onReading": [{ "kana": "ウン", "romaji": "un" }],
+      "kunReading": [{ "kana": "はこぶ", "romaji": "hakobu" }],
+      "commonWords": [{ "word": "運ぶ", "readingKana": "はこぶ", "readingRomaji": "hakobu", "meaning": "to carry" }]
+    },
+    {
+      "kanji": "英",
+      "primaryMeaning": "English",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "エイ", "romaji": "ei" }],
+      "kunReading": [],
+      "commonWords": [{ "word": "英語", "readingKana": "えいご", "readingRomaji": "eigo", "meaning": "English" }]
+    },
+    {
+      "kanji": "映",
+      "primaryMeaning": "reflect",
+      "otherMeaning": "project",
+      "onReading": [{ "kana": "エイ", "romaji": "ei" }],
+      "kunReading": [{ "kana": "うつる", "romaji": "utsuru" }],
+      "commonWords": [{ "word": "映画", "readingKana": "えいが", "readingRomaji": "eiga", "meaning": "movie" }]
+    },
+    {
+      "kanji": "遠",
+      "primaryMeaning": "far",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "エン", "romaji": "en" }],
+      "kunReading": [{ "kana": "とおい", "romaji": "tooi" }],
+      "commonWords": [{ "word": "遠い", "readingKana": "とおい", "readingRomaji": "tooi", "meaning": "far" }]
+    },
+    {
+      "kanji": "屋",
+      "primaryMeaning": "house",
+      "otherMeaning": "shop",
+      "onReading": [{ "kana": "オク", "romaji": "oku" }],
+      "kunReading": [{ "kana": "や", "romaji": "ya" }],
+      "commonWords": [{ "word": "部屋", "readingKana": "へや", "readingRomaji": "heya", "meaning": "room" }]
+    },
+    {
+      "kanji": "音",
+      "primaryMeaning": "sound",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "オン", "romaji": "on" }],
+      "kunReading": [{ "kana": "おと", "romaji": "oto" }],
+      "commonWords": [{ "word": "音楽", "readingKana": "おんがく", "readingRomaji": "ongaku", "meaning": "music" }]
+    },
+    {
+      "kanji": "歌",
+      "primaryMeaning": "song",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "カ", "romaji": "ka" }],
+      "kunReading": [{ "kana": "うた", "romaji": "uta" }],
+      "commonWords": [{ "word": "歌", "readingKana": "うた", "readingRomaji": "uta", "meaning": "song" }]
+    },
+    {
+      "kanji": "夏",
+      "primaryMeaning": "summer",
+      "otherMeaning": "",
+      "onReading": [{ "kana": "カ", "romaji": "ka" }],
+      "kunReading": [{ "kana": "なつ", "romaji": "natsu" }],
+      "commonWords": [{ "word": "夏", "readingKana": "なつ", "readingRomaji": "natsu", "meaning": "summer" }]
+    }
+  ]
