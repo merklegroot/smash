@@ -6,6 +6,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { formatReadings } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
+import {
+  listN5LevelRows,
+  n5LevelLabelForTrainingSet,
+} from "@/lib/training-sets/n5-levels";
 import { loadSmashPoolPreference, saveSmashPoolPreference } from "@/lib/training-sets/preference";
 import { loadTrainingSets } from "@/lib/training-sets/storage";
 import type { TrainingSet } from "@/lib/training-sets/types";
@@ -252,7 +256,9 @@ export default function SmashPage() {
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(false);
-  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "instructions">("training");
+  const [rosterPanelTab, setRosterPanelTab] = useState<
+    "training" | "instructions" | "levels"
+  >("training");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
@@ -326,20 +332,28 @@ export default function SmashPage() {
     [trainingKanji],
   );
 
+  const n5LevelRows = useMemo(() => listN5LevelRows(trainingSets), [trainingSets]);
+
+  const selectTrainingSet = useCallback(
+    (saved: TrainingSet) => {
+      const chars = itemsForActiveChars(saved.kanjiChars, itemLookup).map((item) => item.kanji);
+      saveSmashPoolPreference(saved.id);
+      applyPracticePool({
+        allKanji: kanjiItems,
+        chars,
+        trainingSetId: saved.id,
+      });
+    },
+    [applyPracticePool, itemLookup, kanjiItems],
+  );
+
   function handlePoolChange(event: ChangeEvent<HTMLSelectElement>) {
-    const value = event.target.value;
-    const saved = trainingSets.find((s) => s.id === value);
+    const saved = trainingSets.find((s) => s.id === event.target.value);
     if (!saved) {
       return;
     }
 
-    const chars = itemsForActiveChars(saved.kanjiChars, itemLookup).map((item) => item.kanji);
-    saveSmashPoolPreference(saved.id);
-    applyPracticePool({
-      allKanji: kanjiItems,
-      chars,
-      trainingSetId: saved.id,
-    });
+    selectTrainingSet(saved);
   }
 
   useEffect(() => {
@@ -648,11 +662,15 @@ export default function SmashPage() {
               disabled={kanjiItems.length === 0 || trainingSets.length === 0}
               className="cursor-pointer rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm outline-none ring-zinc-400/30 transition hover:border-zinc-400 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:focus:ring-zinc-500/40"
             >
-              {trainingSets.map((set) => (
-                <option key={set.id} value={set.id}>
-                  {set.name} ({set.kanjiChars.length} kanji)
-                </option>
-              ))}
+              {trainingSets.map((set) => {
+                const level = n5LevelLabelForTrainingSet(set);
+                return (
+                  <option key={set.id} value={set.id}>
+                    {level ? `${level} · ` : ""}
+                    {set.name} ({set.kanjiChars.length} kanji)
+                  </option>
+                );
+              })}
             </select>
           </label>
           <Link
@@ -746,6 +764,21 @@ export default function SmashPage() {
                 >
                   Instructions
                 </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rosterPanelTab === "levels"}
+                  id="roster-tab-levels"
+                  aria-controls="roster-panel-levels"
+                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
+                    rosterPanelTab === "levels"
+                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
+                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
+                  }`}
+                  onClick={() => setRosterPanelTab("levels")}
+                >
+                  Levels
+                </button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
                 <div
@@ -809,6 +842,55 @@ export default function SmashPage() {
                     instead of only chasing mistakes. Only kanji from your selected training set
                     appear in the quiz.
                   </p>
+                </div>
+                <div
+                  role="tabpanel"
+                  id="roster-panel-levels"
+                  aria-labelledby="roster-tab-levels"
+                  hidden={rosterPanelTab !== "levels"}
+                >
+                  <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
+                    The default training sets are all N5. They use levels{" "}
+                    <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …
+                    (leading <span className="font-mono">1</span> = N5 tier). Pick one to load that
+                    set.
+                  </p>
+                  {n5LevelRows.length === 0 ? (
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                      None of the default N5 sets are in your saved list. Restore them on the
+                      Training sets page if you removed them.
+                    </p>
+                  ) : (
+                    <ul className="space-y-1.5">
+                      {n5LevelRows.map(({ levelLabel, set }) => {
+                        const selected = selectedTrainingSetId === set.id;
+
+                        return (
+                          <li key={set.id}>
+                            <button
+                              type="button"
+                              onClick={() => selectTrainingSet(set)}
+                              className={`flex w-full items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm transition ${
+                                selected
+                                  ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
+                                  : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
+                              }`}
+                            >
+                              <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-zinc-600 dark:text-zinc-300">
+                                {levelLabel}
+                              </span>
+                              <span className="min-w-0 flex-1 font-medium text-zinc-800 dark:text-zinc-100">
+                                {set.name}
+                              </span>
+                              <span className="shrink-0 text-xs tabular-nums text-zinc-500 dark:text-zinc-400">
+                                {set.kanjiChars.length}
+                              </span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </div>
               </div>
             </aside>
