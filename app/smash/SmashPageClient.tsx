@@ -656,9 +656,6 @@ export default function SmashPage() {
                   : (trainingSets[0]?.id ?? "")
               }
               onChange={handlePoolChange}
-              onFocus={() => {
-                setTrainingSets(loadTrainingSets());
-              }}
               disabled={kanjiItems.length === 0 || trainingSets.length === 0}
               className="cursor-pointer rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm outline-none ring-zinc-400/30 transition hover:border-zinc-400 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:focus:ring-zinc-500/40"
             >
@@ -677,24 +674,12 @@ export default function SmashPage() {
             href="/training-sets"
             className="text-xs font-medium text-sky-700 underline-offset-2 hover:underline dark:text-sky-300"
           >
-            Manage training sets
+            All training sets
           </Link>
           <p className="max-w-md text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
             Quiz draws meaning prompts and answer tiles only from the kanji in this set.
           </p>
         </div>
-        {kanjiItems.length > 0 && trainingSets.length === 0 ? (
-          <p className="rounded-xl border border-amber-200 bg-amber-50/90 px-4 py-3 text-sm text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-100">
-            Add at least one training set on the{" "}
-            <Link
-              href="/training-sets"
-              className="font-medium text-sky-800 underline-offset-2 hover:underline dark:text-sky-300"
-            >
-              Training sets
-            </Link>{" "}
-            page to practice.
-          </p>
-        ) : null}
         <div className="flex items-start gap-8">
           <div className="flex max-w-md flex-col items-center gap-3">
             <p className="max-w-md rounded-full border border-black/10 bg-white/70 px-5 py-2 text-center leading-snug shadow-sm dark:border-white/10 dark:bg-white/10">
@@ -855,42 +840,35 @@ export default function SmashPage() {
                     (leading <span className="font-mono">1</span> = N5 tier). Pick one to load that
                     set.
                   </p>
-                  {n5LevelRows.length === 0 ? (
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                      None of the default N5 sets are in your saved list. Restore them on the
-                      Training sets page if you removed them.
-                    </p>
-                  ) : (
-                    <ul className="space-y-1.5">
-                      {n5LevelRows.map(({ levelLabel, set }) => {
-                        const selected = selectedTrainingSetId === set.id;
+                  <ul className="space-y-1.5">
+                    {n5LevelRows.map(({ levelLabel, set }) => {
+                      const selected = selectedTrainingSetId === set.id;
 
-                        return (
-                          <li key={set.id}>
-                            <button
-                              type="button"
-                              onClick={() => selectTrainingSet(set)}
-                              className={`flex w-full items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm transition ${
-                                selected
-                                  ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
-                                  : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
-                              }`}
-                            >
-                              <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-zinc-600 dark:text-zinc-300">
-                                {levelLabel}
-                              </span>
-                              <span className="min-w-0 flex-1 font-medium text-zinc-800 dark:text-zinc-100">
-                                {set.name}
-                              </span>
-                              <span className="shrink-0 text-xs tabular-nums text-zinc-500 dark:text-zinc-400">
-                                {set.kanjiChars.length}
-                              </span>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
+                      return (
+                        <li key={set.id}>
+                          <button
+                            type="button"
+                            onClick={() => selectTrainingSet(set)}
+                            className={`flex w-full items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm transition ${
+                              selected
+                                ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
+                                : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
+                            }`}
+                          >
+                            <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-zinc-600 dark:text-zinc-300">
+                              {levelLabel}
+                            </span>
+                            <span className="min-w-0 flex-1 font-medium text-zinc-800 dark:text-zinc-100">
+                              {set.name}
+                            </span>
+                            <span className="shrink-0 text-xs tabular-nums text-zinc-500 dark:text-zinc-400">
+                              {set.kanjiChars.length}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               </div>
             </aside>
