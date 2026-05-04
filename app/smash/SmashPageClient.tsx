@@ -256,9 +256,7 @@ export default function SmashPage() {
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(false);
-  const [rosterPanelTab, setRosterPanelTab] = useState<
-    "training" | "instructions" | "levels"
-  >("training");
+  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("training");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
@@ -737,21 +735,6 @@ export default function SmashPage() {
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={rosterPanelTab === "instructions"}
-                  id="roster-tab-instructions"
-                  aria-controls="roster-panel-instructions"
-                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
-                    rosterPanelTab === "instructions"
-                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
-                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
-                  }`}
-                  onClick={() => setRosterPanelTab("instructions")}
-                >
-                  Instructions
-                </button>
-                <button
-                  type="button"
-                  role="tab"
                   aria-selected={rosterPanelTab === "levels"}
                   id="roster-tab-levels"
                   aria-controls="roster-panel-levels"
@@ -813,23 +796,6 @@ export default function SmashPage() {
                 </div>
                 <div
                   role="tabpanel"
-                  id="roster-panel-instructions"
-                  aria-labelledby="roster-tab-instructions"
-                  hidden={rosterPanelTab !== "instructions"}
-                >
-                  <p className="mb-2 text-xs font-semibold text-zinc-700 dark:text-zinc-200">
-                    How practice works
-                  </p>
-                  <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-300">
-                    Red pips mean you missed that kanji before getting the round right — those kanji
-                    are weighted to appear as the meaning prompt more often. Kanji you have not seen
-                    as the prompt for a while also get a small nudge so the session mixes characters
-                    instead of only chasing mistakes. Only kanji from your selected training set
-                    appear in the quiz.
-                  </p>
-                </div>
-                <div
-                  role="tabpanel"
                   id="roster-panel-levels"
                   aria-labelledby="roster-tab-levels"
                   hidden={rosterPanelTab !== "levels"}
@@ -840,29 +806,26 @@ export default function SmashPage() {
                     (leading <span className="font-mono">1</span> = N5 tier). Pick one to load that
                     set.
                   </p>
-                  <ul className="space-y-1.5">
+                  <ul className="grid grid-cols-3 gap-1.5">
                     {n5LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
 
                       return (
-                        <li key={set.id}>
+                        <li key={set.id} className="min-w-0">
                           <button
                             type="button"
                             onClick={() => selectTrainingSet(set)}
-                            className={`flex w-full items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm transition ${
+                            className={`flex w-full min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-lg border px-1 py-2 text-center transition ${
                               selected
                                 ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
                                 : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
                             }`}
                           >
-                            <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-zinc-600 dark:text-zinc-300">
+                            <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
                               {levelLabel}
                             </span>
-                            <span className="min-w-0 flex-1 font-medium text-zinc-800 dark:text-zinc-100">
+                            <span className="line-clamp-2 w-full text-[10px] font-medium leading-snug text-zinc-500 dark:text-zinc-400">
                               {set.name}
-                            </span>
-                            <span className="shrink-0 text-xs tabular-nums text-zinc-500 dark:text-zinc-400">
-                              {set.kanjiChars.length}
                             </span>
                           </button>
                         </li>
