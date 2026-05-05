@@ -3,8 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { formatKanjiGlosses, formatReadings, kanjiGlossSearchText } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem, KanjiLevelId } from "@/lib/kanji/types";
-import { trainingSetLevelLabel } from "@/lib/training-sets/level-labels";
-import { loadTrainingSets } from "@/lib/training-sets/storage";
+import { KanjiDetailsPanel } from "@/app/components/KanjiDetailsPanel";
 
 function matchesFilter(item: KanjiItem, query: string): boolean {
   if (!query) return true;
@@ -34,7 +33,6 @@ export default function KanjiList() {
   const [filter, setFilter] = useState("");
 
   const kanji = decks[level];
-  const trainingSets = useMemo(() => loadTrainingSets(), []);
 
   useEffect(() => {
     async function loadKanji() {
@@ -62,22 +60,6 @@ export default function KanjiList() {
     if (!q) return kanji;
     return kanji.filter((item) => matchesFilter(item, q));
   }, [kanji, filter]);
-
-  const trainingSetsIncludingSelected = useMemo(() => {
-    if (!selectedKanji) return [];
-    const char = selectedKanji.kanji;
-    return trainingSets
-      .filter((set) => set.kanjiChars.includes(char))
-      .map((set) => ({ set, levelLabel: trainingSetLevelLabel(set) }))
-      .sort((a, b) => {
-        if (a.levelLabel && b.levelLabel) {
-          return a.levelLabel.localeCompare(b.levelLabel, undefined, { numeric: true });
-        }
-        if (a.levelLabel) return -1;
-        if (b.levelLabel) return 1;
-        return a.set.name.localeCompare(b.set.name);
-      });
-  }, [selectedKanji, trainingSets]);
 
   useEffect(() => {
     if (filteredKanji.length === 0) return;
@@ -213,80 +195,7 @@ export default function KanjiList() {
 
           <aside className="min-h-0 rounded-2xl border border-black/10 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 lg:max-h-[min(720px,calc(100vh-7rem))] lg:overflow-y-auto">
             {selectedKanji && filteredKanji.length > 0 ? (
-              <div className="space-y-5">
-                <div className="flex flex-col gap-2 border-b border-black/10 pb-4 sm:flex-row sm:items-end sm:justify-between dark:border-white/10">
-                  <h2 className="text-5xl font-semibold leading-none tracking-tight">
-                    {selectedKanji.kanji}
-                  </h2>
-                  <div className="max-w-prose text-right sm:text-right">
-                    <p className="text-sm leading-snug text-black/85 dark:text-white/85">
-                      {selectedKanji.primaryMeaning}
-                    </p>
-                    {selectedKanji.otherMeaning ? (
-                      <p className="mt-1 text-sm leading-snug text-black/60 dark:text-white/60">
-                        {selectedKanji.otherMeaning}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-black/60 dark:text-white/60">
-                    Training sets
-                  </p>
-                  {trainingSetsIncludingSelected.length === 0 ? (
-                    <p className="text-sm text-black/60 dark:text-white/60">
-                      Not included in any training set.
-                    </p>
-                  ) : (
-                    <ul className="space-y-1">
-                      {trainingSetsIncludingSelected.map(({ set, levelLabel }) => (
-                        <li
-                          key={`set-${set.id}`}
-                          className="flex items-baseline justify-between gap-3 rounded-xl border border-black/10 bg-black/[0.02] px-3 py-2 text-sm dark:border-white/10 dark:bg-white/[0.03]"
-                        >
-                          <span className="min-w-0 truncate font-medium text-black/85 dark:text-white/85">
-                            {set.name}
-                          </span>
-                          {levelLabel ? (
-                            <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-black/60 dark:text-white/60">
-                              {levelLabel}
-                            </span>
-                          ) : null}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-xl border border-black/10 bg-black/[0.03] p-3 dark:border-white/10 dark:bg-white/[0.03]">
-                    <p className="mb-1 text-sm font-semibold">On reading</p>
-                    <p className="text-sm">{formatReadings(selectedKanji.onReading)}</p>
-                  </div>
-                  <div className="rounded-xl border border-black/10 bg-black/[0.03] p-3 dark:border-white/10 dark:bg-white/[0.03]">
-                    <p className="mb-1 text-sm font-semibold">Kun reading</p>
-                    <p className="text-sm">{formatReadings(selectedKanji.kunReading)}</p>
-                  </div>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-black/60 dark:text-white/60">
-                    Common words
-                  </p>
-                  <ul className="space-y-2">
-                    {selectedKanji.commonWords.map((word) => (
-                      <li
-                        key={`${selectedKanji.kanji}-${word.word}-${word.readingKana}`}
-                        className="rounded-xl border border-black/10 px-3 py-2 dark:border-white/10"
-                      >
-                        <p className="text-lg font-medium">{word.word}</p>
-                        <p className="text-sm text-black/70 dark:text-white/70">
-                          {word.readingKana} ({word.readingRomaji})
-                        </p>
-                        <p className="text-sm">{word.meaning}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <KanjiDetailsPanel kanji={selectedKanji} />
             ) : (
               <p className="text-black/60 dark:text-white/60">
                 {filteredKanji.length === 0
