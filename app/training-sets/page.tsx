@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { formatKanjiGlosses } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
-import { n5LevelLabelForTrainingSet } from "@/lib/training-sets/n5-levels";
+import { trainingSetLevelLabel } from "@/lib/training-sets/level-labels";
 import { loadTrainingSets } from "@/lib/training-sets/storage";
 
 export default function TrainingSets() {
@@ -43,8 +43,8 @@ export default function TrainingSets() {
       <header className="space-y-1">
         <h1 className="text-3xl font-semibold tracking-tight">Training sets</h1>
         <p className="text-sm text-black/60 dark:text-white/60">
-          Fixed N5 sets shipped with the app. Selection happens on the Smash page (dropdown or Levels
-          tab).
+          Fixed N5 and N4 sets shipped with the app. Selection happens on the Smash page (dropdown or
+          Levels tab).
         </p>
       </header>
 
@@ -63,7 +63,7 @@ export default function TrainingSets() {
       {!isLoadingKanji && !kanjiError && (
         <ul className="flex flex-col gap-4">
           {sets.map((set) => {
-            const level = n5LevelLabelForTrainingSet(set);
+            const level = trainingSetLevelLabel(set);
             return (
               <li
                 key={set.id}

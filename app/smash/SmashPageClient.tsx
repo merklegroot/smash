@@ -4,12 +4,14 @@ import Link from "next/link";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { formatKanjiJlptHeading, resolveKanjiJlptLevel } from "@/lib/kanji/jlpt-level";
 import { formatReadings } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem } from "@/lib/kanji/types";
 import {
+  listN4LevelRows,
   listN5LevelRows,
-  n5LevelLabelForTrainingSet,
-} from "@/lib/training-sets/n5-levels";
+  trainingSetLevelLabel,
+} from "@/lib/training-sets/level-labels";
 import {
   hasStarForTrainingSet,
   loadLevelClearProgress,
@@ -270,6 +272,8 @@ export default function SmashPage() {
   const [selectedTrainingSetId, setSelectedTrainingSetId] = useState<string | null>(null);
   const [trainingSets, setTrainingSets] = useState<TrainingSet[]>([]);
   const [levelClearProgress, setLevelClearProgress] = useState<LevelClearProgress>({});
+  const [n5KanjiSet, setN5KanjiSet] = useState<Set<string>>(() => new Set());
+  const [n4KanjiSet, setN4KanjiSet] = useState<Set<string>>(() => new Set());
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const kanjiItemsRef = useRef<KanjiItem[]>([]);
   const pipHistoryRef = useRef<Record<string, PipOutcome[]>>({});
@@ -339,6 +343,7 @@ export default function SmashPage() {
   );
 
   const n5LevelRows = useMemo(() => listN5LevelRows(trainingSets), [trainingSets]);
+  const n4LevelRows = useMemo(() => listN4LevelRows(trainingSets), [trainingSets]);
 
   const selectTrainingSet = useCallback(
     (saved: TrainingSet) => {
@@ -378,6 +383,12 @@ export default function SmashPage() {
 
         if (isMounted) {
           setKanjiItems(data.kanji);
+          if (Array.isArray(data.n5)) {
+            setN5KanjiSet(new Set(data.n5.map((k) => k.kanji)));
+          }
+          if (Array.isArray(data.n4)) {
+            setN4KanjiSet(new Set(data.n4.map((k) => k.kanji)));
+          }
           setTrainingSets(savedSets);
           const resolved = resolvePracticePoolFromSets(data.kanji, savedSets, pref);
 
@@ -579,6 +590,14 @@ export default function SmashPage() {
     });
   }
 
+  const kanjiDetailsJlptLabel = useMemo(() => {
+    if (!selectedKanjiDetails) {
+      return null;
+    }
+
+    return resolveKanjiJlptLevel(selectedKanjiDetails.kanji, n5KanjiSet, n4KanjiSet);
+  }, [selectedKanjiDetails, n5KanjiSet, n4KanjiSet]);
+
   function openKanjiDetails(kanji: string) {
     setSelectedKanjiDetails((currentSelection) => {
       if (currentSelection?.kanji === kanji) {
@@ -611,6 +630,9 @@ export default function SmashPage() {
                 <div>
                   <p id="kanji-details-title" className="text-4xl font-semibold leading-none">
                     {selectedKanjiDetails.kanji}
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                    {formatKanjiJlptHeading(kanjiDetailsJlptLabel)}
                   </p>
                   <p className="text-sm text-zinc-600">{selectedKanjiDetails.primaryMeaning}</p>
                   {selectedKanjiDetails.otherMeaning ? (
@@ -695,7 +717,7 @@ export default function SmashPage() {
               className="cursor-pointer rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm outline-none ring-zinc-400/30 transition hover:border-zinc-400 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:focus:ring-zinc-500/40"
             >
               {trainingSets.map((set) => {
-                const level = n5LevelLabelForTrainingSet(set);
+                const level = trainingSetLevelLabel(set);
                 return (
                   <option key={set.id} value={set.id}>
                     {level ? `${level} · ` : ""}
@@ -838,13 +860,58 @@ export default function SmashPage() {
                   hidden={rosterPanelTab !== "levels"}
                 >
                   <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                    The default training sets are all N5 (levels{" "}
-                    <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …).
-                    Answer each kanji correctly when it is the prompt to clear the level and earn a
-                    star.
+                    N5 levels use <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …;
+                    N4 uses <span className="font-mono">2-1</span>, <span className="font-mono">2-2</span>, … Answer
+                    each kanji correctly when it is the prompt to clear the level and earn a star.
+                  </p>
+                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
+                    N5
+                  </p>
+                  <ul className="mb-4 grid grid-cols-3 gap-1.5">
+                    {n5LevelRows.map(({ levelLabel, set }) => {
+                      const selected = selectedTrainingSetId === set.id;
+                      const starred = hasStarForTrainingSet(
+                        set.id,
+                        set.kanjiChars,
+                        levelClearProgress,
+                      );
+
+                      return (
+                        <li key={set.id} className="min-w-0">
+                          <button
+                            type="button"
+                            onClick={() => selectTrainingSet(set)}
+                            className={`relative flex w-full min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-lg border px-1 py-2 pt-3 text-center transition ${
+                              selected
+                                ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
+                                : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
+                            }`}
+                          >
+                            {starred ? (
+                              <span
+                                className="absolute right-0.5 top-0.5 text-sm leading-none"
+                                title="Level cleared"
+                                aria-label="Star earned for this level"
+                              >
+                                ⭐
+                              </span>
+                            ) : null}
+                            <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
+                              {levelLabel}
+                            </span>
+                            <span className="line-clamp-2 w-full text-[10px] font-medium leading-snug text-zinc-500 dark:text-zinc-400">
+                              {set.name}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
+                    N4
                   </p>
                   <ul className="grid grid-cols-3 gap-1.5">
-                    {n5LevelRows.map(({ levelLabel, set }) => {
+                    {n4LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
                       const starred = hasStarForTrainingSet(
                         set.id,

@@ -1,0 +1,44 @@
+[
+    {
+      "id": "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
+      "name": "Time & Seasons",
+      "kanjiChars": ["昨", "明", "週", "春", "夏", "秋", "冬"],
+      "createdAt": "2026-05-04T20:00:01.000Z"
+    },
+    {
+      "id": "b7c8d9e0-f1a2-b3c4-d5e6-f7g8h9i0j1k2",
+      "name": "People & Family",
+      "kanjiChars": ["兄", "姉", "弟", "妹", "夫", "妻", "親"],
+      "createdAt": "2026-05-04T20:00:02.000Z"
+    },
+    {
+      "id": "c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8",
+      "name": "Verbs & Actions",
+      "kanjiChars": ["作", "持", "待", "借", "貸", "知", "教", "習", "始", "終", "運", "送"],
+      "createdAt": "2026-05-04T20:00:03.000Z"
+    },
+    {
+      "id": "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
+      "name": "Adjectives",
+      "kanjiChars": ["強", "弱", "軽", "重", "広", "短", "暑", "寒", "暗", "新", "古"],
+      "createdAt": "2026-05-04T20:00:04.000Z"
+    },
+    {
+      "id": "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",
+      "name": "Places & Buildings",
+      "kanjiChars": ["館", "室", "池", "森", "村", "区", "県", "屋"],
+      "createdAt": "2026-05-04T20:00:05.000Z"
+    },
+    {
+      "id": "f6g7h8i9-j0k1-l2m3-n4o5-p6q7r8s9t0u1",
+      "name": "Common N4",
+      "kanjiChars": ["会", "同", "事", "社", "場", "方", "目", "私", "体", "心"],
+      "createdAt": "2026-05-04T20:00:06.000Z"
+    },
+    {
+      "id": "g7h8i9j0-k1l2-m3n4-o5p6-q7r8s9t0u1v2",
+      "name": "Core N4 Sampler",
+      "kanjiChars": ["会", "同", "事", "自", "社", "発", "者", "地", "業", "新", "場", "員", "立", "開", "手", "力", "問", "代", "明", "動"],
+      "createdAt": "2026-05-04T20:00:07.000Z"
+    }
+  ]
