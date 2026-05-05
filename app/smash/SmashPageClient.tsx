@@ -276,7 +276,6 @@ export default function SmashPage() {
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [levelCompleteSetId, setLevelCompleteSetId] = useState<string | null>(null);
   const [levelCompleteStars, setLevelCompleteStars] = useState<number>(0);
-  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("levels");
   const [showDebugRunStrip, setShowDebugRunStrip] = useState(false);
   const [runOrder, setRunOrder] = useState<string[]>([]);
   const [runIndex, setRunIndex] = useState(0);
@@ -773,14 +772,12 @@ export default function SmashPage() {
                   onClick={() => {
                     const next = nextLevelAfterSelected;
                     if (next) {
-                      setRosterPanelTab("levels");
                       setLevelCompleteSetId(null);
                       setIsAdvancingRound(false);
                       setCorrectButtonIndex(null);
                       selectTrainingSet(next);
                       return;
                     }
-                    setRosterPanelTab("levels");
                     setLevelCompleteSetId(null);
                     setIsAdvancingRound(false);
                     setCorrectButtonIndex(null);
@@ -926,94 +923,8 @@ export default function SmashPage() {
           </div>
           <div className="flex items-start gap-3">
             <aside className="flex max-h-[26rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
-              <div
-                role="tablist"
-                aria-label="Roster"
-                className="flex shrink-0 gap-1 border-b border-zinc-200 px-2 pt-2 dark:border-zinc-700"
-              >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={rosterPanelTab === "levels"}
-                  id="roster-tab-levels"
-                  aria-controls="roster-panel-levels"
-                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
-                    rosterPanelTab === "levels"
-                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
-                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
-                  }`}
-                  onClick={() => setRosterPanelTab("levels")}
-                >
-                  Levels
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={rosterPanelTab === "training"}
-                  id="roster-tab-training"
-                  aria-controls="roster-panel-training"
-                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
-                    rosterPanelTab === "training"
-                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
-                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
-                  }`}
-                  onClick={() => setRosterPanelTab("training")}
-                >
-                  Currently training
-                </button>
-              </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
-                <div
-                  role="tabpanel"
-                  id="roster-panel-training"
-                  aria-labelledby="roster-tab-training"
-                  hidden={rosterPanelTab !== "training"}
-                >
-                  <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                    More red pips → more likely as the meaning prompt. Kanji you have not seen as the
-                    prompt for a few rounds get a slight boost so the session mixes characters
-                    instead of only chasing mistakes.
-                  </p>
-                  <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-center text-2xl font-semibold text-zinc-800 sm:grid-cols-3 xl:grid-cols-4">
-                    {trainingKanji.map((kanji) => (
-                        <li
-                          key={`training-${kanji}`}
-                          className="flex flex-col items-center justify-center gap-1"
-                        >
-                          <button
-                            type="button"
-                            className="w-full cursor-pointer rounded-md p-1 transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                            onClick={() => openKanjiDetails(kanji)}
-                          >
-                            <span>{kanji}</span>
-                            <span className="grid min-h-5 grid-cols-4 grid-rows-2 gap-1">
-                              {(pipHistoryByKanji[kanji] ?? [])
-                                .slice(-MAX_PIPS_PER_KANJI)
-                                .map((outcome, index) => (
-                                  <span
-                                    key={`pip-${kanji}-${index}`}
-                                    aria-label={
-                                      outcome === "right"
-                                        ? "correct answer"
-                                        : "missed before correct answer"
-                                    }
-                                    className={`inline-block size-2 rounded-full ${
-                                      outcome === "right" ? "bg-emerald-500" : "bg-rose-500"
-                                    }`}
-                                  />
-                                ))}
-                            </span>
-                          </button>
-                        </li>
-                    ))}
-                  </ul>
-                </div>
-                <div
-                  role="tabpanel"
-                  id="roster-panel-levels"
-                  aria-labelledby="roster-tab-levels"
-                  hidden={rosterPanelTab !== "levels"}
-                >
+                <div>
                   <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
                     N5 levels use <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …;
                     N4 uses <span className="font-mono">2-1</span>, <span className="font-mono">2-2</span>, … Answer
