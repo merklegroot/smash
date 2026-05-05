@@ -254,6 +254,7 @@ export default function SmashPage() {
   );
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
+  const [rightSinceWrong, setRightSinceWrong] = useState<Set<string>>(() => new Set());
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("levels");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
@@ -306,6 +307,7 @@ export default function SmashPage() {
       setRound(createRound(poolItems, {}, {}, undefined));
       setWrongKanjiChoices([]);
       setCorrectButtonIndex(null);
+      setRightSinceWrong(new Set());
       setIsAdvancingRound(false);
       setToasts([]);
     },
@@ -331,6 +333,20 @@ export default function SmashPage() {
     () => Array.from(new Set(trainingKanji)),
     [trainingKanji],
   );
+
+  const rightSinceWrongList = useMemo(() => {
+    if (rightSinceWrong.size === 0) return [];
+
+    const order = new Map<string, number>();
+    for (let i = 0; i < allPossibleKanji.length; i += 1) {
+      const kanji = allPossibleKanji[i];
+      if (kanji) order.set(kanji, i);
+    }
+
+    return Array.from(rightSinceWrong).sort(
+      (a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0),
+    );
+  }, [rightSinceWrong, allPossibleKanji]);
 
   const n5LevelRows = useMemo(() => listN5LevelRows(trainingSets), [trainingSets]);
   const n4LevelRows = useMemo(() => listN4LevelRows(trainingSets), [trainingSets]);
@@ -478,6 +494,16 @@ export default function SmashPage() {
         computeHistoryAfterCorrectAnswer(historyBefore, targetKanji, wrongKanjiChoices),
       );
 
+      if (wrongKanjiChoices.length === 0) {
+        setRightSinceWrong((current) => {
+          const next = new Set(current);
+          next.add(targetKanji);
+          return next;
+        });
+      } else {
+        setRightSinceWrong(new Set());
+      }
+
       setCorrectButtonIndex(buttonIndex);
       setIsAdvancingRound(true);
 
@@ -518,6 +544,7 @@ export default function SmashPage() {
       return;
     }
 
+    setRightSinceWrong(new Set());
     setWrongKanjiChoices((currentWrongChoices) =>
       currentWrongChoices.includes(clickedKanji)
         ? currentWrongChoices
@@ -682,6 +709,38 @@ export default function SmashPage() {
                   {item.kanji}
                 </button>
               ))}
+            </div>
+            <div className="w-full max-w-md">
+              <div className="space-y-2">
+                <div className="flex flex-wrap justify-center gap-1.5">
+                  {allPossibleKanji.map((kanji) => (
+                    <span
+                      key={`training-pill-${kanji}`}
+                      className="inline-flex h-7 min-w-7 items-center justify-center rounded-lg border border-zinc-200 bg-white px-2 font-mono text-sm font-semibold leading-none text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100"
+                      title="In training set"
+                    >
+                      {kanji}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap justify-center gap-1.5">
+                  {rightSinceWrongList.length > 0 ? (
+                    rightSinceWrongList.map((kanji) => (
+                      <span
+                        key={`right-pill-${kanji}`}
+                        className="inline-flex h-7 min-w-7 items-center justify-center rounded-lg border border-emerald-300 bg-emerald-100 px-2 font-mono text-sm font-semibold leading-none text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-100"
+                        title="Right (since last wrong)"
+                      >
+                        {kanji}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                      No correct kanji yet.
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex items-start gap-3">
