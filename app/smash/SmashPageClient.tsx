@@ -671,7 +671,7 @@ export default function SmashPage() {
                   type="button"
                   disabled={wrongKanjiChoices.includes(item.kanji) || isAdvancingRound}
                   className={`aspect-square w-24 rounded-2xl border text-4xl font-semibold shadow-sm transition duration-150 ${
-                    correctButtonIndex === index
+                    correctButtonIndex !== null && item.kanji === round.target.kanji
                       ? "cursor-not-allowed scale-[1.02] border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30"
                       : wrongKanjiChoices.includes(item.kanji)
                       ? "cursor-not-allowed border-rose-500 bg-rose-500 text-white"
