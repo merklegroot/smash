@@ -278,6 +278,7 @@ export default function SmashPage() {
   const [levelCompleteStars, setLevelCompleteStars] = useState<number>(0);
   const [levelCategoryTab, setLevelCategoryTab] = useState<"N5" | "N4">("N5");
   const [showDebugRunStrip, setShowDebugRunStrip] = useState(false);
+  const [mobileScreen, setMobileScreen] = useState<"stages" | "game">("stages");
   const [runOrder, setRunOrder] = useState<string[]>([]);
   const [runIndex, setRunIndex] = useState(0);
   const [runOutcomeByKanji, setRunOutcomeByKanji] = useState<Record<string, "right" | "wrong" | undefined>>({});
@@ -412,9 +413,23 @@ export default function SmashPage() {
         chars,
         trainingSetId: saved.id,
       });
+      setMobileScreen("game");
     },
     [applyPracticePool, itemLookup, kanjiItems],
   );
+
+  const goToStageSelection = useCallback(() => {
+    if (roundAdvanceTimeoutRef.current) {
+      clearTimeout(roundAdvanceTimeoutRef.current);
+      roundAdvanceTimeoutRef.current = null;
+    }
+    setLevelCompleteSetId(null);
+    setLevelCompleteStars(0);
+    setCorrectButtonIndex(null);
+    setWrongKanjiChoices([]);
+    setIsAdvancingRound(false);
+    setMobileScreen("stages");
+  }, []);
 
   const selectedTrainingSet = useMemo(() => {
     if (trainingSets.length === 0) return null;
@@ -533,7 +548,7 @@ export default function SmashPage() {
       isCorrect,
       message: isCorrect
         ? earnedRunStars
-          ? `Level complete — you earned ${"⭐".repeat(earnedRunStars)}`
+          ? `Stage complete — you earned ${"⭐".repeat(earnedRunStars)}`
           : "Correct choice!"
         : "Not quite, try again.",
     });
@@ -760,7 +775,7 @@ export default function SmashPage() {
               onClick={(event) => event.stopPropagation()}
             >
               <p id="level-complete-title" className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                Level complete — you earned {levelCompleteStars > 0 ? "⭐".repeat(levelCompleteStars) : "⭐"}!
+                Stage complete — you earned {levelCompleteStars > 0 ? "⭐".repeat(levelCompleteStars) : "⭐"}!
               </p>
               <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
                 Nice work. Want to keep going?
@@ -784,7 +799,7 @@ export default function SmashPage() {
                     setCorrectButtonIndex(null);
                   }}
                 >
-                  {nextLevelAfterSelected ? "Next level" : "Choose a level"}
+                  {nextLevelAfterSelected ? "Next stage" : "Choose a stage"}
                 </button>
                 <button
                   type="button"
@@ -828,10 +843,20 @@ export default function SmashPage() {
         ))}
       </div>
       <div className="relative z-10 flex flex-col gap-4">
-        <div className="flex flex-wrap items-end gap-4 border-b border-zinc-200/80 pb-4 dark:border-zinc-700/80">
+        <div className="flex flex-wrap items-end justify-between gap-4 border-b border-zinc-200/80 pb-4 dark:border-zinc-700/80">
+          {mobileScreen === "game" ? (
+            <button
+              type="button"
+              className="cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-2 text-base font-semibold text-zinc-800 shadow-sm transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-50 dark:hover:bg-zinc-800"
+              onClick={goToStageSelection}
+            >
+              <span className="text-xl leading-none">←</span>
+              <span className="ml-2">Stages</span>
+            </button>
+          ) : null}
           <div className="flex min-w-[14rem] flex-col gap-1.5">
             <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
-              Training set
+              {mobileScreen === "game" ? "Stage" : "Choose a stage"}
             </span>
             <div className="flex items-baseline gap-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
               {selectedTrainingSet ? (
@@ -848,87 +873,14 @@ export default function SmashPage() {
             </div>
           </div>
         </div>
-        <div className="flex items-start gap-8">
-          <div className="flex w-80 flex-col items-center gap-3">
-            <p className="w-full rounded-2xl border-2 border-zinc-300/90 bg-zinc-50/80 px-5 py-2 text-center leading-snug shadow-sm dark:border-zinc-600 dark:bg-zinc-900/60">
-              <span className="text-3xl font-semibold text-zinc-700 dark:text-zinc-100">
-                {round.target.primaryMeaning}
-              </span>
-              {round.target.otherMeaning?.trim() ? (
-                <span className="mt-1.5 block text-sm font-normal text-zinc-500 dark:text-zinc-400">
-                  {round.target.otherMeaning.trim()}
-                </span>
-              ) : null}
-              {runProgressLabel ? (
-                <span className="mt-2 block text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                  Progress: {runProgressLabel}
-                </span>
-              ) : null}
-            </p>
-            <div className="grid grid-cols-3 gap-4">
-              {round.buttons.map((item, index) => (
-                <button
-                  key={`${item.kanji}-${index}`}
-                  type="button"
-                  disabled={wrongKanjiChoices.includes(item.kanji) || isAdvancingRound}
-                  className={`aspect-square w-24 rounded-2xl border text-4xl font-semibold shadow-sm transition duration-150 ${
-                    correctButtonIndex !== null && item.kanji === round.target.kanji
-                      ? "cursor-not-allowed scale-[1.02] border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30"
-                      : wrongKanjiChoices.includes(item.kanji)
-                      ? "cursor-not-allowed border-rose-500 bg-rose-500 text-white"
-                      : "cursor-pointer border-zinc-300 bg-white hover:-translate-y-0.5 hover:border-zinc-400 hover:bg-zinc-50 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
-                  }`}
-                  onClick={() => handleKanjiClick(item.kanji, index)}
-                >
-                  {item.kanji}
-                </button>
-              ))}
-            </div>
-            <div className="w-full max-w-md">
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  type="button"
-                  className="cursor-pointer rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:bg-zinc-800"
-                  onClick={() => setShowDebugRunStrip((v) => !v)}
-                >
-                  {showDebugRunStrip ? "Hide debug" : "Show debug"}
-                </button>
-              </div>
-              {showDebugRunStrip ? (
-                <div className="mt-2 flex flex-wrap justify-center gap-1.5">
-                  {runOrder.map((kanji) => {
-                    const status = runOutcomeByKanji[kanji];
-                    const isActive = kanji === currentTargetKanji;
-                    const statusClass =
-                      status === "right"
-                        ? "border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-100"
-                        : status === "wrong"
-                        ? "border-rose-300 bg-rose-100 text-rose-900 dark:border-rose-900/40 dark:bg-rose-950/40 dark:text-rose-100"
-                        : "border-zinc-200 bg-white text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100";
-
-                    return (
-                      <span
-                        key={`training-pill-${kanji}`}
-                        className={`inline-flex h-7 min-w-7 items-center justify-center rounded-lg border px-2 font-mono text-sm font-semibold leading-none ${statusClass} ${
-                          isActive ? "ring-2 ring-sky-400/50" : ""
-                        }`}
-                        title={isActive ? "Current target" : "In run"}
-                      >
-                        {kanji}
-                      </span>
-                    );
-                  })}
-                </div>
-              ) : null}
-            </div>
-          </div>
+        {mobileScreen === "stages" ? (
           <div className="flex items-start gap-3">
-            <aside className="flex max-h-[26rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
+            <aside className="flex w-full max-w-md flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
                 <div>
                   <div className="mb-3 flex items-center justify-between gap-2">
                     <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
-                      Levels
+                      Stages
                     </p>
                     <button
                       type="button"
@@ -948,7 +900,7 @@ export default function SmashPage() {
                   </div>
                   <div
                     role="tablist"
-                    aria-label="Level categories"
+                    aria-label="Stage categories"
                     className="mb-3 flex gap-1 rounded-lg border border-zinc-200 bg-white/70 p-1 dark:border-zinc-700 dark:bg-zinc-900/50"
                   >
                     <button
@@ -979,7 +931,7 @@ export default function SmashPage() {
                     </button>
                   </div>
 
-                  <ul className="grid grid-cols-3 gap-1.5" aria-label="Levels">
+                  <ul className="grid grid-cols-3 gap-1.5" aria-label="Stages">
                     {(levelCategoryTab === "N5" ? n5LevelRows : n4LevelRows).map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
                       const stars = starCountForTrainingSet(set.id, levelClearProgress);
@@ -1023,7 +975,85 @@ export default function SmashPage() {
               </div>
             </aside>
           </div>
-        </div>
+        ) : (
+          <div className="flex w-full flex-col items-center gap-3">
+            <div className="w-full max-w-sm">
+              <p className="w-full rounded-2xl border-2 border-zinc-300/90 bg-zinc-50/80 px-5 py-2 text-center leading-snug shadow-sm dark:border-zinc-600 dark:bg-zinc-900/60">
+                <span className="text-3xl font-semibold text-zinc-700 dark:text-zinc-100">
+                  {round.target.primaryMeaning}
+                </span>
+                {round.target.otherMeaning?.trim() ? (
+                  <span className="mt-1.5 block text-sm font-normal text-zinc-500 dark:text-zinc-400">
+                    {round.target.otherMeaning.trim()}
+                  </span>
+                ) : null}
+                {runProgressLabel ? (
+                  <span className="mt-2 block text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                    Progress: {runProgressLabel}
+                  </span>
+                ) : null}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              {round.buttons.map((item, index) => (
+                <button
+                  key={`${item.kanji}-${index}`}
+                  type="button"
+                  disabled={wrongKanjiChoices.includes(item.kanji) || isAdvancingRound}
+                  className={`aspect-square w-24 rounded-2xl border text-4xl font-semibold shadow-sm transition duration-150 ${
+                    correctButtonIndex !== null && item.kanji === round.target.kanji
+                      ? "cursor-not-allowed scale-[1.02] border-emerald-500 bg-emerald-500 text-white shadow-emerald-500/30"
+                      : wrongKanjiChoices.includes(item.kanji)
+                      ? "cursor-not-allowed border-rose-500 bg-rose-500 text-white"
+                      : "cursor-pointer border-zinc-300 bg-white hover:-translate-y-0.5 hover:border-zinc-400 hover:bg-zinc-50 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-zinc-500 dark:hover:bg-zinc-800"
+                  }`}
+                  onClick={() => handleKanjiClick(item.kanji, index)}
+                >
+                  {item.kanji}
+                </button>
+              ))}
+            </div>
+
+            <div className="w-full max-w-md">
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  type="button"
+                  className="cursor-pointer rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                  onClick={() => setShowDebugRunStrip((v) => !v)}
+                >
+                  {showDebugRunStrip ? "Hide debug" : "Show debug"}
+                </button>
+              </div>
+              {showDebugRunStrip ? (
+                <div className="mt-2 flex flex-wrap justify-center gap-1.5">
+                  {runOrder.map((kanji) => {
+                    const status = runOutcomeByKanji[kanji];
+                    const isActive = kanji === currentTargetKanji;
+                    const statusClass =
+                      status === "right"
+                        ? "border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-100"
+                        : status === "wrong"
+                        ? "border-rose-300 bg-rose-100 text-rose-900 dark:border-rose-900/40 dark:bg-rose-950/40 dark:text-rose-100"
+                        : "border-zinc-200 bg-white text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100";
+
+                    return (
+                      <span
+                        key={`training-pill-${kanji}`}
+                        className={`inline-flex h-7 min-w-7 items-center justify-center rounded-lg border px-2 font-mono text-sm font-semibold leading-none ${statusClass} ${
+                          isActive ? "ring-2 ring-sky-400/50" : ""
+                        }`}
+                        title={isActive ? "Current target" : "In run"}
+                      >
+                        {kanji}
+                      </span>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        )}
       </div>
     </section>
     {kanjiDetailsDialog}
