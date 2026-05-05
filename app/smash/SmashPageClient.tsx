@@ -276,6 +276,7 @@ export default function SmashPage() {
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [levelCompleteSetId, setLevelCompleteSetId] = useState<string | null>(null);
   const [levelCompleteStars, setLevelCompleteStars] = useState<number>(0);
+  const [levelCategoryTab, setLevelCategoryTab] = useState<"N5" | "N4">("N5");
   const [showDebugRunStrip, setShowDebugRunStrip] = useState(false);
   const [runOrder, setRunOrder] = useState<string[]>([]);
   const [runIndex, setRunIndex] = useState(0);
@@ -925,11 +926,6 @@ export default function SmashPage() {
             <aside className="flex max-h-[26rem] w-[22rem] flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white/80 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
                 <div>
-                  <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                    N5 levels use <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …;
-                    N4 uses <span className="font-mono">2-1</span>, <span className="font-mono">2-2</span>, … Answer
-                    each kanji correctly when it is the prompt to clear the level and earn a star.
-                  </p>
                   <div className="mb-3 flex items-center justify-between gap-2">
                     <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
                       Levels
@@ -950,54 +946,41 @@ export default function SmashPage() {
                       Reset stars
                     </button>
                   </div>
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
-                    N5
-                  </p>
-                  <ul className="mb-4 grid grid-cols-3 gap-1.5">
-                    {n5LevelRows.map(({ levelLabel, set }) => {
-                      const selected = selectedTrainingSetId === set.id;
-                      const stars = starCountForTrainingSet(set.id, levelClearProgress);
-                      const earnedStars = Math.max(0, Math.min(3, stars));
+                  <div
+                    role="tablist"
+                    aria-label="Level categories"
+                    className="mb-3 flex gap-1 rounded-lg border border-zinc-200 bg-white/70 p-1 dark:border-zinc-700 dark:bg-zinc-900/50"
+                  >
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={levelCategoryTab === "N5"}
+                      className={`flex-1 cursor-pointer rounded-md px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide transition ${
+                        levelCategoryTab === "N5"
+                          ? "bg-white text-zinc-800 shadow-sm dark:bg-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-200"
+                      }`}
+                      onClick={() => setLevelCategoryTab("N5")}
+                    >
+                      N5
+                    </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={levelCategoryTab === "N4"}
+                      className={`flex-1 cursor-pointer rounded-md px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide transition ${
+                        levelCategoryTab === "N4"
+                          ? "bg-white text-zinc-800 shadow-sm dark:bg-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/60 dark:hover:text-zinc-200"
+                      }`}
+                      onClick={() => setLevelCategoryTab("N4")}
+                    >
+                      N4
+                    </button>
+                  </div>
 
-                      return (
-                        <li key={set.id} className="min-w-0">
-                          <button
-                            type="button"
-                            onClick={() => selectTrainingSet(set)}
-                            className={`relative flex w-full min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-lg border px-1 py-2 pt-3 text-center transition ${
-                              selected
-                                ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
-                                : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
-                            }`}
-                          >
-                            <span
-                              className="absolute right-0.5 top-0.5 text-sm leading-none"
-                              title={`Stars earned: ${earnedStars} / 3`}
-                              aria-label={`${earnedStars} of 3 stars earned for this level`}
-                            >
-                              <span className="text-amber-500 dark:text-amber-400">
-                                {"★".repeat(earnedStars)}
-                              </span>
-                              <span className="text-zinc-300 dark:text-zinc-600">
-                                {"☆".repeat(3 - earnedStars)}
-                              </span>
-                            </span>
-                            <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
-                              {levelLabel}
-                            </span>
-                            <span className="line-clamp-2 w-full text-[10px] font-medium leading-snug text-zinc-500 dark:text-zinc-400">
-                              {set.name}
-                            </span>
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
-                    N4
-                  </p>
-                  <ul className="grid grid-cols-3 gap-1.5">
-                    {n4LevelRows.map(({ levelLabel, set }) => {
+                  <ul className="grid grid-cols-3 gap-1.5" aria-label="Levels">
+                    {(levelCategoryTab === "N5" ? n5LevelRows : n4LevelRows).map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
                       const stars = starCountForTrainingSet(set.id, levelClearProgress);
                       const earnedStars = Math.max(0, Math.min(3, stars));
