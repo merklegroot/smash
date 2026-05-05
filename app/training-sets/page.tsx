@@ -8,6 +8,7 @@ import { loadTrainingSets } from "@/lib/training-sets/storage";
 
 export default function TrainingSets() {
   const sets = useMemo(() => loadTrainingSets(), []);
+  const [tier, setTier] = useState<"n5" | "n4">("n5");
   const [kanji, setKanji] = useState<KanjiItem[]>([]);
   const [isLoadingKanji, setIsLoadingKanji] = useState(true);
   const [kanjiError, setKanjiError] = useState(false);
@@ -38,6 +39,11 @@ export default function TrainingSets() {
     return map;
   }, [kanji]);
 
+  const setsForTier = useMemo(() => {
+    const major = tier === "n5" ? "1" : "2";
+    return sets.filter((set) => trainingSetLevelLabel(set)?.startsWith(`${major}-`));
+  }, [sets, tier]);
+
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6">
       <header className="space-y-1">
@@ -61,8 +67,49 @@ export default function TrainingSets() {
       )}
 
       {!isLoadingKanji && !kanjiError && (
+        <>
+          <div
+            role="tablist"
+            aria-label="JLPT tier"
+            className="flex max-w-md gap-1 rounded-xl border border-black/10 bg-black/[0.02] p-1 dark:border-white/10 dark:bg-white/[0.04]"
+          >
+            {(
+              [
+                { id: "n5" as const, label: "N5", count: sets.filter((s) => trainingSetLevelLabel(s)?.startsWith("1-")).length },
+                { id: "n4" as const, label: "N4", count: sets.filter((s) => trainingSetLevelLabel(s)?.startsWith("2-")).length },
+              ] satisfies { id: "n5" | "n4"; label: string; count: number }[]
+            ).map(({ id, label, count }) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={tier === id}
+                id={`training-sets-tab-${id}`}
+                aria-controls="training-sets-tab-panel"
+                disabled={count === 0}
+                className={`flex-1 cursor-pointer rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                  tier === id
+                    ? "bg-white text-black shadow-sm ring-1 ring-black/10 dark:bg-zinc-900 dark:text-white dark:ring-white/15"
+                    : "text-black/55 hover:bg-black/[0.06] hover:text-black/80 disabled:cursor-not-allowed disabled:opacity-40 dark:text-white/55 dark:hover:bg-white/[0.08] dark:hover:text-white/85"
+                }`}
+                onClick={() => setTier(id)}
+              >
+                {label}
+                {count > 0 ? (
+                  <span className="ml-1.5 tabular-nums text-black/45 dark:text-white/45">
+                    ({count})
+                  </span>
+                ) : null}
+              </button>
+            ))}
+          </div>
+          <div
+            id="training-sets-tab-panel"
+            role="tabpanel"
+            aria-labelledby={`training-sets-tab-${tier}`}
+          >
         <ul className="flex flex-col gap-4">
-          {sets.map((set) => {
+          {setsForTier.map((set) => {
             const level = trainingSetLevelLabel(set);
             return (
               <li
@@ -103,6 +150,8 @@ export default function TrainingSets() {
             );
           })}
         </ul>
+          </div>
+        </>
       )}
     </section>
   );
