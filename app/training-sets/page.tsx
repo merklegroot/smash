@@ -86,10 +86,15 @@ export default function TrainingSets() {
                     return (
                       <span
                         key={`${set.id}-${c}`}
-                        className="inline-flex min-w-[1.75rem] items-center justify-center rounded-md bg-black/[0.06] px-1.5 py-0.5 text-base font-semibold tabular-nums dark:bg-white/[0.08]"
+                        className="inline-flex min-w-[2.5rem] flex-col items-center justify-center rounded-md bg-black/[0.06] px-1.5 py-1 text-base font-semibold tabular-nums dark:bg-white/[0.08]"
                         title={kItem ? formatKanjiGlosses(kItem) : undefined}
                       >
-                        {c}
+                        <span className="leading-none">{c}</span>
+                        {kItem ? (
+                          <span className="mt-0.5 text-[10px] font-medium leading-snug text-black/60 dark:text-white/60">
+                            {kItem.primaryMeaning}
+                          </span>
+                        ) : null}
                       </span>
                     );
                   })}
