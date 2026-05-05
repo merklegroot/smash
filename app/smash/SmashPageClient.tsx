@@ -265,7 +265,7 @@ export default function SmashPage() {
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
   const [showDebugStats, setShowDebugStats] = useState(false);
-  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("training");
+  const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("levels");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
@@ -779,21 +779,6 @@ export default function SmashPage() {
                 <button
                   type="button"
                   role="tab"
-                  aria-selected={rosterPanelTab === "training"}
-                  id="roster-tab-training"
-                  aria-controls="roster-panel-training"
-                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
-                    rosterPanelTab === "training"
-                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
-                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
-                  }`}
-                  onClick={() => setRosterPanelTab("training")}
-                >
-                  Currently training
-                </button>
-                <button
-                  type="button"
-                  role="tab"
                   aria-selected={rosterPanelTab === "levels"}
                   id="roster-tab-levels"
                   aria-controls="roster-panel-levels"
@@ -805,6 +790,21 @@ export default function SmashPage() {
                   onClick={() => setRosterPanelTab("levels")}
                 >
                   Levels
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rosterPanelTab === "training"}
+                  id="roster-tab-training"
+                  aria-controls="roster-panel-training"
+                  className={`cursor-pointer flex-1 rounded-t-lg px-1.5 py-2 text-[10px] font-semibold uppercase tracking-wide transition sm:px-2 sm:text-xs ${
+                    rosterPanelTab === "training"
+                      ? "bg-white text-zinc-800 shadow-[inset_0_-2px_0_0_var(--tw-shadow-color)] shadow-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-zinc-100"
+                      : "text-zinc-500 hover:bg-zinc-100/80 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-200"
+                  }`}
+                  onClick={() => setRosterPanelTab("training")}
+                >
+                  Currently training
                 </button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
