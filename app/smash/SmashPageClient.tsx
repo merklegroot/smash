@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { formatKanjiJlptHeading, resolveKanjiJlptLevel } from "@/lib/kanji/jlpt-level";
@@ -358,14 +357,14 @@ export default function SmashPage() {
     [applyPracticePool, itemLookup, kanjiItems],
   );
 
-  function handlePoolChange(event: ChangeEvent<HTMLSelectElement>) {
-    const saved = trainingSets.find((s) => s.id === event.target.value);
-    if (!saved) {
-      return;
+  const selectedTrainingSet = useMemo(() => {
+    if (trainingSets.length === 0) return null;
+    if (selectedTrainingSetId) {
+      const found = trainingSets.find((s) => s.id === selectedTrainingSetId);
+      if (found) return found;
     }
-
-    selectTrainingSet(saved);
-  }
+    return trainingSets[0] ?? null;
+  }, [trainingSets, selectedTrainingSetId]);
 
   useEffect(() => {
     let isMounted = true;
@@ -701,32 +700,24 @@ export default function SmashPage() {
       </div>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex flex-wrap items-end gap-4 border-b border-zinc-200/80 pb-4 dark:border-zinc-700/80">
-          <label className="flex min-w-[14rem] flex-col gap-1.5">
+          <div className="flex min-w-[14rem] flex-col gap-1.5">
             <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
               Training set
             </span>
-            <select
-              value={
-                selectedTrainingSetId &&
-                trainingSets.some((s) => s.id === selectedTrainingSetId)
-                  ? selectedTrainingSetId
-                  : (trainingSets[0]?.id ?? "")
-              }
-              onChange={handlePoolChange}
-              disabled={kanjiItems.length === 0 || trainingSets.length === 0}
-              className="cursor-pointer rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 shadow-sm outline-none ring-zinc-400/30 transition hover:border-zinc-400 focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-500 dark:focus:ring-zinc-500/40"
-            >
-              {trainingSets.map((set) => {
-                const level = trainingSetLevelLabel(set);
-                return (
-                  <option key={set.id} value={set.id}>
-                    {level ? `${level} · ` : ""}
-                    {set.name} ({set.kanjiChars.length} kanji)
-                  </option>
-                );
-              })}
-            </select>
-          </label>
+            <div className="flex items-baseline gap-2 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+              {selectedTrainingSet ? (
+                <>
+                  <span className="font-mono text-base font-semibold tabular-nums text-zinc-500 dark:text-zinc-400">
+                    {trainingSetLevelLabel(selectedTrainingSet) ?? "—"}
+                  </span>
+                  <span className="text-zinc-400 dark:text-zinc-600">·</span>
+                  <span className="leading-snug">{selectedTrainingSet.name}</span>
+                </>
+              ) : (
+                <span className="text-zinc-500 dark:text-zinc-400">Loading…</span>
+              )}
+            </div>
+          </div>
           <Link
             href="/training-sets"
             className="text-xs font-medium text-sky-700 underline-offset-2 hover:underline dark:text-sky-300"
