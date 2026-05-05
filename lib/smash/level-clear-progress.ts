@@ -61,6 +61,11 @@ export function saveLevelClearProgress(progress: LevelClearProgress): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
+export function clearLevelClearProgress(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 export function starCountForTrainingSet(setId: string, progress: LevelClearProgress): number {
   return progress[setId]?.stars ?? 0;
 }

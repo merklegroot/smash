@@ -13,6 +13,7 @@ import {
 } from "@/lib/training-sets/level-labels";
 import {
   hasStarForTrainingSet,
+  clearLevelClearProgress,
   loadLevelClearProgress,
   recordWrongGuess,
   recordTargetCleared,
@@ -1007,6 +1008,26 @@ export default function SmashPage() {
                     N4 uses <span className="font-mono">2-1</span>, <span className="font-mono">2-2</span>, … Answer
                     each kanji correctly when it is the prompt to clear the level and earn a star.
                   </p>
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
+                      Levels
+                    </p>
+                    <button
+                      type="button"
+                      className="cursor-pointer rounded-md border border-rose-200 bg-rose-50 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-rose-700 transition hover:bg-rose-100 dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-200 dark:hover:bg-rose-950/50"
+                      onClick={() => {
+                        if (typeof window !== "undefined" && !window.confirm("Reset all Smash stars and progress?")) {
+                          return;
+                        }
+                        clearLevelClearProgress();
+                        setLevelClearProgress({});
+                        setLevelCompleteSetId(null);
+                        setLevelCompleteStars(0);
+                      }}
+                    >
+                      Reset stars
+                    </button>
+                  </div>
                   <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
                     N5
                   </p>
