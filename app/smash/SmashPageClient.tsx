@@ -57,14 +57,6 @@ function getRandomKanji(items: KanjiItem[]) {
   return items[randomIndex] ?? FALLBACK_KANJI;
 }
 
-function clampNonNegativeCount(value: number) {
-  if (!Number.isFinite(value)) {
-    return 0;
-  }
-
-  return Math.max(0, value);
-}
-
 function appendOutcomeWithCap(history: PipOutcome[], outcome: PipOutcome) {
   const nextHistory = [...history, outcome];
   if (nextHistory.length <= MAX_PIPS_PER_KANJI) {
@@ -263,7 +255,6 @@ export default function SmashPage() {
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
-  const [showDebugStats, setShowDebugStats] = useState(false);
   const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("levels");
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
@@ -540,55 +531,6 @@ export default function SmashPage() {
     );
   }, []);
 
-  function updateOutcomeCount(kanji: string, outcome: PipOutcome, nextCount: number) {
-    const existingHistory = pipHistoryByKanji[kanji] ?? [];
-    const oppositeOutcome: PipOutcome = outcome === "right" ? "wrong" : "right";
-    const oppositeCount = existingHistory.filter(
-      (existingOutcome) => existingOutcome === oppositeOutcome,
-    ).length;
-    const targetCount = Math.min(
-      clampNonNegativeCount(nextCount),
-      Math.max(0, MAX_PIPS_PER_KANJI - oppositeCount),
-    );
-
-    setPipHistoryByKanji((currentHistory) => {
-      const currentKanjiHistory = currentHistory[kanji] ?? [];
-      const currentCount = currentKanjiHistory.filter(
-        (existingOutcome) => existingOutcome === outcome,
-      ).length;
-
-      if (currentCount === targetCount) {
-        return currentHistory;
-      }
-
-      const nextHistory = [...currentKanjiHistory];
-
-      if (targetCount > currentCount) {
-        const additions = targetCount - currentCount;
-        return {
-          ...currentHistory,
-          [kanji]: Array.from({ length: additions }).reduce<PipOutcome[]>(
-            (history) => appendOutcomeWithCap(history, outcome),
-            nextHistory,
-          ),
-        };
-      }
-
-      let toRemove = currentCount - targetCount;
-      for (let i = nextHistory.length - 1; i >= 0 && toRemove > 0; i -= 1) {
-        if (nextHistory[i] === outcome) {
-          nextHistory.splice(i, 1);
-          toRemove -= 1;
-        }
-      }
-
-      return {
-        ...currentHistory,
-        [kanji]: nextHistory,
-      };
-    });
-  }
-
   const kanjiDetailsJlptLabel = useMemo(() => {
     if (!selectedKanjiDetails) {
       return null;
@@ -688,15 +630,6 @@ export default function SmashPage() {
         {toasts.map((toast) => (
           <Toast key={toast.id} toast={toast} onDone={removeToast} />
         ))}
-      </div>
-      <div className="absolute left-4 top-4 z-30 flex flex-wrap gap-2">
-        <button
-          type="button"
-          className="cursor-pointer rounded-full border border-zinc-300 bg-white/90 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-700 shadow-sm backdrop-blur transition hover:bg-white dark:border-zinc-600 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:bg-zinc-800"
-          onClick={() => setShowDebugStats((current) => !current)}
-        >
-          {showDebugStats ? "Hide debug" : "Show debug"}
-        </button>
       </div>
       <div className="relative z-10 flex flex-col gap-4">
         <div className="flex flex-wrap items-end gap-4 border-b border-zinc-200/80 pb-4 dark:border-zinc-700/80">
@@ -937,68 +870,6 @@ export default function SmashPage() {
             </aside>
           </div>
         </div>
-        {showDebugStats ? (
-          <div className="rounded-2xl border border-zinc-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75">
-            <div className="mb-2 flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                Debug totals per kanji
-              </p>
-            </div>
-            <ul className="grid max-h-40 grid-cols-2 gap-x-3 gap-y-1 overflow-y-auto text-sm text-zinc-700 sm:grid-cols-3">
-              {allPossibleKanji.map((kanji) => {
-                const rightCount = (pipHistoryByKanji[kanji] ?? []).filter(
-                  (outcome) => outcome === "right",
-                ).length;
-                const wrongCount = (pipHistoryByKanji[kanji] ?? []).filter(
-                  (outcome) => outcome === "wrong",
-                ).length;
-
-                return (
-                  <li
-                    key={`debug-${kanji}`}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-200 bg-white/80 px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900/70"
-                  >
-                    <span className="text-lg font-semibold leading-none text-zinc-900">{kanji}</span>
-                    <div className="flex items-center gap-2 text-xs">
-                      <label className="flex items-center gap-1">
-                        <span>R</span>
-                        <input
-                          type="number"
-                          min={0}
-                          value={rightCount}
-                          onChange={(event) =>
-                            updateOutcomeCount(
-                              kanji,
-                              "right",
-                              Number.parseInt(event.currentTarget.value, 10),
-                            )
-                          }
-                          className="w-14 rounded border border-zinc-300 px-1 py-0.5 text-right"
-                        />
-                      </label>
-                      <label className="flex items-center gap-1">
-                        <span>W</span>
-                        <input
-                          type="number"
-                          min={0}
-                          value={wrongCount}
-                          onChange={(event) =>
-                            updateOutcomeCount(
-                              kanji,
-                              "wrong",
-                              Number.parseInt(event.currentTarget.value, 10),
-                            )
-                          }
-                          className="w-14 rounded border border-zinc-300 px-1 py-0.5 text-right"
-                        />
-                      </label>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : null}
       </div>
     </section>
     {kanjiDetailsDialog}
