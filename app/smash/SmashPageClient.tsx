@@ -386,12 +386,16 @@ export default function SmashPage() {
   );
 
   const currentTargetKanji = runOrder[runIndex] ?? null;
+  const runCompletedCount = useMemo(() => {
+    const total = runOrder.length;
+    if (total === 0) return 0;
+    return Math.min(total, runIndex + (correctButtonIndex !== null ? 1 : 0));
+  }, [runOrder.length, runIndex, correctButtonIndex]);
   const runProgressLabel = useMemo(() => {
     const total = runOrder.length;
     if (total === 0) return null;
-    const completed = Math.min(total, runIndex + (correctButtonIndex !== null ? 1 : 0));
-    return `${completed} / ${total}`;
-  }, [runOrder.length, runIndex, correctButtonIndex]);
+    return `${runCompletedCount} / ${total}`;
+  }, [runOrder.length, runCompletedCount]);
 
   const n5LevelRows = useMemo(() => listN5LevelRows(trainingSets), [trainingSets]);
   const n4LevelRows = useMemo(() => listN4LevelRows(trainingSets), [trainingSets]);
@@ -990,6 +994,28 @@ export default function SmashPage() {
                 {runProgressLabel ? (
                   <span className="mt-2 block text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                     Progress: {runProgressLabel}
+                  </span>
+                ) : null}
+                {runOrder.length > 0 ? (
+                  <span aria-hidden="true" className="mt-2 block">
+                    <span className="flex w-full gap-1">
+                      {runOrder.map((kanji, index) => {
+                        const completed = index < runCompletedCount;
+                        const outcome = runOutcomeByKanji[kanji];
+                        const barClass = completed
+                          ? outcome === "wrong"
+                            ? "bg-rose-500"
+                            : "bg-emerald-500"
+                          : "bg-zinc-200 dark:bg-zinc-700";
+
+                        return (
+                          <span
+                            key={`run-progress-${kanji}-${index}`}
+                            className={`h-1.5 flex-1 rounded-full ${barClass}`}
+                          />
+                        );
+                      })}
+                    </span>
                   </span>
                 ) : null}
               </p>
