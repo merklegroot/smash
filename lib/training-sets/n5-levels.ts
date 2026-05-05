@@ -8,7 +8,7 @@ export function formatN5Level(minor: number): string {
   return `${N5_LEVEL_MAJOR}-${minor}`;
 }
 
-/** Seeded N5 default id → 1-based minor level from `training-sets-defaults.json` order, or null if not in that catalog. */
+/** Seeded N5 default id → 1-based minor level from `n5-training-sets.json` order, or null if not in that catalog. */
 export function n5MinorLevelForDefaultSetId(id: string): number | null {
   const index = DEFAULT_TRAINING_SETS.findIndex((s) => s.id === id);
   if (index < 0) {

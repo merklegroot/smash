@@ -10,6 +10,13 @@ import {
   listN5LevelRows,
   n5LevelLabelForTrainingSet,
 } from "@/lib/training-sets/n5-levels";
+import {
+  hasStarForTrainingSet,
+  loadLevelClearProgress,
+  recordTargetCleared,
+  saveLevelClearProgress,
+  type LevelClearProgress,
+} from "@/lib/smash/level-clear-progress";
 import { loadSmashPoolPreference, saveSmashPoolPreference } from "@/lib/training-sets/preference";
 import { loadTrainingSets } from "@/lib/training-sets/storage";
 import type { TrainingSet } from "@/lib/training-sets/types";
@@ -262,6 +269,7 @@ export default function SmashPage() {
   const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
   const [selectedTrainingSetId, setSelectedTrainingSetId] = useState<string | null>(null);
   const [trainingSets, setTrainingSets] = useState<TrainingSet[]>([]);
+  const [levelClearProgress, setLevelClearProgress] = useState<LevelClearProgress>({});
   const roundAdvanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const kanjiItemsRef = useRef<KanjiItem[]>([]);
   const pipHistoryRef = useRef<Record<string, PipOutcome[]>>({});
@@ -396,6 +404,10 @@ export default function SmashPage() {
   }, [applyPracticePool]);
 
   useEffect(() => {
+    setLevelClearProgress(loadLevelClearProgress());
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (roundAdvanceTimeoutRef.current) {
         clearTimeout(roundAdvanceTimeoutRef.current);
@@ -427,9 +439,34 @@ export default function SmashPage() {
     }
 
     const isCorrect = clickedKanji === round.target.kanji;
+
+    let earnedLevelStar = false;
+    if (isCorrect && selectedTrainingSetId) {
+      const setId = selectedTrainingSetId;
+      const activeSet = trainingSets.find((s) => s.id === setId);
+      if (activeSet) {
+        const targetKanji = round.target.kanji;
+        setLevelClearProgress((prev) => {
+          const { next, earnedStar } = recordTargetCleared(
+            prev,
+            setId,
+            targetKanji,
+            activeSet.kanjiChars,
+          );
+          saveLevelClearProgress(next);
+          earnedLevelStar = earnedStar;
+          return next;
+        });
+      }
+    }
+
     showToast({
       isCorrect,
-      message: isCorrect ? "Correct choice!" : "Not quite, try again.",
+      message: isCorrect
+        ? earnedLevelStar
+          ? "Level complete — you earned a star! ⭐"
+          : "Correct choice!"
+        : "Not quite, try again.",
     });
 
     if (isCorrect) {
@@ -801,26 +838,40 @@ export default function SmashPage() {
                   hidden={rosterPanelTab !== "levels"}
                 >
                   <p className="mb-3 text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-                    The default training sets are all N5. They use levels{" "}
-                    <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …
-                    (leading <span className="font-mono">1</span> = N5 tier). Pick one to load that
-                    set.
+                    The default training sets are all N5 (levels{" "}
+                    <span className="font-mono">1-1</span>, <span className="font-mono">1-2</span>, …).
+                    Answer each kanji correctly when it is the prompt to clear the level and earn a
+                    star.
                   </p>
                   <ul className="grid grid-cols-3 gap-1.5">
                     {n5LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
+                      const starred = hasStarForTrainingSet(
+                        set.id,
+                        set.kanjiChars,
+                        levelClearProgress,
+                      );
 
                       return (
                         <li key={set.id} className="min-w-0">
                           <button
                             type="button"
                             onClick={() => selectTrainingSet(set)}
-                            className={`flex w-full min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-lg border px-1 py-2 text-center transition ${
+                            className={`relative flex w-full min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-lg border px-1 py-2 pt-3 text-center transition ${
                               selected
                                 ? "border-sky-500 bg-sky-50 ring-1 ring-sky-500/30 dark:border-sky-600 dark:bg-sky-950/50 dark:ring-sky-400/25"
                                 : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
                             }`}
                           >
+                            {starred ? (
+                              <span
+                                className="absolute right-0.5 top-0.5 text-sm leading-none"
+                                title="Level cleared"
+                                aria-label="Star earned for this level"
+                              >
+                                ⭐
+                              </span>
+                            ) : null}
                             <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
                               {levelLabel}
                             </span>
