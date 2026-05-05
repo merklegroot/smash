@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { formatKanjiGlosses, formatReadings, kanjiGlossSearchText } from "@/lib/kanji/format";
 import type { KanjiApiResponse, KanjiItem, KanjiLevelId } from "@/lib/kanji/types";
+import { trainingSetLevelLabel } from "@/lib/training-sets/level-labels";
+import { loadTrainingSets } from "@/lib/training-sets/storage";
 
 function matchesFilter(item: KanjiItem, query: string): boolean {
   if (!query) return true;
@@ -32,6 +34,7 @@ export default function KanjiList() {
   const [filter, setFilter] = useState("");
 
   const kanji = decks[level];
+  const trainingSets = useMemo(() => loadTrainingSets(), []);
 
   useEffect(() => {
     async function loadKanji() {
@@ -59,6 +62,22 @@ export default function KanjiList() {
     if (!q) return kanji;
     return kanji.filter((item) => matchesFilter(item, q));
   }, [kanji, filter]);
+
+  const trainingSetsIncludingSelected = useMemo(() => {
+    if (!selectedKanji) return [];
+    const char = selectedKanji.kanji;
+    return trainingSets
+      .filter((set) => set.kanjiChars.includes(char))
+      .map((set) => ({ set, levelLabel: trainingSetLevelLabel(set) }))
+      .sort((a, b) => {
+        if (a.levelLabel && b.levelLabel) {
+          return a.levelLabel.localeCompare(b.levelLabel, undefined, { numeric: true });
+        }
+        if (a.levelLabel) return -1;
+        if (b.levelLabel) return 1;
+        return a.set.name.localeCompare(b.set.name);
+      });
+  }, [selectedKanji, trainingSets]);
 
   useEffect(() => {
     if (filteredKanji.length === 0) return;
@@ -209,6 +228,34 @@ export default function KanjiList() {
                       </p>
                     ) : null}
                   </div>
+                </div>
+                <div>
+                  <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-black/60 dark:text-white/60">
+                    Training sets
+                  </p>
+                  {trainingSetsIncludingSelected.length === 0 ? (
+                    <p className="text-sm text-black/60 dark:text-white/60">
+                      Not included in any training set.
+                    </p>
+                  ) : (
+                    <ul className="space-y-1">
+                      {trainingSetsIncludingSelected.map(({ set, levelLabel }) => (
+                        <li
+                          key={`set-${set.id}`}
+                          className="flex items-baseline justify-between gap-3 rounded-xl border border-black/10 bg-black/[0.02] px-3 py-2 text-sm dark:border-white/10 dark:bg-white/[0.03]"
+                        >
+                          <span className="min-w-0 truncate font-medium text-black/85 dark:text-white/85">
+                            {set.name}
+                          </span>
+                          {levelLabel ? (
+                            <span className="shrink-0 font-mono text-xs font-semibold tabular-nums text-black/60 dark:text-white/60">
+                              {levelLabel}
+                            </span>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-xl border border-black/10 bg-black/[0.03] p-3 dark:border-white/10 dark:bg-white/[0.03]">
