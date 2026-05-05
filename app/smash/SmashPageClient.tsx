@@ -718,15 +718,6 @@ export default function SmashPage() {
               )}
             </div>
           </div>
-          <Link
-            href="/training-sets"
-            className="text-xs font-medium text-sky-700 underline-offset-2 hover:underline dark:text-sky-300"
-          >
-            All training sets
-          </Link>
-          <p className="max-w-md text-[11px] leading-snug text-zinc-500 dark:text-zinc-400">
-            Quiz draws meaning prompts and answer tiles only from the kanji in this set.
-          </p>
         </div>
         <div className="flex items-start gap-8">
           <div className="flex max-w-md flex-col items-center gap-3">
