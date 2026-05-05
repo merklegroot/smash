@@ -653,8 +653,8 @@ export default function SmashPage() {
           </div>
         </div>
         <div className="flex items-start gap-8">
-          <div className="flex max-w-md flex-col items-center gap-3">
-            <p className="max-w-md rounded-full border border-black/10 bg-white/70 px-5 py-2 text-center leading-snug shadow-sm dark:border-white/10 dark:bg-white/10">
+          <div className="flex w-80 flex-col items-center gap-3">
+            <p className="w-full rounded-2xl border-2 border-zinc-300/90 bg-zinc-50/80 px-5 py-2 text-center leading-snug shadow-sm dark:border-zinc-600 dark:bg-zinc-900/60">
               <span className="text-3xl font-semibold text-zinc-700 dark:text-zinc-100">
                 {round.target.primaryMeaning}
               </span>
