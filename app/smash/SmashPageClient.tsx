@@ -14,8 +14,11 @@ import {
 import {
   hasStarForTrainingSet,
   loadLevelClearProgress,
+  recordWrongGuess,
   recordTargetCleared,
+  resetTrainingSetRun,
   saveLevelClearProgress,
+  starCountForTrainingSet,
   type LevelClearProgress,
 } from "@/lib/smash/level-clear-progress";
 import { loadSmashPoolPreference, saveSmashPoolPreference } from "@/lib/training-sets/preference";
@@ -51,6 +54,17 @@ const FALLBACK_KANJI: KanjiItem = {
   kunReading: [],
   commonWords: [],
 };
+
+function shuffleArray<T>(items: T[]): T[] {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = next[i];
+    next[i] = next[j] as T;
+    next[j] = tmp as T;
+  }
+  return next;
+}
 
 function getRandomKanji(items: KanjiItem[]) {
   const randomIndex = Math.floor(Math.random() * items.length);
@@ -137,6 +151,7 @@ function createRound(
   pipHistoryByKanji: Record<string, PipOutcome[]>,
   roundsSinceLastTarget: Record<string, number>,
   previousTargetKanji?: string,
+  targetKanji?: string,
 ): RoundState {
   if (poolItems.length === 0) {
     return {
@@ -145,12 +160,15 @@ function createRound(
     };
   }
 
-  const target = pickWeightedTarget(
-    poolItems,
-    pipHistoryByKanji,
-    roundsSinceLastTarget,
-    previousTargetKanji,
-  );
+  const target =
+    targetKanji != null
+      ? poolItems.find((item) => item.kanji === targetKanji) ?? FALLBACK_KANJI
+      : pickWeightedTarget(
+          poolItems,
+          pipHistoryByKanji,
+          roundsSinceLastTarget,
+          previousTargetKanji,
+        );
   const buttons = Array.from({ length: GRID_SIZE }, () => getRandomKanji(poolItems));
 
   // Guarantee at least one correct answer in every board.
@@ -254,9 +272,14 @@ export default function SmashPage() {
   );
   const [wrongKanjiChoices, setWrongKanjiChoices] = useState<string[]>([]);
   const [correctButtonIndex, setCorrectButtonIndex] = useState<number | null>(null);
-  const [rightSinceWrong, setRightSinceWrong] = useState<Set<string>>(() => new Set());
   const [isAdvancingRound, setIsAdvancingRound] = useState(false);
+  const [levelCompleteSetId, setLevelCompleteSetId] = useState<string | null>(null);
+  const [levelCompleteStars, setLevelCompleteStars] = useState<number>(0);
   const [rosterPanelTab, setRosterPanelTab] = useState<"training" | "levels">("levels");
+  const [showDebugRunStrip, setShowDebugRunStrip] = useState(false);
+  const [runOrder, setRunOrder] = useState<string[]>([]);
+  const [runIndex, setRunIndex] = useState(0);
+  const [runOutcomeByKanji, setRunOutcomeByKanji] = useState<Record<string, "right" | "wrong" | undefined>>({});
   const [selectedKanjiDetails, setSelectedKanjiDetails] = useState<KanjiItem | null>(null);
   const [activeKanjiChars, setActiveKanjiChars] = useState<string[]>([]);
   const [roundsSinceLastTarget, setRoundsSinceLastTarget] = useState<Record<string, number>>({});
@@ -270,6 +293,8 @@ export default function SmashPage() {
   const pipHistoryRef = useRef<Record<string, PipOutcome[]>>({});
   const activeKanjiRef = useRef<string[]>([]);
   const roundsSinceRef = useRef<Record<string, number>>({});
+  const runOrderRef = useRef<string[]>([]);
+  const runIndexRef = useRef(0);
 
   const itemLookup = useMemo(() => buildItemLookup(kanjiItems), [kanjiItems]);
 
@@ -289,11 +314,22 @@ export default function SmashPage() {
     roundsSinceRef.current = roundsSinceLastTarget;
   }, [roundsSinceLastTarget]);
 
+  useEffect(() => {
+    runOrderRef.current = runOrder;
+  }, [runOrder]);
+
+  useEffect(() => {
+    runIndexRef.current = runIndex;
+  }, [runIndex]);
+
   const applyPracticePool = useCallback(
     (params: { allKanji: KanjiItem[]; chars: string[]; trainingSetId: string | null }) => {
       const { allKanji, chars, trainingSetId } = params;
       const lookup = buildItemLookup(allKanji);
       const poolItems = itemsForActiveChars(chars, lookup);
+      const uniqueChars = Array.from(new Set(chars));
+      const shuffled = shuffleArray(uniqueChars);
+      const firstTarget = shuffled[0];
 
       if (roundAdvanceTimeoutRef.current) {
         clearTimeout(roundAdvanceTimeoutRef.current);
@@ -302,16 +338,29 @@ export default function SmashPage() {
 
       setSelectedTrainingSetId(trainingSetId);
       setActiveKanjiChars(chars);
+      setRunOrder(shuffled);
+      setRunIndex(0);
+      setRunOutcomeByKanji({});
       setRoundsSinceLastTarget({});
       setPipHistoryByKanji({});
-      setRound(createRound(poolItems, {}, {}, undefined));
+      setRound(createRound(poolItems, {}, {}, undefined, firstTarget));
       setWrongKanjiChoices([]);
       setCorrectButtonIndex(null);
-      setRightSinceWrong(new Set());
       setIsAdvancingRound(false);
+      setLevelCompleteSetId(null);
+      setLevelCompleteStars(0);
+      setShowDebugRunStrip(false);
       setToasts([]);
+
+      if (trainingSetId) {
+        setLevelClearProgress((prev) => {
+          const next = resetTrainingSetRun(prev, trainingSetId);
+          saveLevelClearProgress(next);
+          return next;
+        });
+      }
     },
-    [],
+    [setLevelClearProgress],
   );
 
   useEffect(() => {
@@ -334,22 +383,18 @@ export default function SmashPage() {
     [trainingKanji],
   );
 
-  const rightSinceWrongList = useMemo(() => {
-    if (rightSinceWrong.size === 0) return [];
-
-    const order = new Map<string, number>();
-    for (let i = 0; i < allPossibleKanji.length; i += 1) {
-      const kanji = allPossibleKanji[i];
-      if (kanji) order.set(kanji, i);
-    }
-
-    return Array.from(rightSinceWrong).sort(
-      (a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0),
-    );
-  }, [rightSinceWrong, allPossibleKanji]);
+  const currentTargetKanji = runOrder[runIndex] ?? null;
 
   const n5LevelRows = useMemo(() => listN5LevelRows(trainingSets), [trainingSets]);
   const n4LevelRows = useMemo(() => listN4LevelRows(trainingSets), [trainingSets]);
+  const orderedLevelRows = useMemo(() => [...n5LevelRows, ...n4LevelRows], [n5LevelRows, n4LevelRows]);
+
+  const nextLevelAfterSelected = useMemo(() => {
+    if (!selectedTrainingSetId) return null;
+    const idx = orderedLevelRows.findIndex(({ set }) => set.id === selectedTrainingSetId);
+    if (idx < 0) return null;
+    return orderedLevelRows[idx + 1]?.set ?? null;
+  }, [orderedLevelRows, selectedTrainingSetId]);
 
   const selectTrainingSet = useCallback(
     (saved: TrainingSet) => {
@@ -457,21 +502,21 @@ export default function SmashPage() {
 
     const isCorrect = clickedKanji === round.target.kanji;
 
-    let earnedLevelStar = false;
+    let earnedRunStars: number | null = null;
     if (isCorrect && selectedTrainingSetId) {
       const setId = selectedTrainingSetId;
       const activeSet = trainingSets.find((s) => s.id === setId);
       if (activeSet) {
         const targetKanji = round.target.kanji;
         setLevelClearProgress((prev) => {
-          const { next, earnedStar } = recordTargetCleared(
+          const { next, earnedStars } = recordTargetCleared(
             prev,
             setId,
             targetKanji,
             activeSet.kanjiChars,
           );
           saveLevelClearProgress(next);
-          earnedLevelStar = earnedStar;
+          earnedRunStars = earnedStars;
           return next;
         });
       }
@@ -480,8 +525,8 @@ export default function SmashPage() {
     showToast({
       isCorrect,
       message: isCorrect
-        ? earnedLevelStar
-          ? "Level complete — you earned a star! ⭐"
+        ? earnedRunStars
+          ? `Level complete — you earned ${"⭐".repeat(earnedRunStars)}`
           : "Correct choice!"
         : "Not quite, try again.",
     });
@@ -494,14 +539,22 @@ export default function SmashPage() {
         computeHistoryAfterCorrectAnswer(historyBefore, targetKanji, wrongKanjiChoices),
       );
 
-      if (wrongKanjiChoices.length === 0) {
-        setRightSinceWrong((current) => {
-          const next = new Set(current);
-          next.add(targetKanji);
-          return next;
-        });
-      } else {
-        setRightSinceWrong(new Set());
+      setRunOutcomeByKanji((current) => {
+        const prior = current[targetKanji];
+        const outcome = prior === "wrong" || wrongKanjiChoices.length > 0 ? "wrong" : "right";
+        return { ...current, [targetKanji]: outcome };
+      });
+
+      if (earnedRunStars && selectedTrainingSetId) {
+        setCorrectButtonIndex(buttonIndex);
+        setIsAdvancingRound(true);
+        setLevelCompleteSetId(selectedTrainingSetId);
+        setLevelCompleteStars(earnedRunStars);
+        if (roundAdvanceTimeoutRef.current) {
+          clearTimeout(roundAdvanceTimeoutRef.current);
+          roundAdvanceTimeoutRef.current = null;
+        }
+        return;
       }
 
       setCorrectButtonIndex(buttonIndex);
@@ -517,6 +570,20 @@ export default function SmashPage() {
         const lookup = buildItemLookup(kanjiItemsRef.current);
         const poolItems = itemsForActiveChars(activeKanjiRef.current, lookup);
 
+        const nextIndex = runIndexRef.current + 1;
+        const order = runOrderRef.current;
+        if (nextIndex >= order.length) {
+          if (selectedTrainingSetId && earnedRunStars) {
+            setLevelCompleteSetId(selectedTrainingSetId);
+            setLevelCompleteStars(earnedRunStars);
+          }
+          setWrongKanjiChoices([]);
+          setCorrectButtonIndex(null);
+          setIsAdvancingRound(false);
+          roundAdvanceTimeoutRef.current = null;
+          return;
+        }
+
         const nextRoundsSince: Record<string, number> = {};
 
         for (const k of activeKanjiRef.current) {
@@ -528,12 +595,14 @@ export default function SmashPage() {
         }
 
         setRoundsSinceLastTarget(nextRoundsSince);
+        setRunIndex(nextIndex);
         setRound(
           createRound(
             poolItems,
             pipHistoryRef.current,
             nextRoundsSince,
             previousTargetKanji,
+            order[nextIndex],
           ),
         );
         setWrongKanjiChoices([]);
@@ -544,7 +613,20 @@ export default function SmashPage() {
       return;
     }
 
-    setRightSinceWrong(new Set());
+    setRunOutcomeByKanji((current) => {
+      const targetKanji = round.target.kanji;
+      if (!targetKanji || targetKanji === "?") return current;
+      if (current[targetKanji] === "wrong") return current;
+      return { ...current, [targetKanji]: "wrong" };
+    });
+    if (selectedTrainingSetId) {
+      const setId = selectedTrainingSetId;
+      setLevelClearProgress((prev) => {
+        const next = recordWrongGuess(prev, setId);
+        saveLevelClearProgress(next);
+        return next;
+      });
+    }
     setWrongKanjiChoices((currentWrongChoices) =>
       currentWrongChoices.includes(clickedKanji)
         ? currentWrongChoices
@@ -649,6 +731,88 @@ export default function SmashPage() {
         )
       : null;
 
+  const levelCompleteDialog =
+    levelCompleteSetId && typeof document !== "undefined"
+      ? createPortal(
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6">
+            <button
+              type="button"
+              aria-label="Close level complete dialog"
+              className="absolute inset-0 bg-black/35 transition hover:bg-black/40"
+              onClick={() => {
+                setLevelCompleteSetId(null);
+                setIsAdvancingRound(false);
+                setCorrectButtonIndex(null);
+              }}
+            />
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="level-complete-title"
+              className="relative z-10 w-full max-w-md rounded-2xl border border-zinc-200 bg-white px-5 py-4 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <p id="level-complete-title" className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                Level complete — you earned {levelCompleteStars > 0 ? "⭐".repeat(levelCompleteStars) : "⭐"}!
+              </p>
+              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+                Nice work. Want to keep going?
+              </p>
+
+              <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <button
+                  type="button"
+                  className="cursor-pointer rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+                  onClick={() => {
+                    const next = nextLevelAfterSelected;
+                    if (next) {
+                      setRosterPanelTab("levels");
+                      setLevelCompleteSetId(null);
+                      setIsAdvancingRound(false);
+                      setCorrectButtonIndex(null);
+                      selectTrainingSet(next);
+                      return;
+                    }
+                    setRosterPanelTab("levels");
+                    setLevelCompleteSetId(null);
+                    setIsAdvancingRound(false);
+                    setCorrectButtonIndex(null);
+                  }}
+                >
+                  {nextLevelAfterSelected ? "Next level" : "Choose a level"}
+                </button>
+                <button
+                  type="button"
+                  className="cursor-pointer rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-800 shadow-sm transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                  onClick={() => {
+                    const current = selectedTrainingSet;
+                    if (!current) {
+                      setLevelCompleteSetId(null);
+                      setIsAdvancingRound(false);
+                      setCorrectButtonIndex(null);
+                      return;
+                    }
+                    setLevelClearProgress((prev) => {
+                      const next = resetTrainingSetRun(prev, current.id);
+                      saveLevelClearProgress(next);
+                      return next;
+                    });
+                    setLevelCompleteSetId(null);
+                    setLevelCompleteStars(0);
+                    setIsAdvancingRound(false);
+                    setCorrectButtonIndex(null);
+                    selectTrainingSet(current);
+                  }}
+                >
+                  Do it again
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      : null;
+
   return (
     <>
     <section className="relative flex flex-1 items-center justify-center overflow-hidden rounded-3xl border border-black/10 bg-white/40 p-6 shadow-[0_10px_40px_rgba(0,0,0,0.06)] backdrop-blur-sm dark:border-white/10 dark:bg-white/5">
@@ -711,36 +875,41 @@ export default function SmashPage() {
               ))}
             </div>
             <div className="w-full max-w-md">
-              <div className="space-y-2">
-                <div className="flex flex-wrap justify-center gap-1.5">
-                  {allPossibleKanji.map((kanji) => (
-                    <span
-                      key={`training-pill-${kanji}`}
-                      className="inline-flex h-7 min-w-7 items-center justify-center rounded-lg border border-zinc-200 bg-white px-2 font-mono text-sm font-semibold leading-none text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100"
-                      title="In training set"
-                    >
-                      {kanji}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex flex-wrap justify-center gap-1.5">
-                  {rightSinceWrongList.length > 0 ? (
-                    rightSinceWrongList.map((kanji) => (
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  type="button"
+                  className="cursor-pointer rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:bg-zinc-800"
+                  onClick={() => setShowDebugRunStrip((v) => !v)}
+                >
+                  {showDebugRunStrip ? "Hide debug" : "Show debug"}
+                </button>
+              </div>
+              {showDebugRunStrip ? (
+                <div className="mt-2 flex flex-wrap justify-center gap-1.5">
+                  {runOrder.map((kanji) => {
+                    const status = runOutcomeByKanji[kanji];
+                    const isActive = kanji === currentTargetKanji;
+                    const statusClass =
+                      status === "right"
+                        ? "border-emerald-300 bg-emerald-100 text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-100"
+                        : status === "wrong"
+                        ? "border-rose-300 bg-rose-100 text-rose-900 dark:border-rose-900/40 dark:bg-rose-950/40 dark:text-rose-100"
+                        : "border-zinc-200 bg-white text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-100";
+
+                    return (
                       <span
-                        key={`right-pill-${kanji}`}
-                        className="inline-flex h-7 min-w-7 items-center justify-center rounded-lg border border-emerald-300 bg-emerald-100 px-2 font-mono text-sm font-semibold leading-none text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-100"
-                        title="Right (since last wrong)"
+                        key={`training-pill-${kanji}`}
+                        className={`inline-flex h-7 min-w-7 items-center justify-center rounded-lg border px-2 font-mono text-sm font-semibold leading-none ${statusClass} ${
+                          isActive ? "ring-2 ring-sky-400/50" : ""
+                        }`}
+                        title={isActive ? "Current target" : "In run"}
                       >
                         {kanji}
                       </span>
-                    ))
-                  ) : (
-                    <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                      No correct kanji yet.
-                    </span>
-                  )}
+                    );
+                  })}
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
           <div className="flex items-start gap-3">
@@ -844,11 +1013,7 @@ export default function SmashPage() {
                   <ul className="mb-4 grid grid-cols-3 gap-1.5">
                     {n5LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
-                      const starred = hasStarForTrainingSet(
-                        set.id,
-                        set.kanjiChars,
-                        levelClearProgress,
-                      );
+                      const stars = starCountForTrainingSet(set.id, levelClearProgress);
 
                       return (
                         <li key={set.id} className="min-w-0">
@@ -861,13 +1026,13 @@ export default function SmashPage() {
                                 : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
                             }`}
                           >
-                            {starred ? (
+                            {stars > 0 ? (
                               <span
                                 className="absolute right-0.5 top-0.5 text-sm leading-none"
-                                title="Level cleared"
-                                aria-label="Star earned for this level"
+                                title={`Stars earned: ${stars}`}
+                                aria-label={`${stars} star${stars === 1 ? "" : "s"} earned for this level`}
                               >
-                                ⭐
+                                {"⭐".repeat(stars)}
                               </span>
                             ) : null}
                             <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
@@ -887,11 +1052,7 @@ export default function SmashPage() {
                   <ul className="grid grid-cols-3 gap-1.5">
                     {n4LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
-                      const starred = hasStarForTrainingSet(
-                        set.id,
-                        set.kanjiChars,
-                        levelClearProgress,
-                      );
+                      const stars = starCountForTrainingSet(set.id, levelClearProgress);
 
                       return (
                         <li key={set.id} className="min-w-0">
@@ -904,13 +1065,13 @@ export default function SmashPage() {
                                 : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
                             }`}
                           >
-                            {starred ? (
+                            {stars > 0 ? (
                               <span
                                 className="absolute right-0.5 top-0.5 text-sm leading-none"
-                                title="Level cleared"
-                                aria-label="Star earned for this level"
+                                title={`Stars earned: ${stars}`}
+                                aria-label={`${stars} star${stars === 1 ? "" : "s"} earned for this level`}
                               >
-                                ⭐
+                                {"⭐".repeat(stars)}
                               </span>
                             ) : null}
                             <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
@@ -932,6 +1093,7 @@ export default function SmashPage() {
       </div>
     </section>
     {kanjiDetailsDialog}
+    {levelCompleteDialog}
     </>
   );
 }

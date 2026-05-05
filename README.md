@@ -14,6 +14,17 @@ When the user selects the wrong answer, the kanji is given a red pip.
 A kanji can have at most **8** pips shown.  
 Once it reaches 8, new pips overwrite the oldest ones.
 
+## Stars (level completion)
+
+Each training set ("level") can earn **up to 3 stars**, based on how clean the run was:
+
+- **⭐ (1 star)**: you completed the run (cleared the level) with **2+ wrong guesses**
+- **⭐⭐ (2 stars)**: you completed the run with **exactly 1 wrong guess**
+- **⭐⭐⭐ (3 stars)**: **perfect** run (0 wrong guesses)
+
+Wrong guesses are counted across the run until the level is completed.
+You can replay a level to try to earn more stars.
+
 ## Training strategy
 
 Each round shows an English **meaning**; the player picks the matching kanji from a grid.
