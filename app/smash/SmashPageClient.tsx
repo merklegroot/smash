@@ -385,6 +385,12 @@ export default function SmashPage() {
   );
 
   const currentTargetKanji = runOrder[runIndex] ?? null;
+  const runProgressLabel = useMemo(() => {
+    const total = runOrder.length;
+    if (total === 0) return null;
+    const completed = Math.min(total, runIndex + (correctButtonIndex !== null ? 1 : 0));
+    return `${completed} / ${total}`;
+  }, [runOrder.length, runIndex, correctButtonIndex]);
 
   const n5LevelRows = useMemo(() => listN5LevelRows(trainingSets), [trainingSets]);
   const n4LevelRows = useMemo(() => listN4LevelRows(trainingSets), [trainingSets]);
@@ -855,6 +861,11 @@ export default function SmashPage() {
                   {round.target.otherMeaning.trim()}
                 </span>
               ) : null}
+              {runProgressLabel ? (
+                <span className="mt-2 block text-[10px] font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  Progress: {runProgressLabel}
+                </span>
+              ) : null}
             </p>
             <div className="grid grid-cols-3 gap-4">
               {round.buttons.map((item, index) => (
@@ -1035,6 +1046,7 @@ export default function SmashPage() {
                     {n5LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
                       const stars = starCountForTrainingSet(set.id, levelClearProgress);
+                      const earnedStars = Math.max(0, Math.min(3, stars));
 
                       return (
                         <li key={set.id} className="min-w-0">
@@ -1047,15 +1059,18 @@ export default function SmashPage() {
                                 : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
                             }`}
                           >
-                            {stars > 0 ? (
-                              <span
-                                className="absolute right-0.5 top-0.5 text-sm leading-none"
-                                title={`Stars earned: ${stars}`}
-                                aria-label={`${stars} star${stars === 1 ? "" : "s"} earned for this level`}
-                              >
-                                {"⭐".repeat(stars)}
+                            <span
+                              className="absolute right-0.5 top-0.5 text-sm leading-none"
+                              title={`Stars earned: ${earnedStars} / 3`}
+                              aria-label={`${earnedStars} of 3 stars earned for this level`}
+                            >
+                              <span className="text-amber-500 dark:text-amber-400">
+                                {"★".repeat(earnedStars)}
                               </span>
-                            ) : null}
+                              <span className="text-zinc-300 dark:text-zinc-600">
+                                {"☆".repeat(3 - earnedStars)}
+                              </span>
+                            </span>
                             <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
                               {levelLabel}
                             </span>
@@ -1074,6 +1089,7 @@ export default function SmashPage() {
                     {n4LevelRows.map(({ levelLabel, set }) => {
                       const selected = selectedTrainingSetId === set.id;
                       const stars = starCountForTrainingSet(set.id, levelClearProgress);
+                      const earnedStars = Math.max(0, Math.min(3, stars));
 
                       return (
                         <li key={set.id} className="min-w-0">
@@ -1086,15 +1102,18 @@ export default function SmashPage() {
                                 : "border-zinc-200 bg-white hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900/60 dark:hover:bg-zinc-800/80"
                             }`}
                           >
-                            {stars > 0 ? (
-                              <span
-                                className="absolute right-0.5 top-0.5 text-sm leading-none"
-                                title={`Stars earned: ${stars}`}
-                                aria-label={`${stars} star${stars === 1 ? "" : "s"} earned for this level`}
-                              >
-                                {"⭐".repeat(stars)}
+                            <span
+                              className="absolute right-0.5 top-0.5 text-sm leading-none"
+                              title={`Stars earned: ${earnedStars} / 3`}
+                              aria-label={`${earnedStars} of 3 stars earned for this level`}
+                            >
+                              <span className="text-amber-500 dark:text-amber-400">
+                                {"★".repeat(earnedStars)}
                               </span>
-                            ) : null}
+                              <span className="text-zinc-300 dark:text-zinc-600">
+                                {"☆".repeat(3 - earnedStars)}
+                              </span>
+                            </span>
                             <span className="font-mono text-xs font-semibold tabular-nums text-zinc-800 dark:text-zinc-100">
                               {levelLabel}
                             </span>

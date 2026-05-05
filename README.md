@@ -2,6 +2,8 @@
 
 Whack-a-mole style kanji training
 
+![Screenshot](img/screenshot.png)
+
 ## Initial Kanji
 
 The training set starts with the first **12** unique kanji from the deck (API order). Additional kanji can enter when a slot opens (see **Training strategy**).
