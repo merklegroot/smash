@@ -18,3 +18,7 @@ Stages are labeled like `1-2`, which means **Level 1, Stage 2**. The full `1-2` 
 
 Wrong guesses are counted across the run until the stage is completed.
 You can replay a stage to try to earn more stars.
+
+## Desktop app (macOS)
+
+The Next.js UI lives in [`smashnext/`](smashnext/). A **Tauri** shell that wraps the Smash experience is in [`smashtauri/`](smashtauri/README.md) (macOS `.dmg` today; other platforms can be enabled later).

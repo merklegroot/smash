@@ -37,7 +37,7 @@ export default function KanjiList() {
   useEffect(() => {
     async function loadKanji() {
       try {
-        const response = await fetch("/api/kanji");
+        const response = await fetch("/kanji-data.json");
         if (!response.ok) {
           throw new Error("Failed to load kanji.");
         }

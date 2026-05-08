@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/merge-kanji-public.mjs",
+    "prebuild": "node scripts/merge-kanji-public.mjs",
     "dev": "next dev",
     "build": "next build",
+    "build:tauri": "node scripts/merge-kanji-public.mjs && STATIC_EXPORT=1 NEXT_PUBLIC_TAURI=1 next build",
     "start": "next start",
     "lint": "eslint"
   },

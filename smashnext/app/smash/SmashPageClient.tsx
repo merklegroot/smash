@@ -451,7 +451,7 @@ export default function SmashPage() {
 
     async function loadKanji() {
       try {
-        const response = await fetch("/api/kanji");
+        const response = await fetch("/kanji-data.json");
         const data = (await response.json()) as KanjiApiResponse;
 
         if (!response.ok || !Array.isArray(data.kanji)) {

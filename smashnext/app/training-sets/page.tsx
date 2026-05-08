@@ -18,7 +18,7 @@ export default function TrainingSets() {
   useEffect(() => {
     async function loadKanji() {
       try {
-        const response = await fetch("/api/kanji");
+        const response = await fetch("/kanji-data.json");
         if (!response.ok) throw new Error("Failed");
         const data: KanjiApiResponse = await response.json();
         setKanji(data.kanji);

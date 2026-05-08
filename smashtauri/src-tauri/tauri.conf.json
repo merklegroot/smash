@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Kanji Smash",
+  "version": "0.1.0",
+  "identifier": "com.smash.kanji.desktop",
+  "build": {
+    "frontendDist": "../../smashnext/out",
+    "devUrl": "http://localhost:3000/smash",
+    "beforeDevCommand": "npm run dev --prefix ../smashnext",
+    "beforeBuildCommand": "npm run build:tauri --prefix ../smashnext"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Kanji Smash",
+        "width": 800,
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["dmg"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "android": {
+      "debugApplicationIdSuffix": ".debug"
+    }
+  }
+}

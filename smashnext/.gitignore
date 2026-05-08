@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# Generated for static export / Tauri (see scripts/merge-kanji-public.mjs)
+/public/kanji-data.json
+
 # production
 /build
 
