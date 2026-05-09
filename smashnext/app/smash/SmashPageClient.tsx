@@ -534,17 +534,15 @@ export default function SmashPage() {
       const activeSet = trainingSets.find((s) => s.id === setId);
       if (activeSet) {
         const targetKanji = round.target.kanji;
-        setLevelClearProgress((prev) => {
-          const { next, earnedStars } = recordTargetCleared(
-            prev,
-            setId,
-            targetKanji,
-            activeSet.kanjiChars,
-          );
-          saveLevelClearProgress(next);
-          earnedRunStars = earnedStars;
-          return next;
-        });
+        const { next: nextProgress, earnedStars } = recordTargetCleared(
+          levelClearProgress,
+          setId,
+          targetKanji,
+          activeSet.kanjiChars,
+        );
+        earnedRunStars = earnedStars;
+        saveLevelClearProgress(nextProgress);
+        setLevelClearProgress(nextProgress);
       }
     }
 
